@@ -49,10 +49,7 @@ class Service
     if ($middleware) $this->add($middleware);
     $input = $_REQUEST;
     $output = $this->next($input);
-
-    assert(is_resource($output) && get_resource_type($output) == "stream");
-    fpassthru($output); echo "\n";
-    fclose($output);
+    echo $output;
   }
 
   public function setResponseFactory(ResponseFactory $responseFactory)

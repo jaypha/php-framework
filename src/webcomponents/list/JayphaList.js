@@ -68,15 +68,20 @@ class JayphaList extends HTMLElement
     // Create the table
     document.addEventListener("DOMContentLoaded", () =>
     {
-      let jayphaData = this.querySelector("jaypha-data");
-      this.data = jayphaData.data;
+      let fn = () => this.refresh();
+
+      this.dataElement = this.querySelector("jaypha-data");
+      this.dataElement.data.addEventListener("add", fn);
+      this.dataElement.data.addEventListener("remove", fn);
+      this.dataElement.data.addEventListener("rearrange", fn);
+
       this.tableElement = this.querySelector("table");
       if (!this.tableElement)
       {
         this.tableElement = document.createElement("table");
         this.appendChild(this.tableElement);
       }
-      this.updateContent();
+      this.refresh();
     });
   }
 
@@ -102,7 +107,7 @@ class JayphaList extends HTMLElement
 
   //-------------------------------------------------------
 
-  reSort(idx)
+  setSort(idx)
   {
     let sortColumn = this.sortby;
     if (sortColumn === null || sortColumn.column != idx)
@@ -114,17 +119,20 @@ class JayphaList extends HTMLElement
       else
         this.sortby = { column: idx, dir: "down" };
     }
-    this.updateContent();
+    this.reSort();
   }
 
-  //-------------------------------------------------------
-
-  updateContent()
+  reSort()
   {
     let sortColumn = this.sortby;
     if (sortColumn != null)
     {
-      let col = sortColumn.column;
+      this.dataElement.sort(
+        this.columnDefs[sortColumn.column]
+          .getSortFn(sortColumn.dir == "down")
+      );
+
+/*      
       let sortAs = this.columnDefs[col].sortAs;
       switch(sortAs)
       {
@@ -137,16 +145,17 @@ class JayphaList extends HTMLElement
         default: // sortAs describes a function
           this.fn = new Function('a','b', sortAs);
       }
-      this.data.sort(this.fn);
-      if (sortColumn.dir == "down")
-        this.data.reverse();
+      this.dataElement.sort(this.fn, sortColumn.dir == "down");
+*/
     }
+  }
 
+  refresh()
+  {
     this.tableElement.innerHTML = "";
     this.tableElement.appendChild(this.createColgroup());
     this.tableElement.appendChild(this.createHead());
     this.tableElement.appendChild(this.createBody());
-    
   }
 
   //-------------------------------------------------------
@@ -189,7 +198,7 @@ class JayphaList extends HTMLElement
           let th = document.createElement("th");
           th.className = self.getSortClass(idx);
           th.innerHTML = columnDefs[idx].label;
-          th.onclick = (e) => self.reSort(idx);
+          th.onclick = (e) => self.setSort(idx);
           tr.appendChild(th);
         }
       }
@@ -203,7 +212,9 @@ class JayphaList extends HTMLElement
   createBody()
   {
     let tbody = document.createElement("tbody");
-    tbody.innerHTML = this.data.map(row => this.createRow(row)).join("");
+    let l = this.dataElement.data.length;
+    for (let i=0; i<l; ++i)
+      tbody.appendChild(this.createRow(this.dataElement.data[i]));
     return tbody;
   }
 
@@ -213,11 +224,17 @@ class JayphaList extends HTMLElement
   {
     let columnDefs = this.columnDefs;
 
-    return "<tr>"+
-    this.columnOrder.map
-    (idx => "<td>"+columnDefs[idx].getCellContent(row)+"</td>")
-    .join("")+
-    "</tr>";
+    let tr = document.createElement("tr");
+
+    for (let i=0; i<this.columnOrder.length; ++i)
+    {
+      let td = document.createElement("td");
+
+      columnDefs[this.columnOrder[i]].addCellContent(row, td);
+      tr.appendChild(td);
+    }
+      
+    return tr;
   }
 }
 

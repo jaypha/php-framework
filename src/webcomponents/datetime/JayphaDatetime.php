@@ -17,7 +17,7 @@ class JayphaDatetime extends InputWidget
   {
     switch ($p) {
       case "value":
-        return \PHS\toDateTime($this->attributes[$p] ?? null);
+        return \Jaypha\toDateTime($this->attributes[$p] ?? null);
       default:
         return parent::__get($p);
     }
@@ -27,7 +27,7 @@ class JayphaDatetime extends InputWidget
   {
     switch ($p) {
       case "value":
-        $this->attributes[$p] = \PHS\toDateTime($v)->format(\DateTime::ISO8601);
+        $this->attributes[$p] = \Jaypha\toDateTime($v)->format(\DateTime::ISO8601);
         break;
       default:
         parent::__set($p, $v);

@@ -5,11 +5,20 @@
 
 namespace Jaypha\Jayponents\Html;
 
-class JayphaEditable extends Element
+class JayphaEditable extends Widget
 {
-  function __construct()
+  public $value = null;
+
+  function __construct($name, $form=null)
   {
-    parent::__construct("jaypha-editable");
+    parent::__construct($name);
+    $this->tagName = "jaypha-editable";
+  }
+
+  function display()
+  {
+    $this->add($this->value);
+    parent::display();
   }
 }
 

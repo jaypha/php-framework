@@ -11,7 +11,7 @@ class Form extends Element
 {
   public $hiddens = [];
   public $values = [];
-  protected $fragments;
+  protected $fieldsets;
 
   function __construct(string $action = null)
   {
@@ -19,16 +19,23 @@ class Form extends Element
     if ($action != null)
       $this->attributes["action"] = $action;
     $this->attributes["method"] = "post";
-    $this->fragments = new \ArrayObject();
-    $this->set("fragments", $this->fragments);
+    $this->fieldsets = new \ArrayObject();
+    $this->set("fieldsets", $this->fieldsets);
   }
 
   //-----------------------------------
 
+  function addFieldset($fieldset = null)
+  {
+    if ($fieldset == null) $fieldset = new Fieldset($this);
+    $this->fieldsets[] = $fieldset;
+    return $fieldset;
+  }
+
   function addFragment($fragment = null)
   {
     if ($fragment == null) $fragment = new FormFragment($this);
-    $this->fragments[] = $fragment;
+    $this->fieldsets[] = $fragment;
     return $fragment;
   }
 

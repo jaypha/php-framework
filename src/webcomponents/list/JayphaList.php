@@ -46,6 +46,8 @@ class JayphaList extends Element
       case "columnorder":
         $this->attributes["columnorder"] = implode(" ", $v);
         break;
+      default:
+        parent::__set($p,$v);
     }
   }
 }

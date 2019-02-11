@@ -18,23 +18,7 @@ const DATETIME_COMMON = "jS&\\n\b\s\p;M&\\n\b\s\p;Y&\\n\b\s\p;&\\n\b\s\p;g:i&\\n
 
 function getTimezone()
 {
-  if (isset($_COOKIE["tzoffset"]))
-  {
-    $hours = $_COOKIE["tzoffset"]/3600;
-    $h = floor($hours);
-    $m = floor(($hours - $h) * 60);
-    $t = sprintf("%+03d%02d",$h,$m);
-    return new \DateTimeZone($t);
-  }
-  else if (isset($_COOKIE["tz_offset"]))
-  {
-    $hours = $_COOKIE["tz_offset"]/60;
-    $h = floor($hours);
-    $m = floor(($hours - $h) * 60);
-    return new \DateTimeZone(sprintf("%+03d%02d",$h,$m));
-  }
-  else
-    return NULL;
+  return $GLOBALS["timezone"] ?? null;
 }
 
 function date($dateStr)
@@ -51,7 +35,7 @@ function dateImmutable($dateStr)
 
 function today()
 {
-  return new \DateTime("today", get_timezone());
+  return new \DateTime("today", getTimezone());
 }
 
 function todayImmutable()
@@ -61,7 +45,7 @@ function todayImmutable()
 
 function now()
 {
-  return new \DateTime("now", get_timezone());
+  return new \DateTime("now", getTimezone());
 }
 
 function nowImmutable()
@@ -111,6 +95,13 @@ function toMysqlDate($date)
 {
   $val = toDateTime($date);
   return $val->format(DATE_MYSQL);
+}
+
+function toMysqlTimestamp($time)
+{
+  $val = toDateTime($time);
+  $val->setTimezone(new \DateTimeZone(\Config\MYSQL_TIMEZONE));
+  return $val->format(DATETIME_MYSQL);
 }
 
 function toDateTimeString($date, $format = \DateTime::ISO8601)

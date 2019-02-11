@@ -3,6 +3,7 @@
 // 
 //----------------------------------------------------------------------------
 
+import { bindableArray, bindableAssoc } from "./bindable.js";
 
 class JayphaData extends HTMLElement
 {
@@ -17,15 +18,26 @@ class JayphaData extends HTMLElement
 
     let type = this.getAttribute("type");
     let stuff = this.innerText;
+    let parsedStuff;
+
     switch (type)
     {
       case "application/json":
-        this.data = JSON.parse(stuff);
+        parsedStuff = JSON.parse(stuff);
         break;
       default:
         console.log("Type '"+type+"' not supported");
+        this.data = [];
+        return;
     }
+
+    let a = [];
+    for (let i=0; i<parsedStuff.length; ++i)
+      a.push(bindableAssoc(parsedStuff[i]));
+    this.data = bindableArray(a);
   }
+
+  sort(fn) { this.data.sort(fn); }
 }
 
 customElements.define('jaypha-data', JayphaData);

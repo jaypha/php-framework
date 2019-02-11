@@ -56,6 +56,28 @@ class ButtonRow extends Element
     return $button;
   }
 
+  function addOkButton($label = "OK")
+  {
+    $button = $this->addSubmitButton($label);
+    $button->value = "ok";
+    return $button;
+  }
+
+  function addCancelButton($label = "Cancel")
+  {
+    $button = $this->addSubmitButton($label);
+    $button->value = "cancel";
+    return $button;
+  }
+
+  function __get($p)
+  {
+    switch ($p)
+    {
+      case "count":
+        return count($this->buttons);
+    }
+  }
 }
 
 //----------------------------------------------------------------------------

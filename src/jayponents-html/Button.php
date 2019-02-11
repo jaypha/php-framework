@@ -44,6 +44,7 @@ class Button  extends Element
         break;
       case "onclick":
       case "type":
+      case "value":
         $this->attributes[$p] = $v;
         break;
       default:

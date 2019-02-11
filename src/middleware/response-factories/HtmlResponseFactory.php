@@ -10,7 +10,7 @@ namespace Jaypha\Middleware;
 use Latte\Engine;
 use Latte\Loaders\FileLoader;
 use Jaypha\Jayponents\Component;
-use Jaypha\Jayponents\LatteTemplateEngineAdaptor;
+use Jaypha\Jayponents\Latte\LatteEngineAdaptor;
 
 class HtmlResponseFactory implements ResponseFactory
 {
@@ -19,7 +19,7 @@ class HtmlResponseFactory implements ResponseFactory
     $latte = new Engine();
     $latte->setTempDirectory(\Config\APP_ROOT."/var/latte-cache");
     $latte->setLoader(new FileLoader(\Config\APP_ROOT."/src"));
-    Component::setDefaultTemplateAdaptor(new LatteTemplateEngineAdaptor($latte));
+    Component::setDefaultEngine(new LatteEngineAdaptor($latte));
   }
 
   function mimeType() { return "text/html"; }

@@ -6,22 +6,21 @@
 // Template
 
 let jaypha_editable_template = document.createElement("template");
-jaypha_editable_template.innerHTML = `<pre style='margin:0; overflow-y: auto; height: 100%; max-height: inherit; min-height: inherit;' contenteditable></pre>`;
+jaypha_editable_template.innerHTML = `<input type='hidden'><pre style='margin:0; overflow-y: auto; height: 100%; max-height: inherit; min-height: inherit;' contenteditable></pre>`;
 
 //---------------------------------------------------------
 // Class
 
 class JayphaEditable extends HTMLElement
 {
-  getContent()
-  {
-    return this.pre.innerText;
-  }
+  get value() { return this.pre.innerText; }
+  set value(v) { this.pre.innerText = v; }
 
-  setContent(text)
-  {
-    this.pre.innerText = text;
-  }
+
+  getContent() { return this.value; }
+  setContent(text) { this.value = text; }
+
+  focus() { this.pre.focus(); }
 
   connectedCallback()
   {
@@ -30,7 +29,11 @@ class JayphaEditable extends HTMLElement
     this.innerHTML = "";
     this.appendChild(jaypha_editable_template.content.cloneNode(true));
     this.pre = this.querySelector("pre");
+    //if (this.hasAttribute("autofocus"))
+    //  this.pre.setAttribute("autofocus", this.getAttribute("autofocus"));
     this.pre.innerText = c;
+    this.input = this.querySelector("input");
+    this.input.setAttribute("name",this.getAttribute("name"));
   }
 }
 

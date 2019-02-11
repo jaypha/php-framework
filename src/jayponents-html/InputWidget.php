@@ -24,9 +24,6 @@ class InputWidget extends Widget
           return $this->attributes[$p];
         else
           return null;
-      case "required":
-      case "autofocus":
-        return isset($this->attributes[$p]);
       default:
         return parent::__get($p);
     }
@@ -38,13 +35,6 @@ class InputWidget extends Widget
       case "value":
       case "type":
         $this->attributes[$p] = $v;
-        break;
-      case "required":
-      case "autofocus":
-        if ($v)
-          $this->attributes[$p] = true;
-        else
-          unset($this->attributes[$p]);
         break;
       default:
         parent::__set($p, $v);

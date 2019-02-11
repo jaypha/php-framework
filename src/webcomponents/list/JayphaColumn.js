@@ -38,6 +38,34 @@ class JayphaColumn extends HTMLElement
 
   //-----------------------------------------------
 
+  getSortFn(reverse)
+  {
+    let col = this.name;
+    switch(this.sortAs)
+    {
+      case "string":
+        if (reverse)
+          return (a,b) => b[col].localeCompare(a[col]);
+        else
+          return (a,b) => a[col].localeCompare(b[col]);
+        break;
+      case "number":
+        if (reverse)
+          return (a,b) => b[col] - a[col];
+        else
+          return (a,b) => a[col] - b[col];
+        break;
+      default: // sortAs describes a function
+        let fn = new Function('a','b', this.sortAs);
+        if (reverse)
+          return ((a,b) => { return -fn(a,b) });
+        else
+          return fn;
+    }
+  }
+
+  //-----------------------------------------------
+
   getCellContent(row)
   {
     if (this.hasAttribute("format"))
@@ -47,6 +75,29 @@ class JayphaColumn extends HTMLElement
     }
     else
       return row[this.name];
+  }
+
+  //-----------------------------------------------
+
+  addCellContent(row, td)
+  {
+    let stuff;
+
+    if (this.hasAttribute("format"))
+    {
+      this.fn = new Function('row',this.getAttribute("format"));
+      stuff = this.fn(row);
+    }
+    else if (this.hasAttribute("link"))
+    {
+      let fn = new Function('row',"return "+this.getAttribute("link"));
+      stuff = "<a href="+fn(row)+">"+row[this.name]+"</a>";
+    }
+    else
+      stuff = row[this.name];
+
+    td.innerHTML = stuff;
+    return td;
   }
 
   //-----------------------------------------------
