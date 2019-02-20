@@ -3,6 +3,37 @@
 // 
 //----------------------------------------------------------------------------
 
+import { bindableArray, bindableAssoc } from "/assets/js/modules/bindable.mjs";
+import "/assets/js/modules/JayphaColumn.mjs";
+
+function bindableList(initVal)
+{
+  let a = new Proxy({
+    _array: bindableArray(),
+  },
+  {
+    get: function(target, prop)
+    {
+      const val = target._array[prop];
+      if (typeof val == "function") {
+        if (["push", "unshift"].includes(prop))
+          return function (el) {
+            return target._array[prop](bindableAssoc(el));
+          }
+        return val.bind(target._array);
+      }
+      return val;
+    }
+  });
+
+  if (typeof(initVal) !== "undefined")
+  {
+    for (let i=0; i<initVal.length; ++i)
+      a.push(initVal[i]);
+  }
+  return a;
+}
+
 class JayphaList extends HTMLElement
 {
 
@@ -59,21 +90,25 @@ class JayphaList extends HTMLElement
   constructor()
   {
     super(); // always call super() first in the ctor.
-  }
 
-  //-------------------------------------------------------
-  
-  connectedCallback()
-  {
     // Create the table
     document.addEventListener("DOMContentLoaded", () =>
     {
       let fn = () => this.refresh();
 
-      this.dataElement = this.querySelector("jaypha-data");
-      this.dataElement.data.addEventListener("add", fn);
-      this.dataElement.data.addEventListener("remove", fn);
-      this.dataElement.data.addEventListener("rearrange", fn);
+      let a = [];
+      let dataElement = this.querySelector("script[type='application/json']");
+      if (dataElement)
+      {
+        let newData = JSON.parse(dataElement.innerText);
+        this.data = bindableList(newData);
+      }
+      else
+        this.data = bindableList();
+
+      this.data.addEventListener("add", fn);
+      this.data.addEventListener("remove", fn);
+      this.data.addEventListener("rearrange", fn);
 
       this.tableElement = this.querySelector("table");
       if (!this.tableElement)
@@ -83,6 +118,12 @@ class JayphaList extends HTMLElement
       }
       this.refresh();
     });
+  }
+  
+  //-------------------------------------------------------
+  
+  connectedCallback()
+  {
   }
 
   //-------------------------------------------------------
@@ -127,26 +168,10 @@ class JayphaList extends HTMLElement
     let sortColumn = this.sortby;
     if (sortColumn != null)
     {
-      this.dataElement.sort(
+      this.data.sort(
         this.columnDefs[sortColumn.column]
           .getSortFn(sortColumn.dir == "down")
       );
-
-/*      
-      let sortAs = this.columnDefs[col].sortAs;
-      switch(sortAs)
-      {
-        case "string":
-          this.fn = (a,b) => a[col].localeCompare(b[col]);
-          break;
-        case "number":
-          this.fn = (a,b) => a[col] - b[col];
-          break;
-        default: // sortAs describes a function
-          this.fn = new Function('a','b', sortAs);
-      }
-      this.dataElement.sort(this.fn, sortColumn.dir == "down");
-*/
     }
   }
 
@@ -212,9 +237,9 @@ class JayphaList extends HTMLElement
   createBody()
   {
     let tbody = document.createElement("tbody");
-    let l = this.dataElement.data.length;
+    let l = this.data.length;
     for (let i=0; i<l; ++i)
-      tbody.appendChild(this.createRow(this.dataElement.data[i]));
+      tbody.appendChild(this.createRow(this.data[i]));
     return tbody;
   }
 
@@ -230,7 +255,13 @@ class JayphaList extends HTMLElement
     {
       let td = document.createElement("td");
 
-      columnDefs[this.columnOrder[i]].addCellContent(row, td);
+      let stuff = columnDefs[this.columnOrder[i]].getCellContent(row);
+
+      if (typeof(stuff) == "object")
+        td.appendChild(stuff);
+      else
+        td.innerHTML = stuff;
+
       tr.appendChild(td);
     }
       

@@ -73,32 +73,16 @@ class JayphaColumn extends HTMLElement
       this.fn = new Function('row',this.getAttribute("format"));
       return this.fn(row);
     }
+    else if (this.hasAttribute("link"))
+    {
+      let fn = new Function('row',"return "+this.getAttribute("link"));
+      return "<a href="+fn(row)+">"+row[this.name]+"</a>";
+    }
     else
       return row[this.name];
   }
 
   //-----------------------------------------------
-
-  addCellContent(row, td)
-  {
-    let stuff;
-
-    if (this.hasAttribute("format"))
-    {
-      this.fn = new Function('row',this.getAttribute("format"));
-      stuff = this.fn(row);
-    }
-    else if (this.hasAttribute("link"))
-    {
-      let fn = new Function('row',"return "+this.getAttribute("link"));
-      stuff = "<a href="+fn(row)+">"+row[this.name]+"</a>";
-    }
-    else
-      stuff = row[this.name];
-
-    td.innerHTML = stuff;
-    return td;
-  }
 
   //-----------------------------------------------
 

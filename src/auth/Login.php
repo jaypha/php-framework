@@ -9,49 +9,54 @@ namespace Jaypha;
 
 class Login
 {
-  static function get() : ?Login
+  private $_user = null;
+  private $factory;
+
+  function __construct(UserFactory $f)
   {
+    $this->factory = $f;
     if (isset($_SESSION["login"]))
-      return new Login();
-    else
-      return null;
+      $this->_user = $f->get($_SESSION["login"]["id"]);
   }
 
-  static function loginWithPassword(string $username, string $password, ?string $totpToken = null, int $roles = ROLES_ALL) : ?Login
+  function isLoggedIn()
   {
-    global $rdb;
-    if (isset($_SESSION["login"]))
-      $_SESSION = [];
-    $person = Person::getFromUsername($username);
+    return ($this->_user != null);
+  }
+
+  function loginWithPassword(string $username, string $password, ?string $totpToken = null)
+  {
+    if ($this->isLoggedIn())
+      $this->logout();
+    $user = $this->factory->getFromUsername($username);
     if (
-      $person &&
-      $person->hasRole($roles) &&
-      $person->authenticate($password) &&
-      $person->testTotpToken($totpToken)
+      $user &&
+      $user->actionAuthorised("login") &&
+      $user->authenticate($password) &&
+      $user->testTotpToken($totpToken)
     )
-      return self::login($person);
+      return $this->login($user);
 
-    return null;
+    return false;
   }
 
-  static function loginWithToken(string $token)
+  function loginWithToken(string $token)
   {
-    $stuff = processToken($token, "PHS-login");
+    $stuff = processToken($token, \Config\TOKEN_AUD);
     if (isFailure($stuff))
       return $stuff;
-    $person = Person::get($stuff["sub"]);
-    enforce($person != null);
-    return self::login($person);
+    $user = $this->getuser($stuff["sub"]);
+    enforce($user != null);
+    return $this->login($user);
   }
 
-  static function login(Person $person)
+  function login(user $user)
   {
-    $login = new Login();
-    $login->id = $person->id;
-    $login->roles = $person->roles;
-    $login->lastAccess = time();
-    $login->expiry = \Config\LOGIN_TIMEOUT;
-    return $login;
+    $this->_user = $user;
+    $this->id = $user->id;
+    $this->lastAccess = time();
+    $this->expiry = \Config\LOGIN_TIMEOUT;
+    return true;
   }
 
   function touch()
@@ -67,27 +72,28 @@ class Login
   function logout()
   {
     $_SESSION = [];
+    $this->_user = null;
   }
 
   function authenticate($password)
   {
-    return $this->person->authenticate($password);
+    return $this->_user->authenticate($password);
   }
 
   function actionAuthorised(string $action, string $subjectId = null)
   {
-    return actionAuthorised(new Person($_SESSION["login"]), $action, $subjectId);
+    $this->_user->actionAuthorised($action, $subjectId);
   }
 
   function getLoginToken()
   {
-    return getToken($this->id, "PHS-login");
+    return getToken($this->id, \Config\TOKEN_AUD);
   }
 
   function __get($p)
   {
-    if ($p == "person")
-      return Person::get($_SESSION["login"]["id"]);
+    if ($p == "user")
+      return $this->_user;
     assert(isset($_SESSION["login"][$p]));
     return $_SESSION["login"][$p];
   }

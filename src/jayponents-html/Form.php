@@ -28,15 +28,14 @@ class Form extends Element
   function addFieldset($fieldset = null)
   {
     if ($fieldset == null) $fieldset = new Fieldset($this);
+    else $fieldset->form = $this;
     $this->fieldsets[] = $fieldset;
     return $fieldset;
   }
 
   function addFragment($fragment = null)
   {
-    if ($fragment == null) $fragment = new FormFragment($this);
-    $this->fieldsets[] = $fragment;
-    return $fragment;
+    return $this->addFieldset($fragment);
   }
 
   //-----------------------------------

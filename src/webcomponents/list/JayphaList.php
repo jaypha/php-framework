@@ -9,7 +9,7 @@ namespace Jaypha\Jayponents\Html;
 
 class JayphaList extends Element
 {
-  protected $data;
+  protected $data = null;
   protected $columns = [];
 
   function __construct()
@@ -27,7 +27,7 @@ class JayphaList extends Element
 
   function setData($data)
   {
-    $this->data = new Element("jaypha-data");
+    $this->data = new Element("script");
     $this->data->attributes["type"] = "application/json";
     $this->data->add(json_encode($data));
   }
@@ -36,7 +36,8 @@ class JayphaList extends Element
   {
     foreach ($this->columns as $column)
       $column->display();
-    $this->data->display();
+    if ($this->data)
+      $this->data->display();
   }
 
   function __set($p, $v)

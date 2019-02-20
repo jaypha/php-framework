@@ -13,11 +13,11 @@ namespace Jaypha\Jayponents\Html;
 
 class Fieldset extends Element
 {
-  protected $form;
+  public $form;
   protected $fields = [];
   protected $buttonRows = [];
 
-  function __construct($form)
+  function __construct($form = null)
   {
     parent::__construct("fieldset");
     $this->form = $form;

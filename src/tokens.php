@@ -7,7 +7,7 @@
 // https://github.com/cdoco/php-jwt
 //----------------------------------------------------------------------------
 
-namespace PHS;
+namespace Jaypha;
 
 use \Firebase\JWT\JWT;
 

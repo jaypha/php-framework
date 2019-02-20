@@ -5,7 +5,7 @@
 //
 //----------------------------------------------------------------------------
 
-namespace PHS;
+namespace Jaypha;
 
 function arrayExtract(array &$array, array $keys, bool $cut = false)
 {
@@ -32,6 +32,24 @@ function matrixInvert($a)
     }
   }
   return $b;
+}
+
+function reduceBits(array $bitArray)
+{
+  return array_reduce($bitArray, function($c, $i) { return $c | (int) $i; }, 0);
+}
+
+function expandBits(int $bits)
+{
+  $x = 1;
+  $bitArray = [];
+  while ($x <= $bits)
+  {
+    if ($bits & $x)
+      $bitArray[] = $bits;
+    $x = $x << 1;
+  }
+  return $bitArray;
 }
 
 //----------------------------------------------------------------------------
