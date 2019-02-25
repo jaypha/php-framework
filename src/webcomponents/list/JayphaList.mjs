@@ -34,6 +34,9 @@ function bindableList(initVal)
   return a;
 }
 
+//----------------------------------------------------------------------------
+//
+
 class JayphaList extends HTMLElement
 {
 
@@ -91,8 +94,12 @@ class JayphaList extends HTMLElement
   {
     super(); // always call super() first in the ctor.
 
+    this.dataReady = new Promise((resolve,reject) => {
+      this.addEventListener("dataReady", () => resolve(this.data));
+    });
+
     // Create the table
-    document.addEventListener("DOMContentLoaded", () =>
+    docReady.then(() =>
     {
       let fn = () => this.refresh();
 
@@ -110,6 +117,8 @@ class JayphaList extends HTMLElement
       this.data.addEventListener("remove", fn);
       this.data.addEventListener("rearrange", fn);
 
+      // Data is ready. Fire the event.
+      this.dispatchEvent(new Event("dataReady"));
       this.tableElement = this.querySelector("table");
       if (!this.tableElement)
       {

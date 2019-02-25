@@ -14,27 +14,27 @@ function linkAsButton($label, $link)
 
 function linkButton($label, $link)
 {
-  return "<button class='clickable' onclick='document.location=\"$link\"'>$label</button>";
+  return "<button onclick='document.location=\"$link\"'>$label</button>";
 }
 
 function scriptButton($label, $script)
 {
-  return "<button class='clickable' type='button' onclick='$script'>$label</button>";
+  return "<button type='button' onclick='$script'>$label</button>";
 }
 
 function submitButton($label = "Submit")
 {
-  return "<button class='clickable' type='submit'>$label</button>";
+  return "<button type='submit'>$label</button>";
 }
 
 function resetButton($label = "Reset")
 {
-  return "<button class='clickable' type='reset'>$label</button>";
+  return "<button type='reset'>$label</button>";
 }
 
 function nopButton($label)
 {
-  return "<button class='clickable' type='button'>$label</button>";
+  return "<button type='button'>$label</button>";
 }
 
 //----------------------------------------------------------------------------

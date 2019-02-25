@@ -51,6 +51,32 @@ class Button  extends Element
         parent::__set($p, $v);
     }
   }
+
+  static function submitButton($label, $value)
+  {
+    $button = new Button($label);
+    $button->type="submit";
+    $button->value = $value;
+    return $button;
+  }
+
+  static function linkButton($label, $link)
+  {
+    $button = new Button($label);
+    $button->type="button";
+    $button->setRedirect($link);
+    return $button;
+  }
+
+  static function okButton($label = "OK")
+  {
+    return self::submitButton($label, "ok");
+  }
+
+  static function cancelButton($label = "Cancel")
+  {
+    return self::submitButton($label, "cancel");
+  }
 }
 
 //----------------------------------------------------------------------------

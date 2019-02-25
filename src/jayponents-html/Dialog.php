@@ -11,15 +11,15 @@ class Dialog extends Element
 {
   public $jsEventListeners = [];
 
-  function __construct($id)
+  function __construct($id = null)
   {
-    assert($id != null);
     parent::__construct("dialog");
     $this->id = $id;
   }
 
   function display()
   {
+    assert($this->id != null);
     parent::display();
     echo "<script>(function (dlg) {
       dialogPolyfill.registerDialog(dlg);";

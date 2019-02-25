@@ -1,9 +1,9 @@
 
 let phs_spinput_template = document.createElement("template");
 phs_spinput_template.innerHTML = `
-  <input type='text'  style='min-width:30px; flex-grow:1; flex-shrink:1'/>
-  <span class='phs-spinput-up' style='cursor: pointer;'>&#9650;</span>
-  <span class='phs-spinput-dn' style='cursor: pointer;'>&#9660;</span>
+  <input type='text'/>
+  <span class='phs-spinput-up'>&#9650;</span>
+  <span class='phs-spinput-dn'>&#9660;</span>
 `;
 
 class PhsSpinput extends HTMLElement
@@ -45,7 +45,14 @@ class PhsSpinput extends HTMLElement
     this.style.display = "inline-flex";
 
     this.appendChild(phs_spinput_template.content.cloneNode(true));
+
+    // min-width:30px; flex-grow:1; flex-shrink:1
+
     this.inputElement = this.querySelector("input");
+    this.inputElement.style.minWidth = '30px';
+    this.inputElement.style.flexGrow = 1;
+    this.inputElement.style.flexShrink = 1;
+    
 
     if (this.hasAttribute("name"))
       this.inputElement.name = this.getAttribute("name");
@@ -103,18 +110,13 @@ class PhsSpinput extends HTMLElement
       }
     });
 
-    this.querySelector(".phs-spinput-up").addEventListener
-    (
-      "click",
-      function() { self.moveStep(1); }
-    );
+    let up = this.querySelector(".phs-spinput-up");
+    up.style.cursor = "pointer";
+    up.addEventListener("click", () => this.moveStep(1));
 
-    this.querySelector(".phs-spinput-dn").addEventListener
-    (
-      "click",
-      function() { self.moveStep(-1); }
-    );
-
+    let dn = this.querySelector(".phs-spinput-dn");
+    dn.style.cursor = "pointer";
+    dn.addEventListener("click", () => this.moveStep(-1));
   }
 
   moveStep(count) { this.move(count*this.step); }
@@ -132,7 +134,7 @@ class PhsSpinput extends HTMLElement
   }
 
   stepUp() { this.moveStep(1); }
-  stepDown() { this.move(-1); }
+  stepDown() { this.moveStep(-1); }
 }
 
 

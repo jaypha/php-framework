@@ -7,10 +7,7 @@ namespace Jaypha\Middleware;
 
 class Timezone implements Middleware
 {
-  public function handle(
-    $input,
-    Service $service
-  )
+  public function handle($input, Service $service)
   {
     if (isset($_COOKIE["tzoffset"]))
     {

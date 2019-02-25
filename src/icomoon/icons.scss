@@ -1,0 +1,21 @@
+.icon {
+  width: 1em;
+  height: 1em;
+}
+
+.icon-pending {
+  stroke: lightgrey;
+  fill: none;
+}
+
+.icon-active { fill: lawngreen; }
+.icon-paused { fill: orange; }
+.icon-stopped { fill: crimson; }
+.icon-completed { fill: green; }
+.icon-cancelled { fill: darkred; }
+
+.icomoon-buttons
+{
+  height:32px;
+  button { height: 32px; border: none; background-color: inherit; font-size: 32px; }
+}

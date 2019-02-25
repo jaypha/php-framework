@@ -18,7 +18,7 @@ class FileLogger extends \Psr\Log\AbstractLogger
 
   public function log($level, $message, array $context = [])
   {
-    $now = new \DateTime('now', get_timezone());
+    $now = new \DateTime('now');
     if (!is_string($message)) $message = serialize($message);
     file_put_contents($this->logFile, $now->format(\DateTime::ISO8601).": [$level] $message\n", FILE_USE_INCLUDE_PATH|FILE_APPEND|LOCK_EX);
   }
