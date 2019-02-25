@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title></title>
+</head>
+
+<body>
+ <p><b id='here'></b> <button onclick='plusOne()'>+1</button></p>
+ <p><input name='num'></p>
+ <p>Num = <span id=num></span>.</p>
+ <script type='module'>
+  import * as bindable from './bindable.mjs';
+
+  //----------------------------------------------------------------------------
+
+  let bv = new bindable.BindableValue();
+  bv.addEventListener((v) => console.log(`bv set to ${v}`));
+  bv.addEventListener(bindable.setInnerHtml(document,'#here'));
+  bv.set("12");
+  bv.set(13);
+  bv.set(14);
+  bv.set(14);
+
+  window.plusOne = function() { bv.set(bv.get()+1); }
+
+  //----------------------------------------------------------------------------
+
+  let c = bindable.bindableArray();
+
+  c.addEventListener("add",() => console.log("adding to array"));
+  c.addEventListener("remove",() => console.log("removing from array"));
+
+  c.push(12,13,14,15);
+  c.pop();
+  c.splice(1,1,20);
+
+  //----------------------------------------------------------------------------
+
+  let ba = bindable.bindableAssoc();
+
+  ba.addEventListener('x', bindable.setInnerHtml(document,'#num'));
+  ba.addEventListener('x', function(v) { console.log(`X was set to ${v}`); });
+
+  document.addEventListener("DOMContentLoaded", function()
+  {
+    ba.bindWidget("x", document.querySelector("[name=num]"));
+    ba.x = 4;
+    ba["x"] = 3;
+    ba.y = 2;
+  });
+
+ </script>
+</body>
+
+</html>
+

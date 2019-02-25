@@ -3,6 +3,15 @@
 // Binding without the bloat
 //----------------------------------------------------------------------------
 
+// Binding works by allowing event handler to be attached to the value in
+// question. When the value changes, the event is fired.
+
+
+//----------------------------------------------------------------------------
+// BindableValue is an object encapsulating a single value. You need to use
+// get and set as simply sddigning will replace the object. Attach listeners
+// using addEventListener. Every time set is called, the event fires.
+
 export class BindableValue
 {
   get() { return this._value; }
@@ -38,6 +47,12 @@ export class BindableValue
 }
 
 //----------------------------------------------------------------------------
+// bindableObject() returns an object that listens for when a property is
+// added or removed. You need to use obj.remove(), not delete. To have the
+// individual properties bindable, use BindableValue. There are two types of
+// event: 'add' and 'remove'.
+
+// NOTE: This is a function that returns an object. Do not use 'new'.
 
 export function bindableObject(initVal)
 {
@@ -75,6 +90,9 @@ export function bindableObject(initVal)
 }
 
 //----------------------------------------------------------------------------
+// bindableArray() is similar to BindableObject, but for arrays. Adding,
+// removing and rearranging the elements will trigger the 'add', 'remove' and
+// 'rearrange' events respectively.
 
 export function bindableArray(initVal)
 {
@@ -132,6 +150,11 @@ export function bindableArray(initVal)
 }
 
 //----------------------------------------------------------------------------
+// bindableAssoc returns an object where all the properties are
+// BindableValues. It does not fire an event when you add and remove a
+// property, but you can use addEventListener to add an event to a particular
+// property. This object can be passed on to other parts of the code that are
+// not aware of the objects nature, (however you still need to use remove()).
 
 export function bindableAssoc(initVal)
 {
@@ -183,6 +206,9 @@ export function bindableAssoc(initVal)
   });
 }
 
+//----------------------------------------------------------------------------
+// A convenience function that updates the innards of an element in response
+// to a change.
 
 export function setInnerHtml(r,sel) {
   return function(v) {
