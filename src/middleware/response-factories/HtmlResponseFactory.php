@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------
-// Bootstrap for all GET requests expecting to return HTML
+// Response factory for all GET requests expecting to return HTML
 //----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------
@@ -16,10 +16,6 @@ class HtmlResponseFactory implements ResponseFactory
 {
   function __construct()
   {
-    $latte = new Engine();
-    $latte->setTempDirectory(\Config\APP_ROOT."/var/latte-cache");
-    $latte->setLoader(new FileLoader(\Config\APP_ROOT."/src"));
-    Component::setDefaultEngine(new LatteEngineAdaptor($latte));
   }
 
   function mimeType() { return "text/html"; }

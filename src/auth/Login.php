@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------------
-//
+// Handles login session
 //----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ class Login
     $stuff = processToken($token, \Config\TOKEN_AUD);
     if (isFailure($stuff))
       return $stuff;
-    $user = $this->getuser($stuff["sub"]);
+    $user = $this->factory->get($stuff["sub"]);
     enforce($user != null);
     return $this->login($user);
   }

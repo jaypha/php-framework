@@ -5,7 +5,9 @@
 
 namespace Jaypha\Middleware;
 
-use PHS\Validator;
+use Jaypha\Validator;
+
+//----------------------------------------------------------------------------
 
 class Validation implements Middleware
 {
@@ -28,6 +30,8 @@ class Validation implements Middleware
       return $service->responseFactory->reject(implode("\n",$result["failures"]),400);
   }          
 }
+
+//----------------------------------------------------------------------------
 
 class ValidateId extends Validation
 {

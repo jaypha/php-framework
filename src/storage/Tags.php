@@ -2,10 +2,8 @@
 //----------------------------------------------------------------------------
 // Used for a tag related functionality. Each tag group has its own database.
 //----------------------------------------------------------------------------
-// src/generic/tags.php
-//----------------------------------------------------------------------------
 
-namespace PHS;
+namespace Jaypha;
 
 class Tags
 {
@@ -129,6 +127,7 @@ class Tags
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2017 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2017 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //

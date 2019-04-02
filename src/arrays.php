@@ -1,11 +1,11 @@
 <?php
 //----------------------------------------------------------------------------
-//
-//----------------------------------------------------------------------------
-//
+// Extra array functions
 //----------------------------------------------------------------------------
 
 namespace Jaypha;
+
+//----------------------------------------------------------------------------
 
 function arrayExtract(array &$array, array $keys, bool $cut = false)
 {
@@ -18,6 +18,8 @@ function arrayExtract(array &$array, array $keys, bool $cut = false)
     }
   return $r;
 }
+
+//----------------------------------------------------------------------------
 
 function matrixInvert($a)
 {
@@ -34,10 +36,14 @@ function matrixInvert($a)
   return $b;
 }
 
+//----------------------------------------------------------------------------
+
 function reduceBits(array $bitArray)
 {
   return array_reduce($bitArray, function($c, $i) { return $c | (int) $i; }, 0);
 }
+
+//----------------------------------------------------------------------------
 
 function expandBits(int $bits)
 {
@@ -53,6 +59,7 @@ function expandBits(int $bits)
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2017 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2017 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //

@@ -13,6 +13,7 @@ interface UserFactory
 
 interface User
 {
+  function isRoot() : bool;
   function authenticate($password) : bool;
   function actionAuthorised($action, $subjectId = null) : bool;
   function testTotpToken($token) : bool;

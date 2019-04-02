@@ -9,7 +9,7 @@ namespace Jaypha\Jayponents\Html;
 
 class ButtonRow extends Element
 {
-  protected $buttons = [];
+  protected $buttons;
 
   function __construct()
   {
@@ -19,19 +19,6 @@ class ButtonRow extends Element
     $this->set("buttons", $this->buttons);
   }
 
-  function fromDefs(array $defs)
-  {
-    foreach ($defs as $def)
-    {
-      switch ($def["type"])
-      {
-        case "submit":
-          $this->addSubmit($def["label"]); 
-        default:
-      }
-    }
-  }
-
   function addButton($button = null)
   {
     if ($button == null) $button = new Button();
@@ -39,6 +26,7 @@ class ButtonRow extends Element
     return $button;
   }
 
+/*
   function addSubmitButton($label)
   {
     $button = new Button($label);
@@ -69,6 +57,7 @@ class ButtonRow extends Element
     $button->value = "cancel";
     return $button;
   }
+*/
 
   function __get($p)
   {
@@ -78,6 +67,24 @@ class ButtonRow extends Element
         return count($this->buttons);
     }
   }
+
+  //-------------------------------------------------------
+
+  static function fromDefs(array $defs)
+  {
+    $buttons = new ButtonRow();
+    foreach ($defs as $def)
+    {
+      switch ($def["type"])
+      {
+        case "submit":
+          $buttons->addButton(Button::submitButton($def["label"], $def["value"])); 
+        default:
+      }
+    }
+    return $buttons;
+  }
+
 }
 
 //----------------------------------------------------------------------------

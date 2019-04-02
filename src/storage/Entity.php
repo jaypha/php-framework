@@ -6,7 +6,7 @@
 // database accessed via Jaypha/MySQLiExt.
 //----------------------------------------------------------------------------
 
-namespace PHS;
+namespace Jaypha;
 
 abstract class Entity
 {
@@ -69,12 +69,6 @@ abstract class Entity
       $this->_save($this->_updates);
       $this->_updates = [];
     }
-  }
-
-  function flush() // deprecated
-  {
-    \warn("flush is deprecated");
-    $this->save();
   }
 
   //---------------------------------------------
@@ -154,6 +148,7 @@ abstract class Entity
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2017 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2018 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //

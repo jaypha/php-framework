@@ -3,7 +3,7 @@
 //
 //----------------------------------------------------------------------------
 
-namespace Jaypha\Streams;
+namespace Jaypha;
 
 use Psr\Http\Message\StreamInterface;
 

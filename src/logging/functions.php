@@ -5,6 +5,8 @@
 // Some functions for logging that do not involve classes.
 //----------------------------------------------------------------------------
 
+namespace Jaypha;
+
 function console($message)
 {
   file_put_contents("php://stdout", $message."\n");
@@ -26,6 +28,7 @@ function debugLog($message)
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2017 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2017 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //

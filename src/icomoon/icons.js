@@ -3,20 +3,17 @@
 // 
 //----------------------------------------------------------------------------
 
-function icoMoon(name)
+App.icomoonSvg = function(name, cssClass)
 {
-  switch (name)
-  {
-    case "pending":
-      return getSvg("icon-circle", "icon-pending");
-    default:
-      return getSvg(`icon-${name}`, `icon-${name}`);
-  }
+  return `<svg class="icon icon-${cssClass}"><use xlink:href="${App.assetDir}/icomoon/symbol-defs.svg#icon-${name}"></use></svg>`;
 }
 
-function getSvg(iconName, iconClass)
+App.icomoonButton = function(name, cssClass)
 {
-  return `<svg class="icon ${iconClass}"><use xlink:href="/assets/symbol-defs.svg#${iconName}"></use></svg>`;
+  let button = document.createElement("button");
+  button.innerHTML = App.icomoonSvg(name, cssClass);
+  button.classList.add("svg-button");
+  return button;
 }
 
 //----------------------------------------------------------------------------

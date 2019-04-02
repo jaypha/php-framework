@@ -1,15 +1,19 @@
 <?php
 //----------------------------------------------------------------------------
-//
-//----------------------------------------------------------------------------
-//
+// Functions useful with consoles
 //----------------------------------------------------------------------------
 
-namespace PHS;
+namespace Jaypha;
+
+//----------------------------------------------------------------------------
 
 function hideTerm() { system('stty -echo'); }
 
+//----------------------------------------------------------------------------
+
 function restoreTerm() { system('stty echo'); }
+
+//----------------------------------------------------------------------------
 
 function collectPassword($prompt = null)
 {
@@ -21,6 +25,8 @@ function collectPassword($prompt = null)
   echo PHP_EOL;
   return $password;
 }
+
+//----------------------------------------------------------------------------
 
 function collectInput(string $prompt = null, string $default = "")
 {
@@ -38,6 +44,7 @@ function collectInput(string $prompt = null, string $default = "")
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2006-18 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2018 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //

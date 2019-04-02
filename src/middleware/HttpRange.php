@@ -3,6 +3,9 @@
 //
 //----------------------------------------------------------------------------
 
+namespace Jaypha\Middleware;
+
+/* TODO: This is unfinished and untested */
 
 class HttpRange implements Middleware
 {
@@ -13,10 +16,10 @@ class HttpRange implements Middleware
   {
     if (array_key_exists("HTTP_RANGE",$_SERVER))
     {
-      $ranges = \PHS\parseHttpRangeHeader($_SERVER["HTTP_RANGE"]);
+      $ranges = \Jaypha\parseHttpRangeHeader($_SERVER["HTTP_RANGE"]);
       if ($ranges["unit"] != "bytes")
         return new \Exception("Non byte range units not supported", 416);
-      $vals = \PHS\interperetByteRanges($ranges["rangeSet"], $fileSize);
+      $vals = \Jaypha\interperetByteRanges($ranges["rangeSet"], $fileSize);
       if (count($vals) > 1)
         return new \Exception("Multipart ranges not supported", 416);
       $start = $vals[0][0];

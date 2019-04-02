@@ -1,0 +1,27 @@
+
+.inline-button
+{
+  border: 0;
+  border-radius: 3px;
+  background-color:  #F58220;
+  font-size: inherit;
+  color: white;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.1em;
+  margin: 0px;
+  padding: 0px;
+}
+
+.inline-button span
+{
+  font-size: smaller;
+}
+
+//----------------------------------------------------------------------------
+// Copyright (C) 2018 Jaypha.
+// License: BSL-1.0
+// Author: Jason den Dulk
+//

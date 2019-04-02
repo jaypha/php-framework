@@ -1,0 +1,66 @@
+<?php
+//----------------------------------------------------------------------------
+// Configuration Distribution file.
+// Copy this file to config.php.
+// Do not edit config.php.dist directly.
+//----------------------------------------------------------------------------
+
+namespace Config;
+
+// Root directory for data mutable by the application
+const VAR_ROOT = APP_ROOT."/var";
+
+// True for development installations
+const DEBUG = false;
+
+// True for demonstration installations
+const DEMO = true;
+
+//-----------------------------------------------
+// Login
+
+const LOGIN_TIMEOUT = 1200; // 20 minutes
+
+//-----------------------------------------------
+// Email
+
+const EMAIL_SUPRESS = true;
+const EMAIL_CATCHALL = false;
+const EMAIL_ERROR_NOTIFY = false;
+
+//-----------------------------------------------
+// MySQL
+
+const MYSQL_HOST = "localhost";
+const MYSQL_USER = <MYSQL_USER>;
+const MYSQL_PASSWORD = <MYSQL_PASSWORD>;
+const MYSQL_DATABASE = <MYSQL_DATABASE>;
+
+//-----------------------------------------------
+// Logging
+
+const LOG_ERROR = false;
+const LOG_DEBUG = false;
+const LOG_CRON = false;
+const LOG_DIR = VAR_ROOT."/logs/php";
+
+//-----------------------------------------------
+// Tokens
+
+const JWT_ISS = "";
+const JWT_TIMEOUT = "";
+const JWT_KEY = "";
+
+//-----------------------------------------------
+// Assets
+
+const ASSET_DIR = "/assets";
+const JS_DIR = ASSET_DIR."/js";
+const CSS_DIR = ASSET_DIR."/css";
+const IMG_DIR = ASSET_DIR."/images";
+
+//----------------------------------------------------------------------------
+// Copyright (C) 2018-9 Jaypha.
+// License: BSL-1.0
+// Author: Jason den Dulk
+//

@@ -3,6 +3,8 @@
 //
 //----------------------------------------------------------------------------
 
+namespace Jaypha;
+
 class MetadataStream extends WrappedStream
 {
   private $metaData = [];

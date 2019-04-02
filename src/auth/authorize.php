@@ -2,16 +2,15 @@
 //----------------------------------------------------------------------------
 // Authentication and authorisation functions
 //----------------------------------------------------------------------------
-//
+// Authentication = Acknowledge identity
+// Authorisation = Permission to do something.
 //----------------------------------------------------------------------------
 
 namespace Jaypha;
 
 //----------------------------------------------------------------------------
-// Authorisation - Permission to do something.
-//----------------------------------------------------------------------------
 
-function actionAuthorized(Person $actor, string $action, string $subjectId = null)
+function actionAuthorized($actionList, User $actor, string $action, string $subjectId = null)
 {
   // Superuser can do anything.
   if ($actor->isRoot())
@@ -20,12 +19,12 @@ function actionAuthorized(Person $actor, string $action, string $subjectId = nul
   $roles = $actor->roles;
 
   // No permission by default. Permission must be explicitly granted.
-  if (!array_key_exists($action, ACTION_LIST))
+  if (!array_key_exists($action, $actionList))
     return false;
 
-  foreach (ACTION_LIST[$action] as $r => $v)
+  foreach ($actionList[$action] as $r => $v)
   {
-    if (!includesRole($roles, $r))
+    if (!($roles & $r))
       continue;
     if ($v === true)
       return true;

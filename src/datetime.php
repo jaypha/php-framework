@@ -1,8 +1,8 @@
 <?php
 //----------------------------------------------------------------------------
-// Convenience function help setup time and date.
+// Convenience function for time and date.
 //----------------------------------------------------------------------------
-//
+// Use with the Timezone middleware
 //----------------------------------------------------------------------------
 
 namespace Jaypha;
@@ -119,6 +119,7 @@ function age($refDate, $ageDate = null)
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2017 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2017 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //

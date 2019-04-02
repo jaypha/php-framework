@@ -2,10 +2,8 @@
 //----------------------------------------------------------------------------
 // Functions to extract and validate various kinds of input
 //----------------------------------------------------------------------------
-//
-//----------------------------------------------------------------------------
 
-namespace PHS;
+namespace Jaypha;
 
 class Validator
 {
@@ -39,8 +37,8 @@ class Validator
           $f = "extract".ucfirst($varType);
           $r = self::$f($source, $name, $required, $rule);
       }
-      if (isFailure($r))
-        $failures[$name] = $r->reason;
+      if ($r instanceof Exception)
+        $failures[$name] = $r->getMessage();
       else
         $values[$name] = $r;
     }
@@ -65,7 +63,7 @@ class Validator
   static function extractId(array $source, string $name, bool $required = true)
   {
     if (!array_key_exists($name, $source) || $source[$name] == "")
-      return $required ? new Failure(self::FAIL_MISSING) : null;
+      return $required ? new \Exception(self::FAIL_MISSING) : null;
 
     $r = self::validateId($source[$name]);
     return ($r === true) ? $source[$name] : $r;
@@ -76,10 +74,10 @@ class Validator
     if (!is_int($value))
     {
       if (!ctype_digit($value))
-        return new Failure(self::FAIL_MISMATCH);
+        return new \Exception(self::FAIL_MISMATCH);
     }
     if ($value <= 0)
-      return new Failure(self::FAIL_MISMATCH);
+      return new \Exception(self::FAIL_MISMATCH);
     return true;
   }
 
@@ -93,7 +91,7 @@ class Validator
   )
   {
     if (!array_key_exists($name, $source) || $source[$name] == "")
-      return $required ? new Failure(self::FAIL_MISSING) : "";
+      return $required ? new \Exception(self::FAIL_MISSING) : "";
 
     $r = self::validateString($source[$name], $constraints);
     return ($r === true) ? $source[$name] : $r;
@@ -110,7 +108,7 @@ class Validator
     {
       assert(is_string($constraints["regex"]));
       if (!preg_match($constraints["regex"], $value))
-        return new Failure(self::FAIL_MISMATCH);
+        return new \Exception(self::FAIL_MISMATCH);
     }
     if (array_key_exists("minLength", $constraints))
     {
@@ -119,7 +117,7 @@ class Validator
         (is_int($constraints["minLength"]) && $constraints["minLength"] > 0)
       );
       if (strlen($value) < $constraints["minLength"])
-        return new Failure(self::FAIL_TOO_SHORT);
+        return new \Exception(self::FAIL_TOO_SHORT);
     }
     if (array_key_exists("maxLength", $constraints))
     {
@@ -128,7 +126,7 @@ class Validator
         (is_int($constraints["maxLength"]) && $constraints["maxLength"] > 0)
       );
       if (strlen($value) > $constraints["maxLength"])
-        return new Failure(self::FAIL_TOO_LONG);
+        return new \Exception(self::FAIL_TOO_LONG);
     }
     return true;
   }
@@ -155,7 +153,7 @@ class Validator
   )
   {
     if (!array_key_exists($name, $source) || $source[$name] == "")
-      return $required ? new Failure(self::FAIL_MISSING) : null;
+      return $required ? new \Exception(self::FAIL_MISSING) : null;
 
     $r = self::validateInteger($source[$name], $constraints);
     return ($r === true) ? $source[$name] : $r;
@@ -169,19 +167,19 @@ class Validator
   )
   {
     if (!preg_match(self::REGEX_INTEGER, $value))
-      return new Failure(self::FAIL_MISMATCH);
+      return new \Exception(self::FAIL_MISMATCH);
 
     if (array_key_exists("max", $constraints))
     {
       assert(is_int($constraints["max"]) || self::validateInteger($constraints["max"]));
       if ($value > $constraints["max"])
-        return new Failure(self::FAIL_TOO_HIGH);
+        return new \Exception(self::FAIL_TOO_HIGH);
     }
     if (array_key_exists("min", $constraints))
     {
       assert(is_int($constraints["min"]) || self::validateInteger($constraints["min"]));
       if ($value < $constraints["min"])
-        return new Failure(self::FAIL_TOO_HIGH);
+        return new \Exception(self::FAIL_TOO_HIGH);
     }
     return true;
   }
@@ -196,7 +194,7 @@ class Validator
   )
   {
     if (!array_key_exists($name, $source) || $source[$name] == "")
-      return $required ? new Failure(self::FAIL_MISSING) : "";
+      return $required ? new \Exception(self::FAIL_MISSING) : "";
 
     $r = self::validateNumber($source[$name], $constraints);
     return ($r === true) ? $source[$name] : $r;
@@ -210,19 +208,19 @@ class Validator
   )
   {
     if (!preg_match(self::REGEX_NUMBER, $value))
-      return new Failure(self::FAIL_MISMATCH);
+      return new \Exception(self::FAIL_MISMATCH);
 
     if (array_key_exists("max", $constraints))
     {
       assert(is_numeric($constraints["max"]));
       if ($value > $constraints["max"])
-        return new Failure(self::FAIL_TOO_HIGH);
+        return new \Exception(self::FAIL_TOO_HIGH);
     }
     if (array_key_exists("min", $constraints))
     {
       assert(is_numeric($constraints["min"]));
       if ($value > $constraints["min"])
-        return new Failure(self::FAIL_TOO_LOW);
+        return new \Exception(self::FAIL_TOO_LOW);
     }
     return $true;
   }
@@ -243,7 +241,7 @@ class Validator
     if (!array_key_exists($name, $source) || $source[$name] == "")
     {
       if ($constraints["minCount"] != 0)
-        return new Failure(self::FAIL_MISSING);
+        return new \Exception(self::FAIL_MISSING);
       if ($constraints["maxCount"] >1)
         return [];
       else
@@ -268,14 +266,14 @@ class Validator
     if (!is_array($value)) $value = [ $value ];
 
     if (count($value) < $constraints["minCount"])
-      return new Failure(FAIL_TOO_SHORT);
+      return new \Exception(FAIL_TOO_SHORT);
     if (count($value) > $constraints["maxCount"])
-      return new Failure(FAIL_TOO_LONG);
+      return new \Exception(FAIL_TOO_LONG);
 
     if (array_key_exists("options", $constraints))
       foreach ($value as $v)
         if (!in_array($v, $constraints["options"]))
-          return new Failure(FAIL_MISMATCH);
+          return new \Exception(FAIL_MISMATCH);
 
     return true;
   }
@@ -290,7 +288,7 @@ class Validator
   )
   {
     if (!array_key_exists($name, $source) || $source[$name] == "")
-      return $required ? new Failure(self::FAIL_MISSING) : "";
+      return $required ? new \Exception(self::FAIL_MISSING) : "";
 
     $r = self::validateDate($source[$name], $constraints);
     return ($r === true) ? $source[$name] : $r;
@@ -304,7 +302,7 @@ class Validator
   )
   {
     if (!preg_match(self::REGEX_ISO_DATE, $value))
-      return new Failure(self::FAIL_MISMATCH);
+      return new \Exception(self::FAIL_MISMATCH);
 
     return true;
   }
@@ -312,7 +310,7 @@ class Validator
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2006-18 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2018 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //
-

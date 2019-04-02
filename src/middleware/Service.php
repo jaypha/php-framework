@@ -228,6 +228,7 @@ function phpError($errno, $errstr, $errfile, $errline)
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2006-18 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2018 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //

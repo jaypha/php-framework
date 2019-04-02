@@ -11,32 +11,21 @@ use Jaypha\Jayponents\Html\Element;
 
 class IcomoonIcon extends Element
 {
-  const SYMBOL_FILE = "/assets/symbol-defs.svg";
+  const SYMBOL_FILE = ASSET_DIR."/icomoon/symbol-defs.svg";
 
-  public $iconName;
+  public $name;
 
-  function __construct($iconName, $iconClass)
+  function __construct($name, $class)
   {
     parent::__construct("svg");
     $this->cssClasses[] = "icon";
-    $this->cssClasses[] = $iconClass;
-    $this->iconName = $iconName;
+    $this->cssClasses[] = "icon-$class";
+    $this->iconName = $name;
   }
 
   function displayInner()
   {
-    echo "<use xlink:href='".self::SYMBOL_FILE."#$this->iconName'></use>";
-  }
-
-  static function icon($name)
-  {
-    switch ($name)
-    {
-      case "pending":
-        return new IcomoonIcon("icon-circle", "icon-pending");
-      default:
-        return new IcomoonIcon("icon-$name", "icon-$name");
-    }
+    echo "<use xlink:href='".self::SYMBOL_FILE."#icon-$this->name'></use>";
   }
 }
 

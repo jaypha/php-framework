@@ -110,6 +110,7 @@ class DevLogger implements \Psr\Log\LoggerInterface
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2017 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2017 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //

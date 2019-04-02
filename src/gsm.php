@@ -1,11 +1,9 @@
 <?php
 //----------------------------------------------------------------------------
-// Function for GSM, using with SMS
-//----------------------------------------------------------------------------
-//
+// Functions for GSM, for use with SMS
 //----------------------------------------------------------------------------
 
-namespace PHS;
+namespace Jaypha;
 
 function gsm_strlen($content)
 {
@@ -19,6 +17,7 @@ function gsm_strlen($content)
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2017 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2017 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //

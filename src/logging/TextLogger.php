@@ -5,8 +5,7 @@
 //
 //----------------------------------------------------------------------------
 
-
-namespace PHS;
+namespace Jaypha;
 
 class TextLogger extends \Psr\Log\AbstractLogger
 {
@@ -26,6 +25,7 @@ class TextLogger extends \Psr\Log\AbstractLogger
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2006-18 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2018 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //

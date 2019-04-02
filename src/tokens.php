@@ -1,8 +1,7 @@
 <?php
 //----------------------------------------------------------------------------
-//
+// Java Web Tokens
 //----------------------------------------------------------------------------
-//
 // Note: There is a C base PHP extension that does JWT, 
 // https://github.com/cdoco/php-jwt
 //----------------------------------------------------------------------------
@@ -10,6 +9,7 @@
 namespace Jaypha;
 
 use \Firebase\JWT\JWT;
+use \Firebase\JWT\ExpiredException;
 
 function getToken($sub, $aud, $timeout = null)
 {
@@ -27,28 +27,33 @@ function getToken($sub, $aud, $timeout = null)
 function refreshToken(array $currentPayload = [])
 {
   $currentPayload["iat"] = time();
-  $currentPayload["exp"] = strtotime("+".\Config\JWT::RefreshTimeout);
+  $currentPayload["exp"] = strtotime("+".\Config\JWT_TIMEOUT);
 
   return JWT::encode($currentPayload, \Config\JWT_KEY);
 }
 
 function processToken($token, $aud)
 {
-  $payload = (array) JWT::decode($token, \Config\JWT_KEY, ["HS256"]);
+  try {
+    $payload = (array) JWT::decode($token, \Config\JWT_KEY, ["HS256"]);
+  } catch (ExpiredException $e) {
+    return $e;
+  }
 
   if ($payload["iss"] != \Config\JWT_ISS)
-    return new Failure("Bad Issuer");
+    return new \Exception("Bad Issuer");
 
   if ($payload["aud"] != $aud)
-    return new Failure("Bad Audience");
+    return new \Exception("Bad Audience");
 
   if ($payload["exp"] < time())
-    return new Failure("Expired");
+    return new \Exception("Expired");
 
   return $payload;    
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2006-18 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2018 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //

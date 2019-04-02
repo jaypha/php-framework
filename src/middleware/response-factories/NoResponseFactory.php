@@ -1,8 +1,6 @@
 <?php
 //----------------------------------------------------------------------------
-// Bootstrap for requests expecting no return content.
-//----------------------------------------------------------------------------
-//
+// Response factory for requests expecting no return content.
 //----------------------------------------------------------------------------
 
 namespace Jaypha\Middleware;

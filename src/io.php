@@ -1,11 +1,9 @@
 <?php
 //----------------------------------------------------------------------------
-// Extra function for I/O
-//----------------------------------------------------------------------------
-//
+// Extra functions for I/O
 //----------------------------------------------------------------------------
 
-namespace PHS;
+namespace Jaypha;
 
 const RFP_BUFFER_SIZE = 1024*64;
 
@@ -36,7 +34,7 @@ function readfilePartial($filename, $offset, $limit)
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2006-18 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2017 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //
-

@@ -3,6 +3,8 @@
 //
 //----------------------------------------------------------------------------
 
+namespace Jaypha;
+
 use Psr\Http\Message\StreamInterface;
 
 abstract class WrappedStream  implements StreamInterface

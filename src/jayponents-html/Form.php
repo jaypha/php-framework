@@ -85,6 +85,7 @@ class Form extends Element
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2017 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2017-9 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //
