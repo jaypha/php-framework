@@ -3,9 +3,9 @@
 // 
 //----------------------------------------------------------------------------
 
-App.quickSubmit(form) = function(form)
+App.quickSubmit = function(form)
 {
-  stdFetch
+  App.quickFetch
   (
     form.getAttribute("action"),
     "post",
@@ -29,7 +29,6 @@ App.quickFetch = function(url,method = 'get', data = null,successFn = null,failu
   .then((response) =>
   {
     if (response.ok) return response.json();
-    console.log(response);
     throw new Error("Request failed: "+response.statusText);
   })
   .then(function(data)
@@ -49,7 +48,7 @@ App.quickFetch = function(url,method = 'get', data = null,successFn = null,failu
   .catch(function(error)
   {
     console.log(error);
-    alert(error.message);
+    App.alert(error.message);
   });
 }
 

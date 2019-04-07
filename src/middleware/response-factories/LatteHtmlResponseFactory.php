@@ -12,11 +12,11 @@ use Latte\Loaders\FileLoader;
 use Jaypha\Jayponents\Component;
 use Jaypha\Jayponents\Latte\LatteEngineAdaptor;
 
-class LatteHtmlResponseFactory implements HtmlResponseFactory
+class LatteHtmlResponseFactory extends HtmlResponseFactory
 {
   function __construct()
   {
-    parent::__contruct();
+    parent::__construct();
     $latte = new Engine();
     $latte->setTempDirectory(\Config\VAR_ROOT."/latte-cache");
     $latte->setLoader(new FileLoader(\Config\APP_ROOT."/src"));

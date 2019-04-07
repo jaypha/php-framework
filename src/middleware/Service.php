@@ -61,6 +61,7 @@ class Service
 
   public function next($input)
   {
+    assert(array_key_exists($this->stackIdx,$this->stack));
     $current = $this->stack[$this->stackIdx++];
     if (is_callable($current))
       return $current($input, $this);
@@ -68,19 +69,21 @@ class Service
       return $current->handle($input, $this);
   }
 
-  static function quitGraceful($code = 500)
+  function reject($message, $code = 400)
+  {
+    if ($this->responseFactory)
+      return $this->responseFactory->reject($message, $code);
+    else
+      return "Rejected: $message";
+  }
+
+  static function gracefulExit($code = 500)
   {
     http_response_code($code);
     if (self::$service->responseFactory)
       self::$service->responseFactory->gracefulExit($code);
     //if (self::$service && is_callable(self::$service->gracefulExit))
     //  (self::$service->gracefulExit)($message, $code);
-    exit;
-  }
-
-  static function quit($code = 400)
-  {
-    http_response_code($code);
     exit;
   }
 }
@@ -150,7 +153,7 @@ function getDebuggingInfo(Throwable $exception)
   {
     if (Service::$service)
       Service::$service->logger->critical($message);
-    Service::quitGraceful();
+    Service::gracefulExit();
   }
 
   //--------------------------------------------------------------------------
@@ -164,34 +167,31 @@ function getDebuggingInfo(Throwable $exception)
 //----------------------------------------------------------------------------
 // Handler for PHP errors
 
-function phpError($errno, $errstr, $errfile, $errline)
-{
-  if (!(error_reporting() & $errno)) return true;
+  function phpError($errno, $errstr, $errfile, $errline)
+  {
+    if (!(error_reporting() & $errno)) return true;
 
-	$labels = [
-		//E_ERROR           => 'E_ERROR',
-		E_WARNING         => 'E_WARNING',
-		//E_PARSE           => 'E_PARSE',
-		E_NOTICE          => 'E_NOTICE',
-		//E_CORE_ERROR      => 'E_CORE_ERROR',
-		//E_CORE_WARNING    => 'E_CORE_WARNING',
-		//E_COMPILE_ERROR   => 'E_COMPILE_ERROR',
-		//E_COMPILE_WARNING => 'E_COMPILE_WARNING',
-		E_USER_ERROR      => 'E_USER_ERROR',
-		E_USER_WARNING    => 'E_USER_WARNING',
-		E_USER_NOTICE     => 'E_USER_NOTICE',
-		E_STRICT          => 'E_STRICT',
-		E_RECOVERABLE_ERROR  => 'E_RECOVERABLE_ERROR',
-		//E_DEPRECATED      => "E_DEPRECATED",
-		E_USER_DEPRECATED => "E_USER_DEPRECATED"
-	];
+	  $labels = [
+		  //E_ERROR           => 'E_ERROR',
+		  E_WARNING         => 'E_WARNING',
+		  //E_PARSE           => 'E_PARSE',
+		  E_NOTICE          => 'E_NOTICE',
+		  //E_CORE_ERROR      => 'E_CORE_ERROR',
+		  //E_CORE_WARNING    => 'E_CORE_WARNING',
+		  //E_COMPILE_ERROR   => 'E_COMPILE_ERROR',
+		  //E_COMPILE_WARNING => 'E_COMPILE_WARNING',
+		  E_USER_ERROR      => 'E_USER_ERROR',
+		  E_USER_WARNING    => 'E_USER_WARNING',
+		  E_USER_NOTICE     => 'E_USER_NOTICE',
+		  E_STRICT          => 'E_STRICT',
+		  E_RECOVERABLE_ERROR  => 'E_RECOVERABLE_ERROR',
+		  //E_DEPRECATED      => "E_DEPRECATED",
+		  E_USER_DEPRECATED => "E_USER_DEPRECATED"
+	  ];
 
-  warn("Error {$labels[$errno]} - $errstr ($errfile, $errline)");
-	return true;
-}
-
-//-----------------------------------------------------------------------------
-
+    warn("Error {$labels[$errno]} - $errstr ($errfile, $errline)");
+	  return true;
+  }
 
 //-----------------------------------------------------------------------------
 // Checking functions.
@@ -223,6 +223,24 @@ function phpError($errno, $errstr, $errfile, $errline)
   {
     if (!((bool)$condition))
       error($message);
+  }
+
+  //---------------------------------------------------------------------------
+  // Easy redirect
+
+  function redirect($url)
+  {
+    header("Location: $url");
+    exit();
+  }
+
+  //---------------------------------------------------------------------------
+  // instant quit with and optional code.
+
+  function quit($code = 400)
+  {
+    http_response_code($code);
+    exit;
   }
 
 }

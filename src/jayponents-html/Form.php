@@ -33,14 +33,6 @@ class Form extends Element
     return $fieldset;
   }
 
-  function addFragment($fragment = null)
-  {
-    return $this->addFieldset($fragment);
-  }
-
-  //-----------------------------------
-
-
   //-----------------------------------
 
   protected function displayInner()

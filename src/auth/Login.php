@@ -42,8 +42,8 @@ class Login
 
   function loginWithToken(string $token)
   {
-    $stuff = processToken($token, \Config\TOKEN_AUD);
-    if (isFailure($stuff))
+    $stuff = processToken($token, \Config\TOKEN_AUD_LOGIN);
+    if ($stuff instanceof \Exception)
       return $stuff;
     $user = $this->factory->get($stuff["sub"]);
     enforce($user != null);
@@ -80,14 +80,14 @@ class Login
     return $this->_user->authenticate($password);
   }
 
-  function actionAuthorised(string $action, string $subjectId = null)
+  function actionAuthorised($action, $subjectId = null)
   {
-    $this->_user->actionAuthorised($action, $subjectId);
+    return $this->_user->actionAuthorised($action, $subjectId);
   }
 
   function getLoginToken()
   {
-    return getToken($this->id, \Config\TOKEN_AUD);
+    return getToken($this->id, \Config\TOKEN_AUD_LOGIN);
   }
 
   function __get($p)

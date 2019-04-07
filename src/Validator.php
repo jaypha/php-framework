@@ -20,13 +20,14 @@ class Validator
     $values = []; $failures = [];
     foreach ($this->rules as $name => $rule)
     {
-      $varType = $rule["type"];
+      $varType = $rule["type"] ?? "string";
       $required = (!array_key_exists("required",$rule) || $rule["required"]);
       switch ($varType)
       {
         case "id":
           $r = self::extractId($source, $name, $required);
           break;
+        case "enum":
         case "enumerated":
           $r = self::extractEnumerated($source, $name, $rule);
           break;
@@ -39,6 +40,10 @@ class Validator
       }
       if ($r instanceof Exception)
         $failures[$name] = $r->getMessage();
+      else if ( isset($rule["mustMatch"]) &&
+                isset($values[$rule["mustMatch"]]) &&
+                $r != $values[$rule["mustMatch"]])
+        $failures[$name] = self::FAIL_MISMATCH;
       else
         $values[$name] = $r;
     }
@@ -50,6 +55,7 @@ class Validator
   const FAIL_MISSING = "missing";
   const FAIL_TOO_SHORT = "too-short";
   const FAIL_TOO_LONG = "too-long";
+  const FAIL_INVALID = "invalid";
   const FAIL_MISMATCH = "mismatch";
   const FAIL_TOO_LOW = "too-low";
   const FAIL_TOO_HIGH = "too-high";
@@ -74,10 +80,10 @@ class Validator
     if (!is_int($value))
     {
       if (!ctype_digit($value))
-        return new \Exception(self::FAIL_MISMATCH);
+        return new \Exception(self::FAIL_INVALID);
     }
     if ($value <= 0)
-      return new \Exception(self::FAIL_MISMATCH);
+      return new \Exception(self::FAIL_INVALID);
     return true;
   }
 
@@ -108,7 +114,7 @@ class Validator
     {
       assert(is_string($constraints["regex"]));
       if (!preg_match($constraints["regex"], $value))
-        return new \Exception(self::FAIL_MISMATCH);
+        return new \Exception(self::FAIL_INVALID);
     }
     if (array_key_exists("minLength", $constraints))
     {
@@ -167,7 +173,7 @@ class Validator
   )
   {
     if (!preg_match(self::REGEX_INTEGER, $value))
-      return new \Exception(self::FAIL_MISMATCH);
+      return new \Exception(self::FAIL_INVALID);
 
     if (array_key_exists("max", $constraints))
     {
@@ -208,7 +214,7 @@ class Validator
   )
   {
     if (!preg_match(self::REGEX_NUMBER, $value))
-      return new \Exception(self::FAIL_MISMATCH);
+      return new \Exception(self::FAIL_INVALID);
 
     if (array_key_exists("max", $constraints))
     {
@@ -222,7 +228,7 @@ class Validator
       if ($value > $constraints["min"])
         return new \Exception(self::FAIL_TOO_LOW);
     }
-    return $true;
+    return true;
   }
 
   //-----------------------------------------------
@@ -266,14 +272,14 @@ class Validator
     if (!is_array($value)) $value = [ $value ];
 
     if (count($value) < $constraints["minCount"])
-      return new \Exception(FAIL_TOO_SHORT);
+      return new \Exception(self::FAIL_TOO_SHORT);
     if (count($value) > $constraints["maxCount"])
-      return new \Exception(FAIL_TOO_LONG);
+      return new \Exception(self::FAIL_TOO_LONG);
 
     if (array_key_exists("options", $constraints))
       foreach ($value as $v)
         if (!in_array($v, $constraints["options"]))
-          return new \Exception(FAIL_MISMATCH);
+          return new \Exception(self::FAIL_INVALID);
 
     return true;
   }
@@ -302,7 +308,7 @@ class Validator
   )
   {
     if (!preg_match(self::REGEX_ISO_DATE, $value))
-      return new \Exception(self::FAIL_MISMATCH);
+      return new \Exception(self::FAIL_INVALID);
 
     return true;
   }

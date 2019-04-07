@@ -11,7 +11,7 @@ use Jaypha\Jayponents\Html\Element;
 
 class IcomoonIcon extends Element
 {
-  const SYMBOL_FILE = ASSET_DIR."/icomoon/symbol-defs.svg";
+  const SYMBOL_FILE = \Config\ASSET_DIR."/icomoon/symbol-defs.svg";
 
   public $name;
 
@@ -20,7 +20,7 @@ class IcomoonIcon extends Element
     parent::__construct("svg");
     $this->cssClasses[] = "icon";
     $this->cssClasses[] = "icon-$class";
-    $this->iconName = $name;
+    $this->name = $name;
   }
 
   function displayInner()

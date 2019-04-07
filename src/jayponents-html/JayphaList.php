@@ -17,10 +17,14 @@ class JayphaList extends Element
     parent::__construct("jaypha-list");
   }
 
-  function addColumn($name)
+  function addColumn($name, $label = null, $attributes = [])
   {
     $column = new Element("jaypha-column");
     $column->attributes["name"] = $name;
+    if ($label)
+      $column->add($label);
+    foreach ($attributes as $i => $v)
+      $column->attributes[$i] = $v;
     $this->columns[] = $column;
     return $column;
   }
@@ -34,8 +38,10 @@ class JayphaList extends Element
 
   function displayInner()
   {
+    echo "<jaypha-colgroup>";
     foreach ($this->columns as $column)
       $column->display();
+    echo "</jaypha-colgroup>";
     if ($this->data)
       $this->data->display();
   }

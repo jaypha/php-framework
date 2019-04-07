@@ -32,7 +32,7 @@ class Button  extends Element
       case "type":
         return $this->attributes[$p] ?? null;
       default:
-        parent::__get($p);
+        return parent::__get($p);
     }
   }
 
@@ -52,7 +52,7 @@ class Button  extends Element
     }
   }
 
-  static function submitButton($label, $value)
+  static function submitButton($label, $value = "submit")
   {
     $button = new Button($label);
     $button->type="submit";

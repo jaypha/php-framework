@@ -17,7 +17,12 @@ Polyfills for modern browsers include
 
 Some polyfills are imported using NPM. Others are included directly.
 
-### Copyright
+## Notes
+
+Dialog Polyfill has a minor change in that the dialogPolyfill object is attached
+to window to enable insertion inside a module
+
+## Copyright
 
 All files not indicated otherwise, are copyright (C) Jaypha, and distributed
 under the Boost Software License V1.0 (http://www.boost.org/LICENSE_1_0.txt).

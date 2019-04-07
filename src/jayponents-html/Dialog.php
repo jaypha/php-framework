@@ -59,6 +59,27 @@ class Dialog extends Element
   }
 }
 
+function wrapFormInDialog(string $dlgId, Form $form)
+{
+  $c = new \Jaypha\Component();
+  $d = new Dialog("$dlgId");
+  $d->add($form);
+  $s = "
+    {
+      let x = document.querySelector('#$form->id button[value=cancel]');
+      if (x) {
+        x.addEventListener('click', function() 
+        {
+          document.getElementById('$dlgId').close();
+        });
+      }
+    }
+  ";
+  $c->add($d);
+  $c->add(javascript($s));
+  return $c;
+}
+
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha.
 // License: BSL-1.0

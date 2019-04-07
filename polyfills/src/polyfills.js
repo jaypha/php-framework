@@ -4,7 +4,7 @@
 // Includes any polyfill still needed for non-IE browsers
 //----------------------------------------------------------------------------
 
-import 'dialog-polyfill';
+import './dialog-polyfill/dialog-polyfill.js';
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha

@@ -35,7 +35,7 @@ class Fieldset extends Element
     {
       foreach ($this->fields as $field)
       {
-        echo "<div class='p basic-form-row'>";
+        echo "<div class='p two-column-form-row'>";
         echo "<span class='required'>",$field["widget"]->required?"*":"","</span>";
         echo "<span class='label'>{$field["label"]}</span>";
         $field["widget"]->display();
@@ -81,6 +81,13 @@ class Fieldset extends Element
     $widget = $this->addTextWidget($name, $label);
     $widget->type = "password";
     return $widget;
+  }
+
+  //-----------------------------------
+
+  function addTextAreaWidget($name, string $label = null)
+  {
+    return $this->addWidget(new TextAreaWidget($name), $label);
   }
 
   //-----------------------------------
