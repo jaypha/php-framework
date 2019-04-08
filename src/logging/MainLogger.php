@@ -71,7 +71,7 @@ class MainLogger implements \Psr\Log\LoggerInterface
   {
   	if (ini_get("log_errors") == "1")
   	{
-      $now = new \DateTime('now', get_timezone());
+      $now = new \DateTime('now', getTimezone());
       if (!is_string($message)) $message = serialize($message);
       error_log($now->format(\DateTime::ISO8601).": $message\n");
     }
@@ -81,7 +81,7 @@ class MainLogger implements \Psr\Log\LoggerInterface
   {
     if ($file)
     {
-      $now = new \DateTime('now', get_timezone());
+      $now = new \DateTime('now', getTimezone());
       if (!is_string($message)) $message = serialize($message);
       file_put_contents($file, $now->format(\DateTime::ISO8601).": $message\n", FILE_USE_INCLUDE_PATH|FILE_APPEND|LOCK_EX);
     }
