@@ -46,6 +46,15 @@ function csv_escape_field_slashes($value)
     return $value;
 }
 
+class CsvDocument
+{
+  public $filename;
+  public $data = [];
+  public $options = CSV_DOUBLEQUOTES;
+
+  function __toString() { return csv_encode($this->data, $this->options); }
+}
+
 //----------------------------------------------------------------------------
 // Copyright (C) 2018 Jaypha.
 // License: BSL-1.0

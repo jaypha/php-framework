@@ -67,6 +67,13 @@ class Fieldset extends Element
 
   //-----------------------------------
 
+  function addSelectWidget($name, string $label = null)
+  {
+    return $this->addWidget(new SelectWidget($name), $label);
+  }
+
+  //-----------------------------------
+
   function addCheckWidget($name, string $label = null)
   {
     $widget = $this->addWidget(new InputWidget($name), $label);

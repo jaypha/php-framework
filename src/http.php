@@ -3,7 +3,7 @@
 // HTTP related functions
 //----------------------------------------------------------------------------
 
-namespace Jaypha;
+namespace Jaypha {
 
 //----------------------------------------------------------------------------
 // https://tools.ietf.org/html/rfc7233
@@ -81,6 +81,28 @@ function interperetByteRanges($ranges, $size)
     $retVal[] = $v;
   }
   return $retVal;
+}
+
+}
+
+//----------------------------------------------------------------------------
+// Some HTTP response functions that shoudl be a part of PHP proper.
+
+namespace {
+
+function http_response_message($message)
+{
+  $code = http_response_code();
+  $version = $_SERVER["SERVER_PROTOCOL"];
+  header("$version $code $message");
+}
+
+function http_response($code,$message)
+{
+  $version = $_SERVER["SERVER_PROTOCOL"];
+  header("$version $code $message");
+}
+
 }
 
 //----------------------------------------------------------------------------

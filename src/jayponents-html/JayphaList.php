@@ -17,16 +17,30 @@ class JayphaList extends Element
     parent::__construct("jaypha-list");
   }
 
-  function addColumn($name, $label = null, $attributes = [])
+  function column($column)
   {
-    $column = new Element("jaypha-column");
-    $column->attributes["name"] = $name;
-    if ($label)
-      $column->add($label);
-    foreach ($attributes as $i => $v)
-      $column->attributes[$i] = $v;
     $this->columns[] = $column;
     return $column;
+  }
+
+  function addColumn($name, $label = null, $attributes = [])
+  {
+    return $this->column(new JayphaColumn("jaypha-column",$name, $label, $attributes));
+  }
+
+  function addTextColumn($name, $label = null, $attributes = [])
+  {
+    return $this->column(new JayphaColumn("jaypha-column",$name, $label, $attributes));
+  }
+
+  function addDateColumn($name, $label = null, $attributes = [])
+  {
+    return $this->column(new JayphaColumn("jaypha-datecolumn",$name, $label, $attributes));
+  }
+
+  function addEnumColumn($name, $label = null, $attributes = [])
+  {
+    return $this->column(new JayphaColumn("jaypha-enumcolumn",$name, $label, $attributes));
   }
 
   function setData($data)
@@ -55,6 +69,59 @@ class JayphaList extends Element
         break;
       default:
         parent::__set($p,$v);
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+
+class JayphaColumn extends Element
+{
+  public $label;
+
+  function __construct($tagName, $name, $label = null, $attributes = [])
+  {
+    parent::__construct($tagName);
+    $this->attributes["name"] = $name;
+    $this->label = $label;
+    if ($label)
+      $this->add($label);
+    foreach ($attributes as $i => $v)
+    {
+      if ($i == "options")
+        $v = json_encode($v);
+      $this->attributes[$i] = $v;
+    }
+  }
+
+  function display()
+  {
+    if ($this->label)
+    {
+      if ($this->sortable)
+      {
+        $label = "<label>$this->label".
+                 \Jaypha\Icomoon\IcomoonIcon::html("sort").
+                 \Jaypha\Icomoon\IcomoonIcon::html("sort-asc").
+                 \Jaypha\Icomoon\IcomoonIcon::html("sort-desc").
+                 "</label>";
+      }
+      else
+        $label = $this->label;
+      $this->add($label);
+    }
+    parent::display();
+  }
+
+  function __get($p)
+  {
+    switch ($p)
+    {
+      case "sortable":
+        return array_key_exists("sortable", $this->attributes);
+        break;
+      default:
+        parent::__get($p);
     }
   }
 }

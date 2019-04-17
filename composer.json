@@ -1,0 +1,27 @@
+{
+  "name": "php-framework",
+  "description": "PHP Framework",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Jason den Dulk",
+      "email": "jason@jaypha.com.au"
+    }
+  ],
+  "license": "proprietary",
+  "require-dev": {
+    "jaypha/mysqli-ext": "^0",
+    "jaypha/mysqli-fixdb": "^0",
+    "jaypha/array-table": "^0.1",
+    "nette/command-line": "^1.3",
+    "zbateson/mail-mime-parser": "^0.4.8",
+    "psr/log": "^1",
+    "firebase/php-jwt": "^5.0",
+    "lfkeitel/phptotp": "^1.0",
+    "werneckbh/qr-code": "^2.1",
+    "jaypha/jayponents-latte": "^0.1.1",
+    "jaypha/jayponents-html": "^0.2.0",
+    "psr/http-message": "^1.0",
+    "phpunit/phpunit": "^6"
+  }
+}

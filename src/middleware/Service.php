@@ -40,7 +40,7 @@ class Service
 
   function push($middleware)
   {
-    array_unshift($this->stack[], $middleware);
+    array_unshift($this->stack, $middleware);
     return $this;
   }
 
@@ -71,10 +71,9 @@ class Service
 
   function reject($message, $code = 400)
   {
+    http_response($code, $message);
     if ($this->responseFactory)
       return $this->responseFactory->reject($message, $code);
-    else
-      return "Rejected: $message";
   }
 
   static function gracefulExit($code = 500)

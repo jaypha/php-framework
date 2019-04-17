@@ -22,13 +22,11 @@ class HtmlResponseFactory implements ResponseFactory
 
   function gracefulExit($code)
   {
-    http_response_code($code);
     readfile("website/$code.html", true);
   }
 
   function reject($message, $code)
   {
-    http_response_code($code);
     readfile("website/$code.html", true);
   }
 }

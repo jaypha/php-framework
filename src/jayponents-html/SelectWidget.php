@@ -9,7 +9,7 @@ namespace Jaypha\Jayponents\Html;
 
 class SelectWidget extends Widget
 {
-  public $options;
+  public $options = [];
   public $useValues = true;
 
   function __construct($name, $form = null)

@@ -1,13 +1,16 @@
 <?php
 //----------------------------------------------------------------------------
-// JSON responses
+// CSV responses
 //----------------------------------------------------------------------------
 
 namespace Jaypha\Middleware;
+use Jaypha\Streams\StringInputStream;
 
-class CsvResponseFactory implements ResponseFactory
+class CsvOutput implements ResponseFactory, Middleware
 {
+  //function mimeType() { return "text/plain"; }
   function mimeType() { return "application/csv"; }
+
   function gracefulExit($code)
   {
     return null;
@@ -16,6 +19,27 @@ class CsvResponseFactory implements ResponseFactory
   function reject($message, $code)
   {
     return null;
+  }
+
+  public function handle($input, Service $service)
+  {
+    $service->setResponseFactory($this);
+    $output = $service->next($input);
+
+    if ($output instanceof \Jaypha\CsvDocument)
+    {
+      if ($output->filename)
+        header("Content-Disposition: attachment; filename=\"$output->filename\"");
+      header("Pragma: no-cache");
+      header("Expires: 0");
+
+      return new StringInputStream(\Jaypha\csv_encode($output->data));
+    }
+    else
+    {
+      assert(is_string($output) || $output instanceof InputStream);
+      return $output;
+    }
   }
 }
 

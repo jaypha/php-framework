@@ -55,6 +55,11 @@ function nowImmutable()
 
 function formatDate(\DateTimeInterface $dateTime = null, $format = \DateTime::ISO8601, $nullIndicator = "-")
 {
+  return formatDateTime($dateTime, $format, $nullIndicator);
+}
+
+function formatDateTime(\DateTimeInterface $dateTime = null, $format = \DateTime::ISO8601, $nullIndicator = "-")
+{
   if ($dateTime == null) return $nullIndicator;
   else return $dateTime->format($format);
 }
@@ -68,7 +73,7 @@ function dateStrValid(string $str)
   return false;
 }
 
-// Takes in a date/time in any format and converts it to a DateTime value.
+// Takes in a date/time in any format and ctoDateTimeonverts it to a DateTime value.
 
 function toDateTime($timeValue = null)
 {
@@ -91,7 +96,7 @@ function toDateTime($timeValue = null)
 
 // Convenience function to convert a date to MySQL format.
 
-function toMysqlDate($date)
+function toMysqlDate($date = null)
 {
   $val = toDateTime($date);
   return $val->format(DATE_MYSQL);

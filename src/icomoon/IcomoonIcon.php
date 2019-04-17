@@ -15,9 +15,10 @@ class IcomoonIcon extends Element
 
   public $name;
 
-  function __construct($name, $class)
+  function __construct($name, $class = null)
   {
     parent::__construct("svg");
+    if ($class == null) $class = $name;
     $this->cssClasses[] = "icon";
     $this->cssClasses[] = "icon-$class";
     $this->name = $name;
@@ -26,6 +27,12 @@ class IcomoonIcon extends Element
   function displayInner()
   {
     echo "<use xlink:href='".self::SYMBOL_FILE."#icon-$this->name'></use>";
+  }
+
+  static function html($name, $class = null)
+  {
+    $i = new IcomoonIcon($name,$class);
+    return $i->__toString();
   }
 }
 
