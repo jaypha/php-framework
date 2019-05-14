@@ -30,6 +30,7 @@ class Button  extends Element
         return $this->attributes[$p] ?? false;
       case "onclick":
       case "type":
+      case "value":
         return $this->attributes[$p] ?? null;
       default:
         return parent::__get($p);
@@ -63,7 +64,6 @@ class Button  extends Element
   static function linkButton($label, $link)
   {
     $button = new Button($label);
-    $button->type="button";
     $button->setRedirect($link);
     return $button;
   }

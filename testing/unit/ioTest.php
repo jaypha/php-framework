@@ -5,6 +5,8 @@
 //
 //----------------------------------------------------------------------------
 
+namespace Jaypha;
+
 use PHPUnit\Framework\TestCase;
 
 class IoTest extends TestCase
@@ -14,7 +16,7 @@ class IoTest extends TestCase
   function readfile($f, $s, $c)
   {
     ob_start();
-    PHS\readfilePartial($f,$s,$c);
+    readfilePartial($f,$s,$c);
     $x = ob_get_contents();
     ob_end_clean();
     return $x;

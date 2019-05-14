@@ -6,7 +6,7 @@
 //
 //----------------------------------------------------------------------------
 
-namespace PHS;
+namespace Jaypha;
 
 class DataIntegrityException extends \RuntimeException
 {

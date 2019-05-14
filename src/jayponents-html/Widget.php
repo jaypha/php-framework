@@ -39,7 +39,7 @@ class Widget extends Element
   {
     switch ($p) {
       case "name":
-        return $this->attributes[$p];
+        return $this->attributes[$p] ?? null;
       case "required":
       case "autofocus":
         return isset($this->attributes[$p]);

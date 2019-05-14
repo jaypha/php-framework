@@ -8,6 +8,8 @@ namespace Jaypha;
 const CSV_SLASHES = 1;
 const CSV_DOUBLEQUOTES = 2;
 
+//----------------------------------------------------------------------------
+
 function csv_encode($value, $options = CSV_DOUBLEQUOTES)
 {
   $output = [];
@@ -30,6 +32,8 @@ function csv_encode($value, $options = CSV_DOUBLEQUOTES)
   return implode("\n", $output);
 }
 
+//----------------------------------------------------------------------------
+
 function csv_escape_field_doublequotes($value)
 {
   if ((mb_strpos ($value, '"') !== False) || (mb_strpos ($value, ',') !== False) || (mb_strpos ($value, "\n") !== False) || (mb_strpos ($value, "\r") !== False))
@@ -37,6 +41,8 @@ function csv_escape_field_doublequotes($value)
   else
     return $value;
 }
+
+//----------------------------------------------------------------------------
 
 function csv_escape_field_slashes($value)
 {
@@ -46,14 +52,6 @@ function csv_escape_field_slashes($value)
     return $value;
 }
 
-class CsvDocument
-{
-  public $filename;
-  public $data = [];
-  public $options = CSV_DOUBLEQUOTES;
-
-  function __toString() { return csv_encode($this->data, $this->options); }
-}
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2018 Jaypha.

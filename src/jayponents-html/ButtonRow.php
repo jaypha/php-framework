@@ -21,43 +21,10 @@ class ButtonRow extends Element
 
   function addButton($button = null)
   {
-    if ($button == null) $button = new Button();
+    if ($button == null || is_string($button)) $button = new Button($button);
     $this->buttons[] = $button;
     return $button;
   }
-
-/*
-  function addSubmitButton($label)
-  {
-    $button = new Button($label);
-    $this->buttons[] = $button;
-    $button->type="submit";
-    return $button;
-  }
-
-  function addLinkButton($label, $link)
-  {
-    $button = new Button($label);
-    $this->buttons[] = $button;
-    $button->type="button";
-    $button->setRedirect($link);
-    return $button;
-  }
-
-  function addOkButton($label = "OK")
-  {
-    $button = $this->addSubmitButton($label);
-    $button->value = "ok";
-    return $button;
-  }
-
-  function addCancelButton($label = "Cancel")
-  {
-    $button = $this->addSubmitButton($label);
-    $button->value = "cancel";
-    return $button;
-  }
-*/
 
   function __get($p)
   {

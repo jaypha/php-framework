@@ -7,10 +7,7 @@ namespace Jaypha\Middleware;
 
 class IEDetect implements Middleware
 {
-  public function handle(
-    $input,
-    Service $service
-  )
+  public function handle($input, $service)
   {
     if (strpos($_SERVER["HTTP_USER_AGENT"], "MSIE"))
     {

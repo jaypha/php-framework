@@ -27,7 +27,7 @@ class Validation implements Middleware
     if ($result["success"])
       return $service->next($result["values"]);
     else
-      return $service->responseFactory->reject(implode("\n",$result["failures"]),400);
+      return $service->reject(implode("\n",$result["failures"]),400);
   }          
 }
 

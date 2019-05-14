@@ -18,12 +18,10 @@ class InputWidget extends Widget
   function __get($p)
   {
     switch ($p) {
+      case "pattern":
       case "value":
       case "type":
-        if (array_key_exists($p, $this->attributes))
-          return $this->attributes[$p];
-        else
-          return null;
+        return $this->attributes[$p] ?? null;
       default:
         return parent::__get($p);
     }
@@ -32,6 +30,7 @@ class InputWidget extends Widget
   function __set($p, $v)
   {
     switch ($p) {
+      case "pattern":
       case "value":
       case "type":
         $this->attributes[$p] = $v;

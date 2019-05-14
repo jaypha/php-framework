@@ -5,6 +5,8 @@
 //
 //----------------------------------------------------------------------------
 
+namespace Jaypha;
+
 use PHPUnit\Framework\TestCase;
 
 class CsvTest extends TestCase
@@ -18,7 +20,7 @@ class CsvTest extends TestCase
       [ 14, "yay!" ]
     ];
     $expected = "\"ID\",John,213,\"\"\"extra\",\"bill\n\"\n\n14,yay!";
-    $output = \PHS\csv_encode($input);
+    $output = csv_encode($input);
     $this->assertEquals($output, $expected);
   }
 }

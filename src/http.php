@@ -86,7 +86,7 @@ function interperetByteRanges($ranges, $size)
 }
 
 //----------------------------------------------------------------------------
-// Some HTTP response functions that shoudl be a part of PHP proper.
+// Some HTTP response functions that should be a part of PHP proper.
 
 namespace {
 

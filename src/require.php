@@ -3,10 +3,6 @@
 // Bulk include file.
 //----------------------------------------------------------------------------
 
-require \Config\APP_ROOT."/vendor/autoload.php";
-
-//---------------------------------------------------------
-
 require "exceptions/DataIntegrityException.php";
 
 require "jayponents-html/Button.php";

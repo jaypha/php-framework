@@ -73,14 +73,17 @@ function dateStrValid(string $str)
   return false;
 }
 
-// Takes in a date/time in any format and ctoDateTimeonverts it to a DateTime value.
+//---------------------------------------------------------------------------
+// Takes in a date/time in any format and converts it to a DateTime value.
 
 function toDateTime($timeValue = null)
 {
   if ($timeValue === null)
     return now();
-  if ($timeValue instanceof \DateTimeInterface)
+  if ($timeValue instanceof \DateTime)
     return $timeValue;
+  if ($timeValue instanceof \DateTimeImmutable)
+    return new \DateTime($timeValue->format(\DateTimeInterface::ISO8601));
   if (is_string($timeValue))
   {
     if (ctype_digit($timeValue))
@@ -89,11 +92,34 @@ function toDateTime($timeValue = null)
       return new \DateTime($timeValue, getTimezone());
   }
   assert(is_int($timeValue));
-  $time = new \DateTime("now", getTimezone());
-  $time->setTimestamp($timeValue);
-  return $time;
+  $time = new \DateTime("@$timeValue");
+  return $time->setTimezone(getTimezone());
 }
 
+//---------------------------------------------------------------------------
+// Same as above, except DateTimeImmutable
+
+function toDateTimeImmutable($timeValue = null)
+{
+  if ($timeValue === null)
+    return nowImmutable();
+  if ($timeValue instanceof \DateTimeImmutable)
+    return $timeValue;
+  if ($timeValue instanceof \DateTime)
+    return \DateTimeImmutable::createFromMutable($timeValue);
+  if (is_string($timeValue))
+  {
+    if (ctype_digit($timeValue))
+      $timeValue = (int) $timeValue;
+    else
+      return new \DateTimeImmutable($timeValue, getTimezone());
+  }
+  assert(is_int($timeValue));
+  $time = new \DateTimeImmutable("@$timeValue");
+  return $time->setTimezone(getTimezone());
+}
+
+//---------------------------------------------------------------------------
 // Convenience function to convert a date to MySQL format.
 
 function toMysqlDate($date = null)

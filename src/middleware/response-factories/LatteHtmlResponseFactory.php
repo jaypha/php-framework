@@ -14,12 +14,12 @@ use Jaypha\Jayponents\Latte\LatteEngineAdaptor;
 
 class LatteHtmlResponseFactory extends HtmlResponseFactory
 {
-  function __construct()
+  function __construct($srcDir = \Config\SRC_ROOT, $cacheDir = \Config\VAR_ROOT."/latte-cache")
   {
     parent::__construct();
     $latte = new Engine();
-    $latte->setTempDirectory(\Config\VAR_ROOT."/latte-cache");
-    $latte->setLoader(new FileLoader(\Config\APP_ROOT."/src"));
+    $latte->setTempDirectory($cacheDir);
+    $latte->setLoader(new FileLoader($srcDir));
     Component::setDefaultEngine(new LatteEngineAdaptor($latte));
   }
 }

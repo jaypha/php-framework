@@ -5,6 +5,8 @@
 //
 //----------------------------------------------------------------------------
 
+namespace Jaypha;
+
 use PHPUnit\Framework\TestCase;
 
 class DateTimeTest extends TestCase
@@ -14,14 +16,14 @@ class DateTimeTest extends TestCase
     
   function setUp()
   {
-    $this->date = \PHS\date("2018-01-01");
-    $this->dateImmutable = \PHS\dateImmutable("2018-01-01");
+    $this->date = date("2018-01-01");
+    $this->dateImmutable = dateImmutable("2018-01-01");
   }
 
   function testFromNull()
   {
-    $this->assertNull(\PHS\date(null));
-    $this->assertNull(\PHS\dateImmutable(null));
+    $this->assertNull(date(null));
+    $this->assertNull(dateImmutable(null));
   }
 
   function testType()
@@ -32,30 +34,41 @@ class DateTimeTest extends TestCase
 
   function testStrValid()
   {
-    $this->assertTrue(\PHS\dateStrValid("2018-02-02"));
-    $this->assertTrue(\PHS\dateStrValid("20180202"));
-    $this->assertFalse(\PHS\dateStrValid("20-12-0202"));
-    $this->assertFalse(\PHS\dateStrValid("xyz"));
-    $this->assertFalse(\PHS\dateStrValid(""));
+    $this->assertTrue(dateStrValid("2018-02-02"));
+    $this->assertTrue(dateStrValid("20180202"));
+    $this->assertFalse(dateStrValid("20-12-0202"));
+    $this->assertFalse(dateStrValid("xyz"));
+    $this->assertFalse(dateStrValid(""));
   }
 
-  function toDateTime()
+  function testToDateTime()
   {
-    $date = \PHS\toDateTime(strtotime("2018-02-02"));
+    $date = toDateTime(strtotime("2018-02-02"));
     $this->assertInstanceOf(\DateTime::class, $date);
-    $this->assertTrue($date->format(\PHS\DATE_MYSQL) == "2018-02-02");
+    $this->assertTrue($date->format(DATE_MYSQL) == "2018-02-02");
     
-    $date = \PHS\toDateTime("2018-02-02");
+    $date = toDateTime("2018-02-02");
     $this->assertInstanceOf(\DateTime::class, $date);
-    $this->assertTrue($date->format(\PHS\DATE_MYSQL) == "2018-02-02");
+    $this->assertTrue($date->format(DATE_MYSQL) == "2018-02-02");
 
-    $date = \PHS\toDateTime();
+    $date = toDateTime();
     $this->assertInstanceOf(\DateTime::class, $date);
-    $this->assertTrue($date == \PHS\now());
 
-    $date = \PHS\today();
+    $date = today();
     $this->assertInstanceOf(\DateTime::class, $date);
-    $this->assertTrue($date == \PHS\toDateTime($date));
+    $this->assertTrue($date == toDateTime($date));
+  }
+
+  function testToMysqlDate()
+  {
+  }
+
+  function testToMysqlTimestamp()
+  {
+  }
+
+  function testToDateTimeString()
+  {
   }
 }
 

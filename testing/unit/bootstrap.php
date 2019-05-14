@@ -5,7 +5,7 @@
 //
 //----------------------------------------------------------------------------
 
-require __DIR__."/../config-unit.php";
+require __DIR__."/../../config.php";
 
 $paths = [
   ".",
@@ -18,15 +18,13 @@ ini_set("log_errors", "0");
 
 require "require.php";
 
-use Jaypha\MySQLiExt;
-
 global $rdb;
 
-$rdb = new MySQLiExt(
-  \Config\Mysql::Host,
-  \Config\Mysql::User,
-  \Config\Mysql::Password,
-  \Config\Mysql::Database
+$rdb = new Jaypha\MySQLiExt(
+  $GLOBALS["DB_HOST"],
+  $GLOBALS["DB_USER"],
+  $GLOBALS["DB_PASSWD"],
+  $GLOBALS["DB_DBNAME"]
 );
 
 //----------------------------------------------------------------------------

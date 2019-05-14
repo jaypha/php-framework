@@ -38,7 +38,7 @@ class Validator
           $f = "extract".ucfirst($varType);
           $r = self::$f($source, $name, $required, $rule);
       }
-      if ($r instanceof Exception)
+      if ($r instanceof \Exception)
         $failures[$name] = $r->getMessage();
       else if ( isset($rule["mustMatch"]) &&
                 isset($values[$rule["mustMatch"]]) &&
@@ -114,6 +114,12 @@ class Validator
     {
       assert(is_string($constraints["regex"]));
       if (!preg_match($constraints["regex"], $value))
+        return new \Exception(self::FAIL_INVALID);
+    }
+    else if (array_key_exists("pattern", $constraints))
+    {
+      assert(is_string($constraints["pattern"]));
+      if (!preg_match($constraints["pattern"], $value))
         return new \Exception(self::FAIL_INVALID);
     }
     if (array_key_exists("minLength", $constraints))

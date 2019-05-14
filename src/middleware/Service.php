@@ -73,7 +73,7 @@ class Service
   {
     http_response($code, $message);
     if ($this->responseFactory)
-      return $this->responseFactory->reject($message, $code);
+      $this->responseFactory->reject($message, $code);
   }
 
   static function gracefulExit($code = 500)
@@ -81,8 +81,6 @@ class Service
     http_response_code($code);
     if (self::$service->responseFactory)
       self::$service->responseFactory->gracefulExit($code);
-    //if (self::$service && is_callable(self::$service->gracefulExit))
-    //  (self::$service->gracefulExit)($message, $code);
     exit;
   }
 }

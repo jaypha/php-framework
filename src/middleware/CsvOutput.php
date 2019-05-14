@@ -11,22 +11,16 @@ class CsvOutput implements ResponseFactory, Middleware
   //function mimeType() { return "text/plain"; }
   function mimeType() { return "application/csv"; }
 
-  function gracefulExit($code)
-  {
-    return null;
-  }
+  function gracefulExit($code) { return null; }
 
-  function reject($message, $code)
-  {
-    return null;
-  }
+  function reject($message, $code) { return null; }
 
   public function handle($input, Service $service)
   {
     $service->setResponseFactory($this);
     $output = $service->next($input);
 
-    if ($output instanceof \Jaypha\CsvDocument)
+    if ($output instanceof CsvDocument)
     {
       if ($output->filename)
         header("Content-Disposition: attachment; filename=\"$output->filename\"");
@@ -44,21 +38,19 @@ class CsvOutput implements ResponseFactory, Middleware
 }
 
 //----------------------------------------------------------------------------
+
+class CsvDocument
+{
+  public $filename;
+  public $data = [];
+  public $options = CSV_DOUBLEQUOTES;
+
+  function __toString() { return csv_encode($this->data, $this->options); }
+}
+
+//----------------------------------------------------------------------------
 // Copyright (C) 2018 Jaypha.
 // License: BSL-1.0
 // Author: Jason den Dulk
 //
 
-/*
-function csvSend($data, $filename = null)
-{
-  //header("Content-type: text/plain");
-  header("Content-type: application/csv");
-  if ($filename)
-    header("Content-Disposition: attachment; filename=\"$filename\"");
-  header("Pragma: no-cache");
-  header("Expires: 0");
-
-  echo csv_encode($data);
-}
-*/

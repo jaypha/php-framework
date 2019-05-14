@@ -1,7 +1,7 @@
 <phpunit
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.3/phpunit.xsd"
-  bootstrap="tests/bootstrap.php"
+  bootstrap="testing/unit/bootstrap.php"
   
 >
   <testsuites>
@@ -11,9 +11,9 @@
   </testsuites>
    <php>
         <var name="DB_HOST" value="localhost" />
-        <var name="DB_USER" value="" />
-        <var name="DB_PASSWD" value="" />
-        <var name="DB_DBNAME" value="" />
+        <var name="DB_USER" value="jason" />
+        <var name="DB_PASSWD" value="dogmeat" />
+        <var name="DB_DBNAME" value="xyz" />
     </php>
   <!--
   <filter>

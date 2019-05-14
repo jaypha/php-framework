@@ -66,7 +66,7 @@ function wrapFormInDialog(string $dlgId, Form $form)
   $d->add($form);
   $s = "
     {
-      let x = document.querySelector('#$form->id button[value=cancel]');
+      var x = document.querySelector('#$form->id button[value=cancel]');
       if (x) {
         x.addEventListener('click', function() 
         {

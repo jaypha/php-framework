@@ -5,6 +5,8 @@
 //
 //----------------------------------------------------------------------------
 
+namespace Jaypha;
+
 use PHPUnit\Framework\TestCase;
 
 class HttpTest extends TestCase
@@ -20,61 +22,61 @@ class HttpTest extends TestCase
 
   function testNoEquals()
   {
-    $this->expectException(Exception::class);
-    $ret = PHS\parseHttpRangeHeader("somethingnotvalid");
+    $this->expectException(\Exception::class);
+    $ret = parseHttpRangeHeader("somethingnotvalid");
   }
 
   function testNoRanges()
   {
-    $this->expectException(Exception::class);
-    $ret = PHS\parseHttpRangeHeader("bytes=");
+    $this->expectException(\Exception::class);
+    $ret = parseHttpRangeHeader("bytes=");
   }
 
   function testBadRanges1()
   {
-    $this->expectException(Exception::class);
-    $ret = PHS\parseHttpRangeHeader("bytes=14-15,33");
-    $ret = PHS\parseHttpRangeHeader("bytes=-");
+    $this->expectException(\Exception::class);
+    $ret = parseHttpRangeHeader("bytes=14-15,33");
+    $ret = parseHttpRangeHeader("bytes=-");
   }
 
   function testBadRanges2()
   {
-    $this->expectException(Exception::class);
-    $ret = PHS\parseHttpRangeHeader("bytes=14-15-33");
+    $this->expectException(\Exception::class);
+    $ret = parseHttpRangeHeader("bytes=14-15-33");
   }
 
   function testRangesWithoutNumbers()
   {
-    $this->expectException(Exception::class);
-    $ret = PHS\parseHttpRangeHeader("bytes=-");
+    $this->expectException(\Exception::class);
+    $ret = parseHttpRangeHeader("bytes=-");
   }
 
   function testFirstNotNumber()
   {
-    $this->expectException(Exception::class);
-    $ret = PHS\parseHttpRangeHeader("bytes=rt-23");
+    $this->expectException(\Exception::class);
+    $ret = parseHttpRangeHeader("bytes=rt-23");
   }
 
   function testSecondNotNumber()
   {
-    $this->expectException(Exception::class);
-    $ret = PHS\parseHttpRangeHeader("bytes=23-yh");
+    $this->expectException(\Exception::class);
+    $ret = parseHttpRangeHeader("bytes=23-yh");
   }
 
   function testOutofOrserRanges()
   {
-    $this->expectException(Exception::class);
-    $ret = PHS\parseHttpRangeHeader("bytes=33-46,16-14");
+    $this->expectException(\Exception::class);
+    $ret = parseHttpRangeHeader("bytes=33-46,16-14");
   }
 
   function testUnits()
   {
-    $ret = PHS\parseHttpRangeHeader("bytes=23-56");
+    $ret = parseHttpRangeHeader("bytes=23-56");
     $this->assertInternalType("array",$ret);
     $this->AssertArrayHasKey("unit",$ret);
     $this->assertEquals("bytes", $ret["unit"]);
 
-    $ret = PHS\parseHttpRangeHeader("meters=someStuff");
+    $ret = parseHttpRangeHeader("meters=someStuff");
     $this->assertInternalType("array",$ret);
     $this->AssertArrayHasKey("unit",$ret);
     $this->assertEquals("meters", $ret["unit"]);
@@ -83,7 +85,7 @@ class HttpTest extends TestCase
   function testParserNormal()
   {
     $str = "bytes=45-56";
-    $ret = PHS\parseHttpRangeHeader($str);
+    $ret = parseHttpRangeHeader($str);
     $this->AssertArrayHasKey("rangeSet",$ret);
 
     $this->assertInternalType("array",$ret["rangeSet"]);
@@ -94,7 +96,7 @@ class HttpTest extends TestCase
   function testParserMultiple()
   {
     $str = "bytes=45-56,67-1001,9000-45000,45-,-56";
-    $ret = PHS\parseHttpRangeHeader($str);
+    $ret = parseHttpRangeHeader($str);
     $this->AssertArrayHasKey("rangeSet",$ret);
 
     $this->assertInternalType("array",$ret["rangeSet"]);
@@ -109,7 +111,7 @@ class HttpTest extends TestCase
   function testNonByte()
   {
     $str = "stuff=somestuff";
-    $ret = PHS\parseHttpRangeHeader($str);
+    $ret = parseHttpRangeHeader($str);
     $this->assertEquals("stuff", $ret["unit"]);
     $this->AssertArrayHasKey("rangeSet",$ret);
 
@@ -130,25 +132,25 @@ class HttpTest extends TestCase
 
   function testZeroSizeRange()
   {
-    $this->expectException(Exception::class);
+    $this->expectException(\Exception::class);
     $s = "bytes=-0";
-    $r = PHS\parseHttpRangeHeader($s);
-    $ret = PHS\interperetByteRanges($r["rangeSet"], 100);
+    $r = parseHttpRangeHeader($s);
+    $ret = interperetByteRanges($r["rangeSet"], 100);
   }
 
   function testExceedSize()
   {
-    $this->expectException(Exception::class);
+    $this->expectException(\Exception::class);
     $s = "bytes=102-107";
-    $r = PHS\parseHttpRangeHeader($s);
-    $ret = PHS\interperetByteRanges($r["rangeSet"], 100);
+    $r = parseHttpRangeHeader($s);
+    $ret = interperetByteRanges($r["rangeSet"], 100);
   }
 
   function testNormalInterperet()
   {
     $s = "bytes=-56,-123,14-,23-67,87-1000,38-38,14-99";
-    $r = PHS\parseHttpRangeHeader($s);
-    $ret = PHS\interperetByteRanges($r["rangeSet"], 100);
+    $r = parseHttpRangeHeader($s);
+    $ret = interperetByteRanges($r["rangeSet"], 100);
 
     $this->assertInternalType("array",$ret);
     $this->assertCount(7,$ret);
