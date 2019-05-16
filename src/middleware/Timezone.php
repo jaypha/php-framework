@@ -14,17 +14,17 @@ class Timezone implements Middleware
       $hours = $_COOKIE["tzoffset"]/3600;
       $h = floor($hours);
       $m = floor(($hours - $h) * 60);
-      $GLOBALS["timezone"] = new \DateTimeZone(sprintf("%+03d%02d",$h,$m));
+      \Jaypha\setTimezone(sprintf("%+03d%02d",$h,$m));
     }
     else if (isset($_COOKIE["tz_offset"]))
     {
       $hours = $_COOKIE["tz_offset"]/60;
       $h = floor($hours);
       $m = floor(($hours - $h) * 60);
-      $GLOBALS["timezone"] = new \DateTimeZone(sprintf("%+03d%02d",$h,$m));
+      \Jaypha\setTimezone(sprintf("%+03d%02d",$h,$m));
     }
     else
-      $GLOBALS["timezone"] = null;
+      \Jaypha\setTimezone(null);
 
     return $service->next($input);
   }

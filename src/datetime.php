@@ -16,9 +16,26 @@ const TIME_MYSQL = "H:i:s";
 const DATETIME_MYSQL = "Y-m-d H:i:s";
 const DATETIME_COMMON = "jS&\\n\b\s\p;M&\\n\b\s\p;Y&\\n\b\s\p;&\\n\b\s\p;g:i&\\n\b\s\p;a";
 
+// It would be preferable to be able to set the default timezone.
+// Unfortunately you cannot set the default to an offset (eg '+0200')
+
+function setTimezone($tz)
+{
+  if ($tz === null)
+    $GLOBALS["timezone"] = new \DateTimeZone(\date_default_timezone_get());
+  else if (is_string($tz))
+    $GLOBALS["timezone"] = new \DateTimeZone($tz);
+  else
+  {
+    assert($tz instanceof \DateTimeZone);
+    $GLOBALS["timezone"] = $tz;
+  }
+}
+
 function getTimezone()
 {
-  return $GLOBALS["timezone"] ?? null;
+  assert(!isset($GLOBALS["timezone"]) || $GLOBALS["timezone"] instanceof \DateTimeZone);
+  return $GLOBALS["timezone"] ?? new \DateTimeZone(\date_default_timezone_get());
 }
 
 function date($dateStr)
@@ -53,15 +70,15 @@ function nowImmutable()
   return new \DateTimeImmutable("now", getTimezone());
 }
 
-function formatDate(\DateTimeInterface $dateTime = null, $format = \DateTime::ISO8601, $nullIndicator = "-")
+function formatDate($dateTime = null, $format = \DateTime::ISO8601, $nullIndicator = "-")
 {
   return formatDateTime($dateTime, $format, $nullIndicator);
 }
 
-function formatDateTime(\DateTimeInterface $dateTime = null, $format = \DateTime::ISO8601, $nullIndicator = "-")
+function formatDateTime($dateTime = null, $format = \DateTime::ISO8601, $nullIndicator = "-")
 {
   if ($dateTime == null) return $nullIndicator;
-  else return $dateTime->format($format);
+  else return toDateTime($dateTime)->format($format);
 }
 
 // A test that restricts acceptable date strings to ISO format
@@ -84,14 +101,9 @@ function toDateTime($timeValue = null)
     return $timeValue;
   if ($timeValue instanceof \DateTimeImmutable)
     return new \DateTime($timeValue->format(\DateTimeInterface::ISO8601));
-  if (is_string($timeValue))
-  {
-    if (ctype_digit($timeValue))
-      $timeValue = (int) $timeValue;
-    else
-      return new \DateTime($timeValue, getTimezone());
-  }
-  assert(is_int($timeValue));
+  if (is_string($timeValue) && !ctype_digit($timeValue))
+    return new \DateTime($timeValue, getTimezone());
+  assert(is_int($timeValue) || ctype_digit($timeValue));
   $time = new \DateTime("@$timeValue");
   return $time->setTimezone(getTimezone());
 }
@@ -107,14 +119,9 @@ function toDateTimeImmutable($timeValue = null)
     return $timeValue;
   if ($timeValue instanceof \DateTime)
     return \DateTimeImmutable::createFromMutable($timeValue);
-  if (is_string($timeValue))
-  {
-    if (ctype_digit($timeValue))
-      $timeValue = (int) $timeValue;
-    else
-      return new \DateTimeImmutable($timeValue, getTimezone());
-  }
-  assert(is_int($timeValue));
+  if (is_string($timeValue) && !ctype_digit($timeValue))
+    return new \DateTimeImmutable($timeValue, getTimezone());
+  assert(is_int($timeValue) || ctype_digit($timeValue));
   $time = new \DateTimeImmutable("@$timeValue");
   return $time->setTimezone(getTimezone());
 }
