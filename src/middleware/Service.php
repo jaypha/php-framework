@@ -69,11 +69,11 @@ class Service
       return $current->handle($input, $this);
   }
 
-  function reject($message, $code = 400)
+  function reject($message, $code = 200)
   {
-    http_response($code, $message);
+    http_response($code, "Invalid Input");
     if ($this->responseFactory)
-      $this->responseFactory->reject($message, $code);
+      return $this->responseFactory->reject($message, $code);
   }
 
   static function gracefulExit($code = 500)

@@ -33,7 +33,7 @@ App.quickFetch = function(url,method = 'get', data = null,successFn = null,failu
   })
   .then(function(data)
   {
-    if (data.message) alert(data.message);
+    if (data.message) App.alert(data.message);
     if (data.success)
     {
       if (successFn)

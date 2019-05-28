@@ -10,18 +10,18 @@ class JsonResponseFactory implements ResponseFactory
   function mimeType() { return "application/json"; }
   function gracefulExit($code)
   {
-    echo json_encode([ "success" => false, "message" => "error" ]);
+    return json_encode([ "success" => false, "message" => "error" ]);
   }
 
   function reject($message, $code)
   {
-    echo json_encode([ "success" => false, "message" => $message ]);
+    return json_encode([ "success" => false, "message" => $message ]);
   }
 }
 
 //----------------------------------------------------------------------------
 
-class JsonOutput extends JsonResponseFactory implements ResponseFactory
+class JsonOutput extends JsonResponseFactory implements Middleware
 {
   public function handle($input, Service $service)
   {

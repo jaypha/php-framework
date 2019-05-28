@@ -135,7 +135,7 @@ function toMysqlDate($date = null)
   return $val->format(DATE_MYSQL);
 }
 
-function toMysqlTimestamp($time)
+function toMysqlTimestamp($time = null)
 {
   $val = toDateTime($time);
   $val->setTimezone(new \DateTimeZone(\Config\MYSQL_TIMEZONE));

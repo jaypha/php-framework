@@ -21,8 +21,10 @@ require "jayponents-html/JayphaList.php";
 
 require "jayponents-html/Widget.php";
 require "jayponents-html/InputWidget.php";
+require "jayponents-html/BooleanWidget.php";
 require "jayponents-html/TextAreaWidget.php";
 require "jayponents-html/SelectWidget.php";
+require "jayponents-html/RadioGroupWidget.php";
 
 require "jayponents-html/Ribbon.php";
 
@@ -31,14 +33,15 @@ require "icomoon/IcomoonButtons.php";
 
 require "Validator.php";
 
+require "middleware/Middleware.php";
 require "middleware/response-factories/ResponseFactory.php";
+
 require "middleware/response-factories/NoResponseFactory.php";
 require "middleware/response-factories/ConsoleResponseFactory.php";
 require "middleware/response-factories/JsonResponseFactory.php";
 require "middleware/response-factories/HtmlResponseFactory.php";
 require "middleware/response-factories/LatteHtmlResponseFactory.php";
 
-require "middleware/Middleware.php";
 require "middleware/CmdLineParser.php";
 require "middleware/Validation.php";
 require "middleware/Database.php";

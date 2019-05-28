@@ -38,7 +38,9 @@ class Fieldset extends Element
         echo "<div class='p two-column-form-row'>";
         echo "<span class='required'>",$field["widget"]->required?"*":"","</span>";
         echo "<span class='label'>{$field["label"]}</span>";
+        echo "<span class='widget-holder'>";
         $field["widget"]->display();
+        echo "</span>";
         echo "<span class='attn'></span>";
         echo "</div>";
       }
@@ -74,11 +76,27 @@ class Fieldset extends Element
 
   //-----------------------------------
 
+  function addDateWidget($name, string $label = null)
+  {
+    $widget = $this->addWidget(new InputWidget($name), $label);
+    $widget->type = "date";
+    return $widget;
+  }
+
+  //-----------------------------------
+
   function addCheckWidget($name, string $label = null)
   {
     $widget = $this->addWidget(new InputWidget($name), $label);
     $widget->type = "checkbox";
     return $widget;
+  }
+
+  //-----------------------------------
+
+  function addBooleanWidget($name, string $label = null)
+  {
+    return $this->addWidget(new BooleanWidget($name), $label);
   }
 
   //-----------------------------------
@@ -95,6 +113,13 @@ class Fieldset extends Element
   function addTextAreaWidget($name, string $label = null)
   {
     return $this->addWidget(new TextAreaWidget($name), $label);
+  }
+
+  //-----------------------------------
+
+  function addRadioGroupWidget($name, $label = null)
+  {
+    return $this->addWidget(new RadioGroupWidget($name), $label);
   }
 
   //-----------------------------------

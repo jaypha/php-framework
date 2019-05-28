@@ -44,8 +44,7 @@ class Validator
                 isset($values[$rule["mustMatch"]]) &&
                 $r != $values[$rule["mustMatch"]])
         $failures[$name] = self::FAIL_MISMATCH;
-      else
-        $values[$name] = $r;
+      $values[$name] = $r;
     }
     return [ "success" => count($failures) == 0, "values" => $values, "failures" => $failures ];
   }
