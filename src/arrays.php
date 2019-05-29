@@ -59,6 +59,21 @@ function expandBits(int $bits)
 }
 
 //----------------------------------------------------------------------------
+
+function arrayAsChunks(array &$array, $limit = 1000)
+{
+  $i = 0;
+  $r = [];
+
+  while ($i <= count($array))
+  {
+    $r[] = array_slice($array, $i, $limit);
+    $i += $limit;
+  }
+  return $r;
+}
+
+//----------------------------------------------------------------------------
 // Copyright (C) 2017 Jaypha.
 // License: BSL-1.0
 // Author: Jason den Dulk
