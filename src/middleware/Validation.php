@@ -13,6 +13,8 @@ class Validation implements Middleware
 {
   protected $validator;
 
+  //-----------------------------------------------
+
   function __construct($rules)
   {
     if ($rules instanceof Validator)
@@ -20,6 +22,16 @@ class Validation implements Middleware
     else
       $this->validator = new Validator($rules);
   }
+
+  //-----------------------------------------------
+
+  function addValidationType($validationType)
+  {
+    $this->validator->addValidationType($validationType);
+    return $this;
+  }
+
+  //-----------------------------------------------
 
   function handle($input, Service $service)
   {

@@ -95,7 +95,7 @@ abstract class Entity
         if (substr($p, -3) == "Orig")
         {
           $p = substr($p, 0, -4);
-          return $this->data[$p];
+          return $this->_data[$p];
         }
         else if (substr($p, -3) == "Raw")
           $p = substr($p, 0, -3);

@@ -8,10 +8,19 @@ namespace Jaypha;
 class Validator
 {
   protected $rules;
+  protected $types = [];
 
   //-----------------------------------------------
 
   function __construct($rules) { $this->rules = $rules; }
+
+  //-----------------------------------------------
+
+  function addValidationType($validationType)
+  {
+    $this->types[$validationType->typeName()] = $validationType;
+    return $this;
+  }
 
   //-----------------------------------------------
 
@@ -34,9 +43,16 @@ class Validator
         case "boolean":
           $r = self::extractBoolean($source, $name);
           break;
-        default:
+        case "string":
+        case "integer":
+        case "number":
+        case "date":
           $f = "extract".ucfirst($varType);
           $r = self::$f($source, $name, $required, $rule);
+          break;
+        default:
+          assert(isset($this->types[$varType]));
+          $r = $this->types[$varType]->extract($source, $name, $required, $rule);
       }
       if ($r instanceof \Exception)
         $failures[$name] = $r->getMessage();
@@ -205,7 +221,7 @@ class Validator
   )
   {
     if (!array_key_exists($name, $source) || $source[$name] == "")
-      return $required ? new \Exception(self::FAIL_MISSING) : "";
+      return $required ? new \Exception(self::FAIL_MISSING) : null;
 
     $r = self::validateNumber($source[$name], $constraints);
     return ($r === true) ? $source[$name] : $r;
@@ -299,7 +315,7 @@ class Validator
   )
   {
     if (!array_key_exists($name, $source) || $source[$name] == "")
-      return $required ? new \Exception(self::FAIL_MISSING) : "";
+      return $required ? new \Exception(self::FAIL_MISSING) : null;
 
     $r = self::validateDate($source[$name], $constraints);
     return ($r === true) ? $source[$name] : $r;
@@ -318,6 +334,15 @@ class Validator
     return true;
   }
 
+}
+
+//----------------------------------------------------------------------------
+
+interface ValidatorType
+{
+  function typeName();
+  function extract($source, $name, $required, $constraints = []);
+  function validate($value, $constraints = []);
 }
 
 //----------------------------------------------------------------------------
