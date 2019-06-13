@@ -41,6 +41,7 @@ class Validator
           $r = self::extractEnumerated($source, $name, $rule);
           break;
         case "boolean":
+        case "bool":
           $r = self::extractBoolean($source, $name);
           break;
         case "string":

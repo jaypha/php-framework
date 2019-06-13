@@ -50,19 +50,8 @@ abstract class Entity
 
   function save(array $updates = null)
   {
-    assert(
-      (function($u, $d){
-        if ($u === null) return true;
-        foreach ($u as $i => $v)
-          if (!array_key_exists($i, $d))
-            return false;
-        return true;
-      })($updates, $this->_data),
-      "Trying to pass an invalid data field"
-    );
-        
     if ($updates !== null)
-      $this->_updates = \array_merge($this->_updates, $updates);
+      $this->update($updates);
     if (count($this->_updates))
     {
       $this->_data = \array_merge($this->_data, $this->_updates);

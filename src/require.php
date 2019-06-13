@@ -59,6 +59,7 @@ require "streams/StringInputStream.php";
 
 require "storage/Entity.php";
 require "storage/Tags.php";
+require "storage/DbDag.php";
 
 require "auth/Login.php";
 require "auth/User.php";

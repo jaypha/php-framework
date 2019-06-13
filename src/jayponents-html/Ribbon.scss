@@ -4,13 +4,30 @@
 //
 //----------------------------------------------------------------------------
 
-.ribbon-group
-{
-  border-right: 1px solid $linx-orange-border;
+.ribbon { 
+  display: flex;
+}
 
-  > span
-  {
+.ribbon-group {
+  display: inline-flex;
+  flex-direction: column;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-right: 1px solid $linx-orange-border;
+  :first-child { padding-left: 0; }
+  :last-child {
+    border-right: 0;
+    padding-right: 0;
+  }
+  >span {
     border-top: 1px solid $linx-orange-border;
+    text-align: center;
+    padding-top: 5px;
+    margin-top: 5px;
+  }
+  >div {
+    display: inline-flex;
+    flex-grow: 1;
   }
 }
 

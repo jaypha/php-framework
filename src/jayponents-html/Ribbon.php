@@ -9,9 +9,9 @@ namespace Jaypha\Jayponents\Html;
 
 class Ribbon extends Element
 {
-  function __constructor()
+  function __construct()
   {
-    parent::__constructor();
+    parent::__construct();
     $this->cssClasses[] = "ribbon";
   }
 }
@@ -20,9 +20,9 @@ class RibbonGroup extends Element
 {
   public $caption;
 
-  function __constructor()
+  function __construct()
   {
-    parent::__constructor();
+    parent::__construct();
     $this->cssClasses[] = "ribbon-group";
   }
   

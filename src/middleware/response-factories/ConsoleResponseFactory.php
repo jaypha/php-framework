@@ -7,20 +7,18 @@ namespace Jaypha\Middleware;
 
 class ConsoleResponseFactory implements ResponseFactory
 {
-  function __construct()
-  {
-  }
+  function __construct() {}
 
   function mimeType() { return "text/plain"; }
 
   function gracefulExit($code)
   {
-    echo "Error: $code\n";
+    return "Error: $code\n";
   }
 
   function reject($message, $code)
   {
-    echo "Error: $message, ($code)\n";
+    return "Rejected: ($code) $message, \n";
   }
 }
 

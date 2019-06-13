@@ -9,21 +9,22 @@ namespace Jaypha\Jayponents\Html;
 
 class BooleanWidget extends Widget
 {
-  public $value = null;
-
   function __construct($name, $form = null)
   {
     parent::__construct($name, $form);
     $this->tagName = "input";
     $this->attributes["type"]="checkbox";
-    $this->attributes["value"]="1";
   }
 
-  function display()
+  function __set($p, $v)
   {
-    if ($this->value !== null)
-      $this->attributes["selected"] = (bool)$this->value;
-    parent::display();
+    switch ($p)
+    {
+      case "value":
+        $this->attributes["selected"] = (bool)$v;
+        $this->attributes[$p] = $v;
+        break;
+    }
   }
 }
 
