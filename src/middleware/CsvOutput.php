@@ -43,9 +43,9 @@ class CsvDocument
 {
   public $filename;
   public $data = [];
-  public $options = CSV_DOUBLEQUOTES;
+  public $options = \Jaypha\CSV_DOUBLEQUOTES;
 
-  function __toString() { return csv_encode($this->data, $this->options); }
+  function __toString() { return \Jaypha\csv_encode($this->data, $this->options); }
 }
 
 //----------------------------------------------------------------------------

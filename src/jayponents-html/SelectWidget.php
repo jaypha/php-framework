@@ -9,6 +9,8 @@ namespace Jaypha\Jayponents\Html;
 
 class SelectWidget extends Widget
 {
+  const NULL_OPTION_LABEL = "-- Please select --";
+
   public $options = [];
   public $useValues = true;
 
@@ -20,6 +22,8 @@ class SelectWidget extends Widget
 
   function displayInner()
   {
+    if ($this->value === null && !isset($this->options[""]))
+      echo "<option value=''>".self::NULL_OPTION_LABEL."</option>";
     $this->displayOptionGroup($this->options);
   }
 

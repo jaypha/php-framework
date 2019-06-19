@@ -32,6 +32,27 @@ class HtmlResponseFactory implements ResponseFactory
 }
 
 //----------------------------------------------------------------------------
+
+class HtmlOutput extends HtmlResponseFactory implements Middleware
+{
+  public function handle($input, Service $service)
+  {
+    $service->setResponseFactory($this);
+    $output = $service->next($input);
+
+    if (is_array($output))
+    {
+      return new StringInputStream($output);
+    }
+    else
+    {
+      assert(is_string($output) || $output instanceof InputStream);
+      return $output;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
 // Copyright (C) 2018 Jaypha.
 // License: BSL-1.0
 // Author: Jason den Dulk

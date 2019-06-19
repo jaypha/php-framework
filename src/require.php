@@ -66,6 +66,7 @@ require "auth/User.php";
 
 
 require "logging/MainLogger.php";
+require "logging/StreamLogger.php";
 require "logging/StdoutLogger.php";
 require "logging/functions.php";
 require "logging/EchoLogger.php";

@@ -32,6 +32,13 @@ class Service
     set_error_handler("phpError");
   }
 
+  function setLogger($logger)
+  {
+    assert ($logger instanceof LoggerInterface);
+    $this->logger = $logger;
+    return $this;
+  }
+
   function add($middleware)
   {
     $this->stack[] = $middleware;

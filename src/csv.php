@@ -12,12 +12,14 @@ const CSV_DOUBLEQUOTES = 2;
 
 function csv_encode($value, $options = CSV_DOUBLEQUOTES)
 {
+  assert(\is_iterable($value));
+
   $output = [];
 
   foreach ($value as $row)
   {
     $line = [];
-    //assert(\is_iterable($row));
+    assert(\is_iterable($row));
     foreach ($row as $field)
       if ($field === "ID") // Special case for SYLK problem
         $line[] = '"ID"';
