@@ -10,26 +10,27 @@ use Psr\Http\Message\StreamInterface;
 class PhpStream implements StreamInterface
 {
   public $resource;
-  public $handle;
-  public $mode;
 
-  function __construct($handle, $mode)
+  function __construct($resource)
   {
-    $this->handle = $handle;
-    $this->mdoe = $mode;
-    $this->resource = fopen($handle, $mode);
+    $this->resource = $resource;
   }
 
   public function __toString()
   {
-    return get_file_contents($this->handle);
+    $uri = stream_get_meta_data($this->resource)["uri"];
+    return get_file_contents($uri);
   }
 
   public function close() { fclose($this->resource); }
 
   public function detach() { return null; }
 
-  public function getSize() { return filesize($this->handle); }
+  public function getSize()
+  {
+    $uri = stream_get_meta_data($this->resource)["uri"];
+    return filesize($uri);
+  }
 
   public function tell() { return ftell($this->resource); }
 
@@ -45,12 +46,20 @@ class PhpStream implements StreamInterface
   public function rewind()
   { rewind($this->resource); }
 
-  public function isWritable() { return ($this->mode != "r"); }
+  public function isWritable()
+  {
+    $mode = stream_get_meta_data($this->resource)["mode"];
+    return $mode != "r";
+  }
 
   public function write($string)
   { fwrite($this->resource, $string); }
 
-  public function isReadable() { return strpos($this->mode, "r") !== false || strpos($this->mode, "+") !== false; }
+  public function isReadable()
+  {
+    $mode = stream_get_meta_data($this->resource)["mode"];
+    return strpos($mode, "r") !== false || strpos($this->mode, "+") !== false;
+  }
 
   public function read($length)
   {

@@ -42,6 +42,7 @@ abstract class Entity
       "Trying to pass an invalid data field"
     );
 
+    unset($updates["id"]);
     if (count($updates))
       $this->_updates = \array_merge($this->_updates, $updates);
   }

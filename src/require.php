@@ -49,6 +49,7 @@ require "middleware/Timezone.php";
 require "middleware/IEDetect.php";
 require "middleware/ContentSecurityPolicy.php";
 require "middleware/CsvOutput.php";
+require "middleware/Processor.php";
 //require "middleware/HttpRange.php";
 
 //require "streams/MetadataStream.php";

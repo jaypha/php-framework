@@ -1,18 +1,24 @@
 <?php
 //----------------------------------------------------------------------------
-//
+// A special Middleware that combines validation with processing in a single
+// class.
 //----------------------------------------------------------------------------
 
 namespace Jaypha\Middleware;
 
-class ConsoleInput implements Middleware
+class Processor implements Middleware
 {
-  function handle($input, Service $service)
+  function __construct($service)
   {
-    return $service->next($GLOBALS["argv"]);
-  }          
-}
+    $v = $this->getValidation();
+    if ($v)
+      $service->add($v);
+  }
 
+  function getValidation() { return null; }
+
+  function handle($input, $service) { return null; }
+}
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha.

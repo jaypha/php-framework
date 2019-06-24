@@ -42,8 +42,42 @@ class CsvOutput implements ResponseFactory, Middleware
 class CsvDocument
 {
   public $filename;
-  public $data = [];
   public $options = \Jaypha\CSV_DOUBLEQUOTES;
+
+  private $data = [];
+
+  private $currentRow;
+
+  function __construct() { $this->addLine(); }
+  function addCell($cell)
+  {
+    $this->currentRow->append($cell);
+    return $this;
+  }
+
+  function addCells($cells)
+  {
+    assert(is_array($cells));
+    foreach ($cells as $cell)
+      $this->currentRow->append($cell);
+    return $this;
+  }
+
+  function addLine($line = null)
+  {
+    if ($line !== null)
+      $this->addCells($line);
+    $this->currentRow = new \ArrayObject();
+    $this->data[] = $this->currentRow;
+    return $this;
+  }
+
+  function addLines($lines)
+  {
+    foreach ($lines as $line)
+      $this->addLine($line);
+    return $this;
+  }
 
   function __toString() { return \Jaypha\csv_encode($this->data, $this->options); }
 }

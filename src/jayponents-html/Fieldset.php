@@ -29,7 +29,7 @@ class Fieldset extends Element
 
   //-----------------------------------
 
-  function displayInner()
+  protected function displayInner()
   {
     if ($this->_template == null)
     {

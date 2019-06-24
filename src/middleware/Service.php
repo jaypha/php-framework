@@ -20,7 +20,6 @@ class Service
   public $logger;
 
   public $responseFactory = null;
-  private $gracefulExit = null;
 
   function __construct(?LoggerInterface $logger = null)
   { 
@@ -59,14 +58,14 @@ class Service
     echo $output;
   }
 
-  public function setResponseFactory(ResponseFactory $responseFactory)
+  function setResponseFactory(ResponseFactory $responseFactory)
   {
     $this->responseFactory = $responseFactory;
     header("Content-Type: ".$responseFactory->mimeType());
     return $this;
   }
 
-  public function next($input)
+  function next($input)
   {
     assert(array_key_exists($this->stackIdx,$this->stack));
     $current = $this->stack[$this->stackIdx++];
@@ -83,11 +82,11 @@ class Service
       return $this->responseFactory->reject($message, $code);
   }
 
-  static function gracefulExit($code = 500)
+  function gracefulExit($code = 500)
   {
     http_response_code($code);
-    if (self::$service->responseFactory)
-      self::$service->responseFactory->gracefulExit($code);
+    if ($this->responseFactory)
+      $this->responseFactory->gracefulExit($code);
     exit;
   }
 }
@@ -156,8 +155,11 @@ function getDebuggingInfo(Throwable $exception)
   function critical(string $message)
   {
     if (Service::$service)
+    {
       Service::$service->logger->critical($message);
-    Service::gracefulExit();
+      Service::$service->gracefulExit();
+    }
+    exit;
   }
 
   //--------------------------------------------------------------------------
@@ -176,20 +178,20 @@ function getDebuggingInfo(Throwable $exception)
     if (!(error_reporting() & $errno)) return true;
 
 	  $labels = [
-		  //E_ERROR           => 'E_ERROR',
+		  E_ERROR           => 'E_ERROR',
 		  E_WARNING         => 'E_WARNING',
-		  //E_PARSE           => 'E_PARSE',
+		  E_PARSE           => 'E_PARSE',
 		  E_NOTICE          => 'E_NOTICE',
-		  //E_CORE_ERROR      => 'E_CORE_ERROR',
-		  //E_CORE_WARNING    => 'E_CORE_WARNING',
-		  //E_COMPILE_ERROR   => 'E_COMPILE_ERROR',
-		  //E_COMPILE_WARNING => 'E_COMPILE_WARNING',
+		  E_CORE_ERROR      => 'E_CORE_ERROR',
+		  E_CORE_WARNING    => 'E_CORE_WARNING',
+		  E_COMPILE_ERROR   => 'E_COMPILE_ERROR',
+		  E_COMPILE_WARNING => 'E_COMPILE_WARNING',
 		  E_USER_ERROR      => 'E_USER_ERROR',
 		  E_USER_WARNING    => 'E_USER_WARNING',
 		  E_USER_NOTICE     => 'E_USER_NOTICE',
 		  E_STRICT          => 'E_STRICT',
 		  E_RECOVERABLE_ERROR  => 'E_RECOVERABLE_ERROR',
-		  //E_DEPRECATED      => "E_DEPRECATED",
+		  E_DEPRECATED      => "E_DEPRECATED",
 		  E_USER_DEPRECATED => "E_USER_DEPRECATED"
 	  ];
 
@@ -205,10 +207,9 @@ function getDebuggingInfo(Throwable $exception)
   // Checks for a condition. If it fails, execution quits immediately without
   // logging.
 
-  function guard($condition, $code = 400)
+  function guard($condition)
   {
-    if (!$condition)
-      Service::quit($code);
+    if (!$condition) exit;
   }
 
   //---------------------------------------------------------------------------

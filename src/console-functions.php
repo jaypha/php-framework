@@ -18,7 +18,7 @@ function restoreTerm() { system('stty echo'); }
 function collectPassword($prompt = null)
 {
   if ($prompt)
-    echo "$prompt: ";
+    fwrite(STDERR, "$prompt: ");
   hideTerm();
   $password = rtrim(fgets(STDIN), PHP_EOL);
   restoreTerm();
@@ -32,10 +32,9 @@ function collectInput(string $prompt = null, string $default = "")
 {
   if ($prompt)
   {
-    echo "$prompt";
-    if ($default)
-      echo " [$default]";
-    echo ": ";
+    if ($default) $prompt .= " [$default]";
+    $prompt .= ": ";
+    fwrite(STDERR, $prompt);
   }
   $input = rtrim(fgets(STDIN), PHP_EOL);
   if ($input == "")
