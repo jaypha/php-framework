@@ -43,13 +43,14 @@ require "middleware/response-factories/HtmlResponseFactory.php";
 require "middleware/response-factories/LatteHtmlResponseFactory.php";
 
 require "middleware/CmdLineParser.php";
+require "middleware/UseLatteEngine.php";
 require "middleware/Validation.php";
 require "middleware/Database.php";
 require "middleware/Timezone.php";
 require "middleware/IEDetect.php";
 require "middleware/ContentSecurityPolicy.php";
 require "middleware/CsvOutput.php";
-require "middleware/Processor.php";
+//require "middleware/Processor.php";
 //require "middleware/HttpRange.php";
 
 //require "streams/MetadataStream.php";

@@ -27,7 +27,6 @@ class Form extends Element
 
   function addFieldset($fieldset = null)
   {
-    assert ($fieldset == null || $fieldset instanceof Fieldset);
     if ($fieldset == null) $fieldset = new Fieldset($this);
     else $fieldset->form = $this;
     $this->fieldsets[] = $fieldset;

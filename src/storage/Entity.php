@@ -74,7 +74,6 @@ abstract class Entity
 
   function __get(string $p)
   {
-    global $rdb;
     switch ($p)
     {
       case "id":
@@ -82,7 +81,7 @@ abstract class Entity
       case "rawData":
         return $this->_data;
       default:
-        if (substr($p, -3) == "Orig")
+        if (substr($p, -4) == "Orig")
         {
           $p = substr($p, 0, -4);
           return $this->_data[$p];

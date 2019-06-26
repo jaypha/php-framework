@@ -2,12 +2,14 @@
 //----------------------------------------------------------------------------
 // Functions to extract and validate various kinds of input
 //----------------------------------------------------------------------------
+// TODO look at enum to make consistant.
+//----------------------------------------------------------------------------
 
 namespace Jaypha;
 
 class Validator
 {
-  protected $rules;
+  public $rules;
   protected $types = [];
 
   //-----------------------------------------------
