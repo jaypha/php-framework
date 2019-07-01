@@ -11,7 +11,6 @@ class RadioGroupWidget extends Widget
 {
   public $options = [];
   public $useValues = true;
-  protected $widgets;
   public $value;
 
   function __construct($name, $form = null)
@@ -20,29 +19,28 @@ class RadioGroupWidget extends Widget
     $this->tagName = "span";
   }
 
-  function display()
+  function displayInner()
   {
+    $widgets = [];
     foreach ($this->options as $value => $label)
     {
       $widget = new InputWidget($this->name);
       $widget->form = $this->form;
       $widget->type = "radio";
       $widget->value = $value;
-      if ($this->value == $value)
-        $widget->attributes["selected"] = true;
-      $this->widgets[$value] = $widget;
+      if ($this->value === $value)
+        $widget->attributes["checked"] = true;
+      $widgets[$value] = $widget;
     }
-    $this->set("widgets", $this->widgets);
-    parent::display();
-  }
 
-  function displayInner()
-  {
     if ($this->_template)
+    {
+      $this->set("widgets", $widgets);
       parent::displayInner();
+    }
     else
     {
-      foreach ($this->widgets as $value => $widget)
+      foreach ($widgets as $value => $widget)
         echo "<label>$widget {$this->options[$value]}</label>";
     }
   }

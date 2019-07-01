@@ -43,6 +43,8 @@ class ValidateTest extends TestCase
     $this->assertInstanceOf(\Exception::class, $v);
     $this->assertEquals(Validator::FAIL_INVALID, $v->getMessage());
 
+    $v = Validator::extractId($source2, "a");
+
     $v = Validator::extractId($source, "c");
     $this->assertInstanceOf(\Exception::class, $v);
     $this->assertEquals(Validator::FAIL_MISSING, $v->getMessage());
@@ -57,14 +59,11 @@ class ValidateTest extends TestCase
     $this->assertFalse(isset($r["failures"]["a"]));
     $this->assertEquals($source["a"],$r["values"]["a"]);
 
-
     $r = $v->validate($source2);
-
     $this->assertTrue(isset($r["success"]));
     $this->assertTrue(isset($r["values"]));
     $this->assertTrue(isset($r["failures"]));
     $this->assertFalse($r["success"]);
-    $this->assertFalse(isset($r["values"]["a"]));
     $this->assertTrue(isset($r["failures"]["a"]));
     $this->assertEquals(Validator::FAIL_MISSING,$r["failures"]["a"]);
   }
