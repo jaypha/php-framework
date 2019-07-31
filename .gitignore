@@ -1,6 +1,5 @@
 node_modules
 polyfills/node_modules
-testing/unit/var/files
 vendor
 config.php
 composer.lock
