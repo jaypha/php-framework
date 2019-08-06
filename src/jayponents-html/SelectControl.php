@@ -1,21 +1,25 @@
 <?php
 //----------------------------------------------------------------------------
-// Widget for text, password inputs
-//----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------
 
 namespace Jaypha\Jayponents\Html;
 
-class SelectWidget extends Widget
+class SelectControl extends Control
 {
+  const FAIL_TOO_MANY_FORMAT = "You can choose, at most, %n items for '%l'";
+  const FAIL_TOO_FEW_FORMAT = "You must choose at least %n items for '%l'";
+  const FAIL_INVALID_FORMAT = "The value for '%l' is invalid";
+
   const NULL_OPTION_LABEL = "-- Please select --";
 
-  public $options = [];
-  public $useValues = true;
+  private $options = [];
+
+  public $value; 
 
   function __construct($name, $form = null)
   {
+    $this->validator = new \Jaypha\ExtractEnum($name);
     parent::__construct($name, $form);
     $this->tagName = "select";
   }
@@ -33,23 +37,17 @@ class SelectWidget extends Widget
     {
       if (is_array($label))
       {
-        echo "<optgroup label='$value'>\n";
+        echo "<optgroup label='$value'>";
         $this->displayOptionGroup($label);
-        echo "</optgroup>\n";
+        echo "</optgroup>";
       }
       else
       {
         echo "<option";
-        if ($this->useValues)
-        {
-          echo " value='$value'";
-          if ($this->hasValue($value))
-            echo " selected";
-        }
-        else if ($this->hasValue($label))
+        echo " value='$value'";
+        if ($this->hasValue($value))
           echo " selected";
-                  
-        echo ">$label</option>\n";
+        echo ">$label</option>";
       }
     }
   }
@@ -72,7 +70,6 @@ class SelectWidget extends Widget
           return $this->attributes[$p];
         else
           return null;
-      case "required":
       case "autofocus":
       case "multiple":
         return isset($this->attributes[$p]);
@@ -87,21 +84,57 @@ class SelectWidget extends Widget
       case "value":
         $this->attributes[$p] = $v;
         break;
-      case "required":
       case "autofocus":
-      case "multiple":
         if ($v)
           $this->attributes[$p] = true;
         else
           unset($this->attributes[$p]);
         break;
+      case "multiple":
+        if ($v)
+          $this->setMaxCount("all");
+        else
+          $this->setMaxCount(1);
       default:
         parent::__set($p, $v);
     }
   }
+
+  //-------------------------------------------------------
+  // Validation methods
+
+  function setOptions(iterable $options, $failMessageFormat = null)
+  {
+    $this->options = $options;
+    if (!$failMessageFormat)
+      $failMessageFormat = self::FAIL_INVALID_FORMAT;
+    $failMessageFormat = str_replace("%l", $this->label, $failMessageFormat);
+    $this->validator->setOptions(array_keys($options),  $failMessageFormat);
+  }
+
+  function setMinCount($minCount, $failMessageFormat = null)
+  {
+    if (!$failMessageFormat)
+      $failMessageFormat = self::FAIL_TOO_SHORT_FORMAT;
+    $failMessageFormat = str_replace("%l", $this->label, $failMessageFormat);
+    $this->validator->setMinCount($minCount,  $failMessageFormat);
+  }
+
+  function setMaxCount($maxCount, $failMessageFormat = null)
+  {
+    if (!$failMessageFormat)
+      $failMessageFormat = self::FAIL_TOO_LONG_FORMAT;
+    $failMessageFormat = str_replace("%l", $this->label, $failMessageFormat);
+    $this->validator->setMaxCount($maxCount,  $failMessageFormat);
+    if ($maxCount == 1)
+      unset($this->attributes["multiple"]);
+    else
+      $this->attributes["multiple"] = true;
+  }
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2006-18 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2019 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //

@@ -3,8 +3,62 @@
 // Bulk include file.
 //----------------------------------------------------------------------------
 
+require "error-handling.php";
 require "exceptions/DataIntegrityException.php";
 
+require "validation/require.php";
+
+require "io.php";
+require "tokens.php";
+require "gsm.php";
+require "rnd.php";
+require "http.php";
+require "datetime.php";
+require "arrays.php";
+require "timing-safe.php";
+require "csv.php";
+
+require "logging/functions.php";
+require "logging/DevLogger.php";
+require "logging/EchoLogger.php";
+require "logging/FileLogger.php";
+require "logging/NullLogger.php";
+require "logging/ProductionLogger.php";
+require "logging/StreamLogger.php";
+//require "logging/TextLogger.php";
+
+require "storage/Entity.php";
+require "storage/Tags.php";
+require "storage/DbDag.php";
+
+require "middleware/error-formatters/ErrorResponseFormatter.php";
+require "middleware/error-formatters/ConsoleErrorResponseFormatter.php";
+require "middleware/error-formatters/HtmlErrorResponseFormatter.php";
+require "middleware/error-formatters/JsonErrorResponseFormatter.php";
+
+require "middleware/Middleware.php";
+require "middleware/service/Service.php";
+require "middleware/service/HttpService.php";
+
+require "middleware/SetContentSecurityPolicy.php";
+require "middleware/CsvOutput.php";
+require "middleware/JsonOutput.php";
+require "middleware/UseMysql.php";
+require "middleware/UseLatteEngine.php";
+
+require "jayponents-html/Button.php";
+require "jayponents-html/ButtonRow.php";
+
+require "jayponents-html/Control.php";
+require "jayponents-html/ControlGroup.php";
+require "jayponents-html/InputControl.php";
+require "jayponents-html/TextControl.php";
+require "jayponents-html/TextAreaControl.php";
+require "jayponents-html/SelectControl.php";
+
+require "jayponents-html/Form.php";
+
+/*
 require "jayponents-html/Button.php";
 require "jayponents-html/ButtonRow.php";
 require "jayponents-html/buttons.php";
@@ -19,7 +73,6 @@ require "jayponents-html/JayphaList.php";
 //require "jayponents-html/JayphaDatetime.php";
 //require "jayponents-html/JayphaEditable.php";
 
-require "jayponents-html/Widget.php";
 require "jayponents-html/InputWidget.php";
 require "jayponents-html/BooleanWidget.php";
 require "jayponents-html/TextAreaWidget.php";
@@ -48,7 +101,6 @@ require "middleware/Validation.php";
 require "middleware/Database.php";
 require "middleware/Timezone.php";
 require "middleware/IEDetect.php";
-require "middleware/ContentSecurityPolicy.php";
 require "middleware/CsvOutput.php";
 //require "middleware/Processor.php";
 //require "middleware/HttpRange.php";
@@ -59,9 +111,6 @@ require "middleware/CsvOutput.php";
 require "streams/PhpStream.php";
 require "streams/StringInputStream.php";
 
-require "storage/Entity.php";
-require "storage/Tags.php";
-require "storage/DbDag.php";
 
 require "auth/Login.php";
 require "auth/User.php";
@@ -77,17 +126,9 @@ require "logging/NullLogger.php";
 //require "logging/TextLogger.php";
 require "logging/FileLogger.php";
 
-require "io.php";
-require "tokens.php";
-require "gsm.php";
-require "rnd.php";
-require "http.php";
-require "datetime.php";
-require "arrays.php";
-require "timing-safe.php";
-require "csv.php";
 
 require "middleware/Service.php";
+*/
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha.

@@ -7,30 +7,26 @@
 
 namespace Jaypha\Jayponents\Html;
 
-class Form extends Element
+use Jaypha\ValidateRule;
+use Jaypha\ValidateRuleCollection;
+
+
+class Form extends Element implements ValidateRuleCollection
 {
   public $hiddens = [];
   public $values = [];
-  protected $fieldsets;
+
+  protected $validator;
 
   function __construct(string $action = null)
   {
     parent::__construct("form");
+    $this->validator = new \Jaypha\ValidateRuleList();
+
     if ($action != null)
       $this->attributes["action"] = $action;
     $this->attributes["method"] = "post";
-    $this->fieldsets = new \ArrayObject();
-    $this->set("fieldsets", $this->fieldsets);
-  }
-
-  //-----------------------------------
-
-  function addFieldset($fieldset = null)
-  {
-    if ($fieldset == null) $fieldset = new Fieldset($this);
-    else $fieldset->form = $this;
-    $this->fieldsets[] = $fieldset;
-    return $fieldset;
+    $this->attributes["novalidate"] = true;
   }
 
   //-----------------------------------
@@ -67,12 +63,28 @@ class Form extends Element
       case "onsubmit";
         $this->attributes[$p] = $v;
         break;
-      case "submitHandler":
-        $this->attributes["onsubmit"] = "return $v(this)";
-        break;
       default:
         parent::__set($p, $v);
     }
+  }
+
+  function extract(iterable $source, iterable $resultsSoFar = []) : iterable
+  {
+    if (!$resultsSoFar)
+      $resultsSoFar = new \ArrayObject();
+    return $this->validator->extract($source, $resultsSoFar);
+  }
+
+  function setFailMessageFormat(string $code, string $format):  ValidateRule
+  {
+    $this->validator->setFailMessageFormat($code,$format);
+    return $this;
+  }
+
+  function addRule(ValidateRule $rule) : ValidateRuleCollection
+  {
+    $this->validator->addRule($rule);
+    return $this;
   }
 }
 

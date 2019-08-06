@@ -1,25 +1,21 @@
 <?php
 //----------------------------------------------------------------------------
-// Widget for text, password inputs
-//----------------------------------------------------------------------------
-//
+// Component for <input> HTML elements
 //----------------------------------------------------------------------------
 
 namespace Jaypha\Jayponents\Html;
 
-class InputWidget extends Widget
+abstract class InputControl extends Control
 {
-  function __construct($name, $form = null)
+  function __construct($name)
   {
-    parent::__construct($name, $form);
+    parent::__construct($name);
     $this->tagName = "input";
   }
 
   function __get($p)
   {
     switch ($p) {
-      case "pattern":
-      case "value":
       case "type":
         return $this->attributes[$p] ?? null;
       default:
@@ -30,8 +26,6 @@ class InputWidget extends Widget
   function __set($p, $v)
   {
     switch ($p) {
-      case "pattern":
-      case "value":
       case "type":
         $this->attributes[$p] = $v;
         break;
