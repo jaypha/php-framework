@@ -61,14 +61,20 @@ class DateTimeTest extends TestCase
 
   function testToMysqlDate()
   {
+    $mDate = toMysqlDate(strtotime("2018-02-02"));
+    $this->assertEquals("2018-02-02", $mDate);
   }
 
   function testToMysqlTimestamp()
   {
+    $mTime = toMysqlTimestamp(strtotime("2018-02-02 +6hours +21minutes"));
+    $this->assertEquals("2018-02-02 06:21:00", $mTime);
   }
 
   function testToDateTimeString()
   {
+    $mTime = toDateTimeString(strtotime("2018-02-02 +6hours +21minutes"));
+    $this->assertEquals("2018-02-02T06:21:00+0000", $mTime);
   }
 }
 

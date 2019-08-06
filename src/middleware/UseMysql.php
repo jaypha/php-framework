@@ -5,7 +5,7 @@
 
 namespace Jaypha\Middleware;
 
-class Database implements Middleware
+class UseMysql implements Middleware
 {
   public function handle(
     $input,

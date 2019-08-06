@@ -1,15 +1,22 @@
 <?php
 //----------------------------------------------------------------------------
-// Stock repsonses that will be different depeding on the context
+// CSV responses
 //----------------------------------------------------------------------------
 
 namespace Jaypha\Middleware;
 
-interface ResponseFactory
+class JsonOutput implements Middleware
 {
-  function mimeType();
-  function gracefulExit($code);
-  function reject($mesasge, $code);
+  public function handle($input, Service $service)
+  {
+    $service->setMimeType("application/json");
+
+    $output = $service->next($input);
+
+    if (!is_string($output))
+      $output = json_encode($output);
+    return $output;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -17,3 +24,4 @@ interface ResponseFactory
 // License: BSL-1.0
 // Author: Jason den Dulk
 //
+

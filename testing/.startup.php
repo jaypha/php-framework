@@ -11,6 +11,8 @@ ini_set("display_errors", "1");
 ini_set("log_errors", "0");
 
 require "require.php";
+require "console-functions.php";
+require "middleware/service/ConsoleService.php";
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha.

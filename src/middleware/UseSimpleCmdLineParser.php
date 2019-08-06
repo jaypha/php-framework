@@ -5,26 +5,12 @@
 
 namespace Jaypha\Middleware;
 
-class Console implements ResponseFactory, Middleware
+class UseSimpleCmdLineParser implements Middleware
 {
   function __construct() {}
 
-  function mimeType() { return "text/plain"; }
-
-  function gracefulExit($code)
-  {
-    fwrite(STDERR, "Error: $code\n");
-  }
-
-  function reject($message, $code)
-  {
-    return "Rejected: ($code) $message, \n";
-  }
-
   function handle($input, Service $service)
   {
-    $service->setResponseFactory($this);
-
     $numberedParams = [];
     $namedParams = [];
     foreach ($input as $arg) {

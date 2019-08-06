@@ -1,13 +1,13 @@
 <?php
 //----------------------------------------------------------------------------
-// Main logger utilising the PSR-3 interface.
+// Primary PSR-3 logger for use on Production websites.
 //----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------
 
 namespace Jaypha;
 
-class MainLogger implements \Psr\Log\LoggerInterface
+class ProductionLogger implements \Psr\Log\LoggerInterface
 {
   //-------------------------------------------------------
 

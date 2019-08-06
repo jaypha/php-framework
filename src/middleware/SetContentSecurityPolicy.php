@@ -5,14 +5,16 @@
 
 namespace Jaypha\Middleware;
 
-class ContentSecurityPolicy implements Middleware
+class SetContentSecurityPolicy implements Middleware
 {
-  function __construct($policies)
+  function __construct($policies, $reportOnly = false)
   {
     $this->policies = $policies;
-    $this->headerName = "Content-Security-Policy";
+    $this->headerName = $reportOnly ?
+                        "Content-Security-Policy-Report-Only" :
+                        "Content-Security-Policy";
   }
-
+    
   public function handle($input, Service $service)
   {
     $policyStr = [];
@@ -25,15 +27,6 @@ class ContentSecurityPolicy implements Middleware
     }
     header($this->headerName.": ".implode("; ",$policyStr));
     return $service->next($input);
-  }
-}
-
-class ContentSecurityPolicyReportOnly extends ContentSecurityPolicy
-{
-  function __construct($policies)
-  {
-    parent::__construct($policies);
-    $this->headerName = "Content-Security-Policy-Report-Only";
   }
 }
 

@@ -3,25 +3,25 @@
 //
 //----------------------------------------------------------------------------
 
-namespace Jaypha\Middleware;
+namespace Jaypha;
 
-class CmdLineParser implements Middleware
+class NullErrorResponseFormatter extends ErrorResponseFormatter
 {
-  protected $validator;
-  protected $parser;
-
-  function __construct($options)
+  function gracefulExit($code)
   {
-    $this->parser = new \Nette\CommandLine\Parser($options);
+    http_response_code($code);
   }
 
-  function handle($input, Service $service)
+  function getRejectResponse($code, $message = null)
   {
-    $args = $this->parser->parse();
-    return $service->next($args);
-  }          
-}
+    return "";
+  }
 
+  function getErrorResponse($code, $message = null)
+  {
+    return "";
+  }
+}
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha.

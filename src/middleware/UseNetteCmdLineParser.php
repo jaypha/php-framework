@@ -1,24 +1,27 @@
 <?php
 //----------------------------------------------------------------------------
-// A special Middleware that combines validation with processing in a single
-// class.
+//
 //----------------------------------------------------------------------------
 
 namespace Jaypha\Middleware;
 
-class Processor implements Middleware
+class UseNetteCmdLineParser implements Middleware
 {
-  function __construct($service)
+  protected $validator;
+  protected $parser;
+
+  function __construct($options)
   {
-    $v = $this->getValidation();
-    if ($v)
-      $service->add($v);
+    $this->parser = new \Nette\CommandLine\Parser($options);
   }
 
-  function getValidation() { return null; }
-
-  function handle($input, $service) { return null; }
+  function handle($input, Service $service)
+  {
+    $args = $this->parser->parse();
+    return $service->next($args);
+  }          
 }
+
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha.
