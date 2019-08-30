@@ -1,50 +1,19 @@
 #----------------------------------------------------------------------------
-# Nginx configuration.
+# Nginx configuration for development sites.
 #----------------------------------------------------------------------------
 # Application root = <app-root>
 # Base domain = <domain>
-# TLS certificate = <ssl-crt>
-# TLS private key = <ssl-key>
 #-----------------------------------------------------------------------------
-
-#-----------------------------------------------------------------------------
-# Redirects to the canonical website and protocol
-
-server {
-  listen 80;
-  listen [::]:80;
-
-  server_name <domain> www.<domain>;
-  return 301 https://<domain>$request_uri;
-}
-
-#-----------------------------------------------------------------------------
-
-server {
-  listen 443 ssl;
-  listen [::]:443 ssl;
-
-  ssl_certificate     <ssl-crt>;
-  ssl_certificate_key <ssl-key>;
-
-  server_name www.<domain>;
-
-  return 301 https://<domain>$request_uri;
-}
 
 #-----------------------------------------------------------------------------
 # Canonical website configuration
 
 server {
-  listen 443 ssl http2;
-  listen [::]:443 ssl http2;
+  listen 80;
 
   server_name <domain>;
 
-  ssl_certificate     <ssl-crt>;
-  ssl_certificate_key <ssl-key>;
-
-  root <app-root>/docroots/public;
+  root <app-root>/docroot;
 
   index home.php;
 

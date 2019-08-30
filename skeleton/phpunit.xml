@@ -5,7 +5,7 @@
   
 >
   <testsuites>
-    <testsuite name="Primalinx Unit Tests">
+    <testsuite name="Project Unit Tests">
       <directory>tests</directory>
     </testsuite>
   </testsuites>

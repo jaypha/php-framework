@@ -1,0 +1,14 @@
+#!/bin/sh
+#-----------------------------------------------------------------------------
+# Installs the Nginx configuration files
+#-----------------------------------------------------------------------------
+
+BASEDIR=$(dirname $0)
+
+cd $BASEDIR/..
+APP_ROOT=${PWD}
+. $BASEDIR/vars
+
+ln -s $APP_ROOT/$NGINX_CONF $NGINX_SITES_DIR/$NGINX_SITES_AVAILABLE/$DOMAIN
+ln -s ../$NGINX_SITES_AVAILABLE/$DOMAIN $NGINX_SITES_DIR/$NGINX_SITES_ENABLED
+

@@ -10,8 +10,11 @@ namespace Config;
 // Root directory for data mutable by the application
 const VAR_ROOT = APP_ROOT."/var";
 
+// Root directory of the source tree.
+const SRC_ROOT = APP_ROOT."/src";
+
 // True for development installations
-const DEBUG = false;
+const DEBUG = true;
 
 // True for demonstration installations
 const DEMO = true;
@@ -29,12 +32,20 @@ const EMAIL_CATCHALL = false;
 const EMAIL_ERROR_NOTIFY = false;
 
 //-----------------------------------------------
+// Locality
+
+const LOCALE = <LOCALE>;
+
+//-----------------------------------------------
 // MySQL
 
 const MYSQL_HOST = "localhost";
 const MYSQL_USER = <MYSQL_USER>;
 const MYSQL_PASSWORD = <MYSQL_PASSWORD>;
 const MYSQL_DATABASE = <MYSQL_DATABASE>;
+
+// There is no easy way to get this from the DB.
+const MYSQL_TIMEZONE = <MYSQL_TIMEZONE>;
 
 //-----------------------------------------------
 // Logging
@@ -55,9 +66,6 @@ const JWT_KEY = "";
 // Assets
 
 const ASSET_DIR = "/assets";
-const JS_DIR = ASSET_DIR."/js";
-const CSS_DIR = ASSET_DIR."/css";
-const IMG_DIR = ASSET_DIR."/images";
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2018-9 Jaypha.

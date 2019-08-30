@@ -3,22 +3,23 @@
 //
 //----------------------------------------------------------------------------
 
-require "startup/startup.php";
+namespace Skeleton;
 
 use Jaypha\Middleware as MW;
-use Jaypha\Streams\StringInputStream;
 
-$service
-->setResponseFactory(new MW\HtmlResponseFactory())
-->run(
-  function($input, MW\Service $service)
-  {
-    $doc = new DocumentBase();
-    $doc->content->setTemplate("website/home.tpl");
-
-    return new StringInputStream($doc);
-  }
-);
+function getDocument($service)
+{
+  addStdHtmlBundle($service);
+  return $service->add(
+    function($input, $service)
+    {
+      $document = new MainDocument();
+      $document->title = "Home";
+      $document->setTemplate("home/home.tpl");
+      return $document;
+    }
+  );
+}
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2018 Jaypha.

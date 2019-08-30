@@ -1,6 +1,11 @@
-<h1>Hocus Pocus Taskus</h1>
+<header>
+ <h1>Main Document</h1>
+</header>
 
-{comp $content}
+{jayp $content}
+
+<footer>
+</footer>
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2018 Jaypha.

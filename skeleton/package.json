@@ -4,8 +4,7 @@
   "description": "Used to download javascript dependencies",
   "main": "index.js",
   "scripts": {
-    "build" : "rollup -c",
-    "dev": "rollup -c -w",
+    "rollup" : "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jason den Dulk",

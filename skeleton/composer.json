@@ -10,13 +10,15 @@
   ],
   "require": {
     "jaypha/jayponents-html": "^0.2",
+    "jaypha/jayponents-latte": "^0.1.1",
     "jaypha/mysqli-fixdb": "^0.1.1",
     "nette/command-line": "^1.3",
     "psr/log": "^1.0",
     "psr/http-message": "*",
-    "lfkeitel/phptotp": "^1.0",
+    "lfkeitel/phptotp": "^1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6"
+    "phpunit/phpunit": "^6",
+    "kubawerlos/html-validator": "^1.0"
   }
 }

@@ -1,0 +1,69 @@
+#!/usr/bin/php
+<?php
+//----------------------------------------------------------------------------
+// Updates database definitions.
+//----------------------------------------------------------------------------
+
+namespace HPT;
+
+use Jaypha\Middleware as MW;
+
+require __DIR__."/.startup.php";
+
+$service
+->add(new MW\UseMysql())
+->add(new MW\UseSimpleCmdLineParser())
+->run(
+  function($args, $service)
+  {
+    global $fixdb, $rdb;
+
+    $verbose = isset($args["v"]);
+    if ($verbose)
+    {
+      echo "Fix Database\n";
+      echo "Updating database '",\Config\MYSQL_DATABASE,"'.\n";
+      $input = \Jaypha\collectInput("Continue?","n");
+      if ($input != "y") exit;
+    }
+
+    $fixdb = new \Jaypha\FixDB($rdb);
+
+    browseDirectory(\Config\APP_ROOT.'/src');
+
+    if (isset($args["c"]))
+      $fixdb->addClean();
+
+    if (isset($args["x"]))
+      $fixdb->execute($verbose);
+    else
+      $fixdb->show();
+
+    if ($verbose)
+      echo "Fix Database finished.\n";
+
+  }
+);
+
+function browseDirectory($dir, $verbose = false)
+{
+  global $fixdb;
+  foreach (new \DirectoryIterator($dir) as $fileInfo)
+  {
+    if ($fileInfo->isDot())
+      continue;
+    if ($fileInfo->isDir())
+      browseDirectory($fileInfo->getPathname());
+    else if (substr_compare($fileInfo->getFilename(), ".db.php", -7) == 0)
+    {
+      if ($verbose)
+        echo "Processing ",$fileInfo->getPathname(),"\n";
+      include $fileInfo->getPathname();
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+// Copyright (C) 2017 Prima Health Solutions Pty Ltd. All rights reserved.
+// Author: Jason den Dulk
+//

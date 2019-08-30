@@ -16,7 +16,7 @@ const APP_ROOT = __DIR__;
     [
       ".",
       __DIR__."/src",
-      __DIR__."/src/.lib",
+      __DIR__."/src/framework",
     ]
   )
 );

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+BASEDIR=$(dirname $0)
+
+cd $BASEDIR/..
+APP_ROOT=${PWD}
+. $BASEDIR/vars
+
+certbot certonly --webroot --cert-name $DOMAIN \
+  -w $APP_ROOT/docroot -d $DOMAIN
+

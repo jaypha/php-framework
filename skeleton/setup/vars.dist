@@ -1,0 +1,14 @@
+
+
+DOMAIN=<domain>
+
+CERTBASE=/etc/letsencrypt/live
+
+NGINX_CONF=nginx.conf
+NGINX_CONF_DIST=etc/nginx.conf.dist
+NGINX_DEV_CONF_DIST=etc/nginx-dev.conf.dist
+
+NGINX_SITES_DIR="/etc/nginx"
+NGINX_SITES_AVAILABLE="sites-available"
+NGINX_SITES_ENABLED="sites-enabled"
+

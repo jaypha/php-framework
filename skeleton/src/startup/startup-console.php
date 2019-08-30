@@ -5,6 +5,8 @@
 //
 //----------------------------------------------------------------------------
 
+use Jaypha\Middleware as MW;
+
 const IS_CONSOLE = true;
 
 $_SERVER["DOCUMENT_ROOT"] = ".";
@@ -21,6 +23,12 @@ else
 
 require "require.php";
 require "console-functions.php";
+
+$_SESSION["isIE11"] = false;
+$_SESSION["isMobile"] = false;
+\setErrorHandlers();
+\setLogger(new \Jaypha\StreamLogger(STDOUT));
+$service = new MW\Service();
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha.

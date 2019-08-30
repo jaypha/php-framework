@@ -1,0 +1,15 @@
+#!/bin/sh
+#-----------------------------------------------------------------------------
+# Uninstalls the Nginx configuration files
+#
+#-----------------------------------------------------------------------------
+
+BASEDIR=$(dirname $0)
+
+cd $BASEDIR/..
+APP_ROOT=${PWD}
+. $BASEDIR/vars
+
+rm $NGINX_SITES_DIR/$NGINX_SITES_AVAILABLE/$DOMAIN
+rm $NGINX_SITES_DIR/$NGINX_SITES_ENABLED/$DOMAIN
+

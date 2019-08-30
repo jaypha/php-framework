@@ -1,0 +1,32 @@
+#!/bin/sh
+#-----------------------------------------------------------------------------
+# Creates the Nginx configuration files
+#
+#-----------------------------------------------------------------------------
+
+BASEDIR=$(dirname $0)
+
+SRC=vars.dist
+DEST=vars
+
+while getopts h: opt
+do
+	case "$opt" in
+	  h)
+	    DOMAIN=$OPTARG
+	    ;;
+    \?)
+   	  echo >&2 "usage: $0 [-h hostname]"
+   	  exit 1;;
+	esac
+done
+
+sed -e "s|<domain>|$DOMAIN|g" \
+    < $BASEDIR/$SRC  > $BASEDIR/$DEST
+
+#----------------------------------------------------------------------------
+# Copyright (C) 2019 Jaypha
+# License: BSL-1.0
+# Authors: Jason den Dulk
+#
+

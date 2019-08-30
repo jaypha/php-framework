@@ -1,0 +1,38 @@
+#!/bin/sh
+#-----------------------------------------------------------------------------
+# Creates the Nginx configuration files
+#
+#-----------------------------------------------------------------------------
+
+BASEDIR=$(dirname $0)
+
+cd $BASEDIR/..
+APP_ROOT=${PWD}
+. $BASEDIR/vars
+
+SRC=$NGINX_CONF_DIST
+
+while getopts dsh: opt
+do
+	case "$opt" in
+	  d)
+	    SRC=$NGINX_DEV_CONF_DIST
+	    ;;
+	  s)
+	    DOMAIN=$STAGING
+	    ;;
+	  h)
+	    DOMAIN=$OPTARG
+	    ;;
+    \?)
+   	  echo >&2 "usage: $0 [-d] [-s] [-h hostname]"
+   	  exit 1;;
+	esac
+done
+
+sed -e "s|<app-root>|$APP_ROOT|g" \
+    -e "s|<domain>|$DOMAIN|g" \
+    -e "s|<ssl-crt>|$CERTBASE/$DOMAIN/fullchain.pem|g" \
+    -e "s|<ssl-key>|$CERTBASE/$DOMAIN/privkey.pem|g" \
+    < $APP_ROOT/$SRC  > $APP_ROOT/$NGINX_CONF
+
