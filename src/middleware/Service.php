@@ -7,30 +7,17 @@
 
 namespace Jaypha\Middleware;
 
-use Jaypha\NullLogger;
-use \Psr\Log\LoggerInterface;
-
-abstract class Service
+class Service
 {
+  private $mimeType = "text/html";
+
   private $stack = [];
   private $stackIdx = 0;
   protected $originalInput;
 
-  function __construct($logger = null)
+  function __construct()
   {
-    if ($logger) $this->logger = $logger;
-    else $this->logger = new NullLogger();
-    assert ($this->logger instanceof LoggerInterface);
-  }
-
-  function getLogger() { return $this->logger; }
-  function setLogger($logger)
-  {
-    assert ($logger instanceof LoggerInterface);
-    $this->logger = $logger;
-    $erf = \getErrorResponseFormatter();
-    if ($erf) $erf->setLogger($this->logger);
-    return $this;
+    $this->setInput($_REQUEST);
   }
 
   function add($middleware)
@@ -51,17 +38,19 @@ abstract class Service
     return $this;
   }
 
-  function run($middleware = null)
+  function setInput($input)
   {
-    if ($middleware) $this->add($middleware);
-    $input = $_REQUEST;
     $this->originalInput = $input;
-    return $this->next($input);
   }
 
-  function output($middleware = null)
+  function run()
   {
-    $output = $this->run($middleware);
+    return $this->next($this->originalInput);
+  }
+
+  function output()
+  {
+    $output = $this->run();
     echo $output;
   }
 
@@ -76,11 +65,20 @@ abstract class Service
         return $current->handle($input, $this);
     }
 
-    return null;
+    throw new \LogicException("Middleware stack is exhausted");
   }
 
-  abstract function setErrorResponseFormatter($erf);
-  abstract function setMimeType($mimeType);
+  function setMimeType($mimeType)
+  {
+    $this->mimeType = $mimeType;
+    header("Content-Type: $mimeType");
+    return $this;
+  }
+
+  function getMimeType()
+  {
+    return $this->mimeType;
+  }
 }
 
 //----------------------------------------------------------------------------

@@ -18,7 +18,7 @@ class ControlGroup extends \Jaypha\Jayponents\Component
 
   function __construct($form = null)
   {
-    $this->setTemplate("framework/src/jayponents-html/ControlGroup.tpl");
+    $this->setTemplate("framework/jayponents-html/ControlGroup.tpl");
     $this->form = $form;
     $this->controls = new \ArrayObject();
     $this->set("controls", $this->controls);

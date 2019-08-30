@@ -20,7 +20,10 @@ Some polyfills are imported using NPM. Others are included directly.
 ## Notes
 
 Dialog Polyfill has a minor change in that the dialogPolyfill object is attached
-to window to enable insertion inside a module
+to window to enable insertion inside a module.
+
+Web components polyfills have not been included because they are too
+complicated.
 
 ## Copyright
 

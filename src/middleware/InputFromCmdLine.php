@@ -7,30 +7,13 @@
 
 namespace Jaypha\Middleware;
 
-class ConsoleService extends Service
+class InputFromCmdLine implements Middleware
 {
-  function __construct($logger = null)
-  { 
-    parent::__construct($logger);
-    \setErrorResponseFormatter(new \Jaypha\ConsoleErrorResponseFormatter($this->logger));
-  }
-
-  function run($middleware = null)
+  function handle($input, $service)
   {
-    if ($middleware) $this->add($middleware);
     $input = array_slice($GLOBALS["argv"], 1);
-    $this->originalInput = $input;
-    return $this->next($input);
-  }
-
-  function setErrorResponseFormatter($erf)
-  {
-    return $this;
-  }
-
-  function setMimeType($mimeType)
-  {
-    return $this;
+    $service->setInput($input);
+    return $service->next($input);
   }
 }
 

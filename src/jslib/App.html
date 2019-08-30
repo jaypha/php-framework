@@ -1,0 +1,25 @@
+<script>
+  window.docReady = new Promise
+  (
+    function(resolve,reject)
+    {
+      document.addEventListener
+      (
+        "DOMContentLoaded",
+        function()
+        {
+          resolve(true);
+        }
+      );
+    }
+  );
+
+  window.App = 
+  {
+    alert: function(msg)
+           {
+             window.alert(msg);
+           },
+  };
+</script>
+

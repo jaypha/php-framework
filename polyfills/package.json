@@ -4,9 +4,10 @@
   "description": "Compiles polyfills",
   "main": "",
   "scripts": {
-    "sass": "node-sass --include-path node_modules --include-path src",
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "sass-dev": "node-sass --include-path node_modules --include-path src",
+    "sass-dist": "node-sass --output-style compressed --include-path node_modules --include-path src",
+    "rollup-dev": "rollup -c",
+    "rollup-dist": "rollup -c --compact",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jason den Dulk",

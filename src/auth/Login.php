@@ -50,7 +50,7 @@ class Login
     return $this->login($user);
   }
 
-  function login(user $user)
+  function login(User $user)
   {
     $this->_user = $user;
     $this->id = $user->id;
@@ -71,7 +71,7 @@ class Login
 
   function logout()
   {
-    $_SESSION = [];
+    unset($_SESSION["login"]);
     $this->_user = null;
   }
 

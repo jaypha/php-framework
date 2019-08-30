@@ -6,7 +6,7 @@ export default [
 		input: 'src/polyfills.ie.js',
 		output: {
 			name: 'library',
-      file: 'dist/ie/polyfills.ie.js',
+      file: 'dist/polyfills.ie.js',
 			format: 'umd'
 		},
 		plugins: [
@@ -18,7 +18,7 @@ export default [
 		input: 'src/polyfills.js',
 		output: {
 			name: 'library',
-      file: 'dist/modern/polyfills.js',
+      file: 'dist/polyfills.js',
 			format: 'umd'
 		},
 		plugins: [

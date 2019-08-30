@@ -1,0 +1,16 @@
+#!/bin/bash
+#---------------------------------------------------------------------------
+# Script to install polfill files into a project.
+#---------------------------------------------------------------------------
+
+BASEDIR=$(dirname $0)
+SRCDIR=$BASEDIR/../polyfills/dist
+
+CURDIR=$1
+
+DESTDIR=$CURDIR/assets/polyfills
+
+install -d $DESTDIR
+
+cp $SRCDIR/* $DESTDIR
+

@@ -14,7 +14,13 @@ class SetContentSecurityPolicy implements Middleware
                         "Content-Security-Policy-Report-Only" :
                         "Content-Security-Policy";
   }
-    
+
+  public function reportOnly()
+  {
+    $this->headerName = "Content-Security-Policy-Report-Only";
+    return $this;
+  }
+
   public function handle($input, Service $service)
   {
     $policyStr = [];

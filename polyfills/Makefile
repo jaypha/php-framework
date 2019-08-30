@@ -21,35 +21,56 @@ SRCDIR = src
 #SASS = sassc -I $(SRCDIR) -I node_modules
 #SASSCOMP = --style compressed
 
-SASS = npm run sass
+SASS_DEV = npm run sass-dev
+SASS_DIST = npm run sass-dist
 SASSCOMP = --output-style compressed
 
-all: dev
+all: dev dist
 
-dev: css js
+dev: css-dev js-dev
+
+dist: css-dist
 
 #-----------------------------------------------------------------------
 # CSS
 
-css: css-ie css-normal
+css: css-dev css-dist
 
-css-ie:
-	$(SASS) -- $(SRCDIR)/polyfills.ie.scss $(DISTDIR)/ie/polyfills.ie.css
+css-dev: css-dev-ie css-dev-normal
 
-css-normal:
-	$(SASS) -- $(SRCDIR)/polyfills.scss $(DISTDIR)/modern/polyfills.css
+css-dev-ie:
+	$(SASS_DEV) -- $(SRCDIR)/polyfills.ie.scss $(DISTDIR)/polyfills.ie.css
+
+css-dev-normal:
+	$(SASS_DEV) -- $(SRCDIR)/polyfills.scss $(DISTDIR)/polyfills.css
 
 #-----------------------------------------------------------------------
-# Javascript
 
-js:
-	npm run build
+css-dist: css-dist-ie css-dist-normal
+
+css-dist-ie:
+	$(SASS_DIST) -- $(SRCDIR)/polyfills.ie.scss $(DISTDIR)/polyfills.ie.min.css
+
+css-dist-normal:
+	$(SASS_DIST) -- $(SRCDIR)/polyfills.scss $(DISTDIR)/polyfills.min.css
+
+#-----------------------------------------------------------------------
+# Javascript - TODO no compacting yet
+
+js: js-dev
+
+js-dev:
+	npm run rollup-dev
+
+js-dist:
+	npm run rollup-dist
+	mv $(DISTDIR)/polyfills.js  $(DISTDIR)/polyfills.min.js
+	mv $(DISTDIR)/polyfills.ie.js  $(DISTDIR)/polyfills.ie.min.js
 
 #----------------------------------------------------------------------------
 
 clean:
-	rm $(DISTDIR)/ie/*
-	rm $(DISTDIR)/modern/*
+	rm $(DISTDIR)/*
 
 setup:
 	npm install

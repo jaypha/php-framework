@@ -7,10 +7,9 @@ namespace Jaypha\Middleware;
 
 class UseSimpleCmdLineParser implements Middleware
 {
-  function __construct() {}
-
   function handle($input, Service $service)
   {
+    $input = array_slice($GLOBALS["argv"], 1);
     $numberedParams = [];
     $namedParams = [];
     foreach ($input as $arg) {

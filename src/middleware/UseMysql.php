@@ -7,10 +7,7 @@ namespace Jaypha\Middleware;
 
 class UseMysql implements Middleware
 {
-  public function handle(
-    $input,
-    Service $service
-  )
+  public function handle($input, Service $service)
   {
     global $rdb;
 
@@ -34,7 +31,7 @@ class UseMysql implements Middleware
     return $output;
   }
 }
-  
+
 //----------------------------------------------------------------------------
 // Copyright (C) 2018 Jaypha.
 // License: BSL-1.0

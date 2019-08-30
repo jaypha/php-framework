@@ -8,7 +8,8 @@ namespace Jaypha;
 interface UserFactory
 {
   function get($id) : ?User;
-  function getFromUsername($username) : ?User;
+  function getFromUsername(string $username) : ?User;
+  function create(string $username, string $password = null, bool $generateKey = false) : ?User;
 }
 
 interface User

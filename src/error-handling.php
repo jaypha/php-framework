@@ -4,12 +4,34 @@
 //----------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------
-// Generate output in repsonse to errors
+// Logger
 
-  $erf = null;
+  $logger = new \Jaypha\NullLogger();
 
-  function setErrorResponseFormatter($erf) { $GLOBALS["erf"] = $erf; }
-  function getErrorResponseFormatter() { return $GLOBALS["erf"]; }
+  function setLogger($logger) {
+    assert ($logger instanceof \Psr\Log\LoggerInterface);
+    $GLOBALS["logger"] = $logger;
+  }
+  function getLogger() { return $GLOBALS["logger"]; }
+
+//----------------------------------------------------------------------------
+// Graceful Exit
+
+  $gracefulExitOutput = function($code) {};
+    
+  function setGracefulExitOutput($callable)
+  {
+    assert (is_callable($callable));
+    $GLOBALS["gracefulExitOutput"] = $callable;
+  }
+
+  function gracefulExit($code = 500)
+  {
+    global $gracefulExitOutput;
+    http_response_code($code);
+    $gracefulExitOutput($code);
+    exit;
+  }
 
 //----------------------------------------------------------------------------
 
@@ -39,9 +61,7 @@
 
   function debug(string $message)
   {
-    global $erf;
-    if ($erf)
-      $erf->getLogger()->debug($message);
+    getLogger()->debug($message);
   }
 
   //--------------------------------------------------------------------------
@@ -49,9 +69,7 @@
 
   function warn(string $message)
   {
-    global $erf;
-    if ($erf)
-      $erf->getLogger()->warning($message);
+    getLogger()->warning($message);
   }
 
   //--------------------------------------------------------------------------
@@ -59,9 +77,7 @@
 
   function error(string $message)
   {
-    global $erf;
-    if ($erf)
-      $erf->getLogger()->error($message);
+    getLogger()->error($message);
   }
 
   //--------------------------------------------------------------------------
@@ -69,17 +85,8 @@
 
   function critical(string $message)
   {
-    global $erf;
-    if ($erf)
-    {
-      $erf->getLogger()->critical($message);
-      echo $erf->gracefulExit();
-    }
-    else
-    {
-      echo "Critical Error: $message";
-    }
-    exit;
+    getLogger()->critical($message);
+    gracefulExit();
   }
 
   //--------------------------------------------------------------------------
