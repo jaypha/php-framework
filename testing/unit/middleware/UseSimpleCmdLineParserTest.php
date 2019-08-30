@@ -7,6 +7,7 @@ namespace Jaypha;
 
 use PHPUnit\Framework\TestCase;
 use Jaypha\Middleware\UseSimpleCmdLineParser as Parser;
+use Jaypha\Middleware as MW;
 
 require "middleware/UseSimpleCmdLineParser.php";
 require __DIR__."/../../TestService.php";
@@ -15,7 +16,7 @@ class UseSimpleCmdLineParserTest extends TestCase
 {
   function testNoArgs()
   {
-    $service = new TestService([]);
+    $service = new MW\Service();
     $service->add(new Parser());
     $parsedInput = $service->run(function($input,$service) {
       return $input;
@@ -26,7 +27,8 @@ class UseSimpleCmdLineParserTest extends TestCase
 
   function testNumberedArgs()
   {
-    $service = new TestService([ "x", "y" ]);
+    $GLOBALS["argv"] = [ "", "x", "y" ];
+    $service = new MW\Service();
     $service->add(new Parser());
     $parsedInput = $service->run(function($input,$service) {
       return $input;
@@ -39,7 +41,8 @@ class UseSimpleCmdLineParserTest extends TestCase
 
   function testNamedArgs()
   {
-    $service = new TestService([ "--x=john", "--y=bill", "-z" ]);
+    $GLOBALS["argv"] = [ "", "--x=john", "--y=bill", "-z" ];
+    $service = new MW\Service();
     $service->add(new Parser());
     $parsedInput = $service->run(function($input,$service) {
       return $input;

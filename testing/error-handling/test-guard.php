@@ -3,16 +3,17 @@
 //
 //----------------------------------------------------------------------------
 
-require __DIR__."/../paths.php";
-require APP_ROOT."/config.php";
-require APP_ROOT."/vendor/autoload.php";
+require __DIR__."/.startup.php";
 
-ini_set("display_errors", "1");
-ini_set("log_errors", "0");
+//----------------------------------------------------------------------------
 
-require "require.php";
-require "console-functions.php";
-require "middleware/UseSimpleCmdLineParser.php";
+echo "1\n";
+guard(true);
+echo "2\n";
+guard(4-3 == 1);
+echo "3\n";
+guard(false);
+echo "4\n";
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha.

@@ -3,7 +3,7 @@
 //
 //----------------------------------------------------------------------------
 
-require __DIR__."/../paths.php";
+require __DIR__."/../../paths.php";
 require APP_ROOT."/config.php";
 require APP_ROOT."/vendor/autoload.php";
 
@@ -12,7 +12,9 @@ ini_set("log_errors", "0");
 
 require "require.php";
 require "console-functions.php";
-require "middleware/UseSimpleCmdLineParser.php";
+
+setErrorHandlers();
+setLogger(new \Jaypha\EchoLogger());
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha.

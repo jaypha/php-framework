@@ -43,8 +43,9 @@ class Service
     $this->originalInput = $input;
   }
 
-  function run()
+  function run($middleware = null)
   {
+    if ($middleware) $this->add($middleware);
     return $this->next($this->originalInput);
   }
 
