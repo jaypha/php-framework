@@ -3,7 +3,6 @@
 // Bulk include file.
 //----------------------------------------------------------------------------
 
-require "error-handling.php";
 require "exceptions/DataIntegrityException.php";
 
 require "validation/require.php";
@@ -31,15 +30,10 @@ require "storage/Entity.php";
 require "storage/Tags.php";
 require "storage/DbDag.php";
 
-require "middleware/error-formatters/ErrorResponseFormatter.php";
-require "middleware/error-formatters/ConsoleErrorResponseFormatter.php";
-require "middleware/error-formatters/HtmlErrorResponseFormatter.php";
-require "middleware/error-formatters/JsonErrorResponseFormatter.php";
-
 require "middleware/Middleware.php";
-require "middleware/service/Service.php";
-require "middleware/service/HttpService.php";
+require "middleware/Service.php";
 
+require "middleware/DetectUserAgent.php";
 require "middleware/SetContentSecurityPolicy.php";
 require "middleware/CsvOutput.php";
 require "middleware/JsonOutput.php";
@@ -56,27 +50,27 @@ require "jayponents-html/TextControl.php";
 require "jayponents-html/TextAreaControl.php";
 require "jayponents-html/SelectControl.php";
 
+require "jayponents-html/JayphaList.php";
+require "jayponents-html/JayphaEditable.php";
+require "jayponents-html/JayphaEnum.php";
+
 require "jayponents-html/Form.php";
 
+require "auth/Login.php";
+require "auth/User.php";
+
+require "error-handling.php";
+
 /*
-require "jayponents-html/Button.php";
-require "jayponents-html/ButtonRow.php";
 require "jayponents-html/buttons.php";
 require "jayponents-html/Dialog.php";
 require "jayponents-html/Fieldset.php";
-require "jayponents-html/Form.php";
 require "jayponents-html/FormDialog.php";
 require "jayponents-html/InlineButton.php";
 require "jayponents-html/Table.php";
 
-require "jayponents-html/JayphaList.php";
-//require "jayponents-html/JayphaDatetime.php";
-//require "jayponents-html/JayphaEditable.php";
 
-require "jayponents-html/InputWidget.php";
 require "jayponents-html/BooleanWidget.php";
-require "jayponents-html/TextAreaWidget.php";
-require "jayponents-html/SelectWidget.php";
 require "jayponents-html/RadioGroupWidget.php";
 
 require "jayponents-html/Ribbon.php";
@@ -84,50 +78,6 @@ require "jayponents-html/Ribbon.php";
 require "icomoon/IcomoonIcon.php";
 require "icomoon/IcomoonButtons.php";
 
-require "Validator.php";
-
-require "middleware/Middleware.php";
-require "middleware/response-factories/ResponseFactory.php";
-
-require "middleware/response-factories/NoResponseFactory.php";
-require "middleware/response-factories/ConsoleResponseFactory.php";
-require "middleware/response-factories/JsonResponseFactory.php";
-require "middleware/response-factories/HtmlResponseFactory.php";
-require "middleware/response-factories/LatteHtmlResponseFactory.php";
-
-require "middleware/CmdLineParser.php";
-require "middleware/UseLatteEngine.php";
-require "middleware/Validation.php";
-require "middleware/Database.php";
-require "middleware/Timezone.php";
-require "middleware/IEDetect.php";
-require "middleware/CsvOutput.php";
-//require "middleware/Processor.php";
-//require "middleware/HttpRange.php";
-
-//require "streams/MetadataStream.php";
-//require "streams/WrappedStream.php";
-//require "streams/SlicedStream.php";
-require "streams/PhpStream.php";
-require "streams/StringInputStream.php";
-
-
-require "auth/Login.php";
-require "auth/User.php";
-
-
-require "logging/MainLogger.php";
-require "logging/StreamLogger.php";
-require "logging/StdoutLogger.php";
-require "logging/functions.php";
-require "logging/EchoLogger.php";
-require "logging/DevLogger.php";
-require "logging/NullLogger.php";
-//require "logging/TextLogger.php";
-require "logging/FileLogger.php";
-
-
-require "middleware/Service.php";
 */
 
 //----------------------------------------------------------------------------
