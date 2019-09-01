@@ -6,6 +6,7 @@
 
 import './jslib/super-fetch.js';
 import './icomoon/icons.js';
+import './jayponents-html/Dialog.js';
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha

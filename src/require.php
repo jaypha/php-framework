@@ -16,6 +16,7 @@ require "datetime.php";
 require "arrays.php";
 require "timing-safe.php";
 require "csv.php";
+require "json-functions.php";
 
 require "logging/functions.php";
 require "logging/DevLogger.php";
@@ -37,11 +38,15 @@ require "middleware/DetectUserAgent.php";
 require "middleware/SetContentSecurityPolicy.php";
 require "middleware/CsvOutput.php";
 require "middleware/JsonOutput.php";
+require "middleware/ImageOutput.php";
 require "middleware/UseMysql.php";
 require "middleware/UseLatteEngine.php";
 
 require "jayponents-html/Button.php";
 require "jayponents-html/ButtonRow.php";
+require "jayponents-html/InlineButton.php";
+
+require "jayponents-html/Ribbon.php";
 
 require "jayponents-html/Control.php";
 require "jayponents-html/ControlGroup.php";
@@ -55,28 +60,28 @@ require "jayponents-html/JayphaEditable.php";
 require "jayponents-html/JayphaEnum.php";
 
 require "jayponents-html/Form.php";
+require "jayponents-html/Dialog.php";
+
+require "icomoon/IcomoonIcon.php";
+require "icomoon/IcomoonButtons.php";
 
 require "auth/Login.php";
 require "auth/User.php";
 
 require "error-handling.php";
 
+
 /*
 require "jayponents-html/buttons.php";
-require "jayponents-html/Dialog.php";
 require "jayponents-html/Fieldset.php";
 require "jayponents-html/FormDialog.php";
-require "jayponents-html/InlineButton.php";
 require "jayponents-html/Table.php";
 
 
 require "jayponents-html/BooleanWidget.php";
 require "jayponents-html/RadioGroupWidget.php";
 
-require "jayponents-html/Ribbon.php";
 
-require "icomoon/IcomoonIcon.php";
-require "icomoon/IcomoonButtons.php";
 
 */
 

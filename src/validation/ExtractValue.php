@@ -10,7 +10,7 @@ class ExtractValue extends ValidateRuleBase implements ValidateRuleCollection
   protected $name, $isRequired, $default = null;
   private $validateRules;
 
-  function __construct(string $name, bool $isRequired = true, $default = null)
+  function __construct(string $name, bool $isRequired = false, $default = null)
   {
     $this->name = $name;
     $this->isRequired = $isRequired;

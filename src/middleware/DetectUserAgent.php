@@ -28,8 +28,8 @@ class DetectUserAgent implements Middleware
     return $service->next($input);
   }
 
-  static function isIE11() { return $_SESSION["isIE11"]; }
-  static function isMobile() { return $_SESSION["isMobile"]; }
+  static function isIE11() { return $_SESSION["isIE11"] ?? false; }
+  static function isMobile() { return $_SESSION["isMobile"] ?? false; }
 }
 
 //----------------------------------------------------------------------------

@@ -120,6 +120,25 @@ App.superFetch = function(url, params)
   );
 }
 
+App.justFetch(url)
+{
+  let params = {
+    credentials: "include",
+    method: "get"
+  };
+  return App.superFetch(url, params);
+}
+
+App.postFetch(url, bodyData)
+{
+  let params = {
+    credentials: "include",
+    method: "post",
+    body: bodyData
+  };
+  return App.superFetch(url, params);
+}
+
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha
 // License: BSL-1.0

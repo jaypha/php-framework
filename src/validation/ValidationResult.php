@@ -26,15 +26,25 @@ class ValidationResult
 
   function getFailuresAsArray()
   {
-    $message = [];
-    foreach ($this->failures as $failure)
-      $message[] = $failure->message;
-    return $message;
+    $failures = [];
+    foreach ($this->failures as $name => $failure)
+      $failures[$name] = $failure->message;
+    return $failures;
   }
 
   function getFailuresAsString()
   {
     return implode("\n", $this->getFailuresAsArray());
+  }
+
+  // Json is for responsing to ajax form submission
+  function getFailuresAsJson()
+  {
+    return [
+      "success" => false,
+      "message" => $this->getFailuresAsString(),
+      "failures" => $this->getFailuresAsArray()
+    ];
   }
 }
 //----------------------------------------------------------------------------

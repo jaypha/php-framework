@@ -1,31 +1,23 @@
 <?php
 //----------------------------------------------------------------------------
-//
+// CSV responses
 //----------------------------------------------------------------------------
 
 namespace Jaypha\Middleware;
 
-class UseMysql implements Middleware
+class ImageOutput implements Middleware
 {
+  function __construct($imgType)
+  {
+    $this->imgType = $imgType;
+  }
+
   public function handle($input, Service $service)
   {
-    global $rdb;
-    $rdb = new \Jaypha\MySQLiExt
-    (
-      \Config\MYSQL_HOST,
-      \Config\MYSQL_USER,
-      \Config\MYSQL_PASSWORD,
-      \Config\MYSQL_DATABASE
-    );
-    $rdb->q("start transaction");
-    try {
-      $output = $service->next($input);
-    } catch (Throwable $t)
-    {
-      $rdb->q("rollback");
-      throw $t;
-    }
-    $rdb->q("commit");
+    $output = $service->next($input);
+
+    $service->setMimeType("image/$this->imgType");
+
     return $output;
   }
 }

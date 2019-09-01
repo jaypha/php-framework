@@ -17,10 +17,7 @@ class ExtractText extends ExtractValue
   function __construct(string $name, array $constraints = [])
   {
     $default = $constraints["default"] ?? "";
-    if (isset($constraints["required"]))
-      $required = $constraints["required"];
-    else
-      $required = !isset($constraints["default"]);
+    $required = $constraints["required"] ?? false;
 
     $this->constraints = $constraints;
     parent::__construct($name, $required, $default);
