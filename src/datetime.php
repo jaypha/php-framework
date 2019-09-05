@@ -16,27 +16,31 @@ const TIME_MYSQL = "H:i:s";
 const DATETIME_MYSQL = "Y-m-d H:i:s";
 const DATETIME_COMMON = "jS&\\n\b\s\p;M&\\n\b\s\p;Y&\\n\b\s\p;&\\n\b\s\p;g:i&\\n\b\s\p;a";
 
+//---------------------------------------------------------------------------
+
 // It would be preferable to be able to set the default timezone.
 // Unfortunately you cannot set the default to an offset (eg '+0200')
 
 function setTimezone($tz)
 {
   if ($tz === null)
-    $GLOBALS["timezone"] = new \DateTimeZone(\date_default_timezone_get());
+    $GLOBALS["jaypha_timezone"] = new \DateTimeZone(\date_default_timezone_get());
   else if (is_string($tz))
-    $GLOBALS["timezone"] = new \DateTimeZone($tz);
+    $GLOBALS["jaypha_timezone"] = new \DateTimeZone($tz);
   else
   {
     assert($tz instanceof \DateTimeZone);
-    $GLOBALS["timezone"] = $tz;
+    $GLOBALS["jaypha_timezone"] = $tz;
   }
 }
 
 function getTimezone()
 {
-  assert(!isset($GLOBALS["timezone"]) || $GLOBALS["timezone"] instanceof \DateTimeZone);
-  return $GLOBALS["timezone"] ?? new \DateTimeZone(\date_default_timezone_get());
+  assert(!isset($GLOBALS["jaypha_timezone"]) || $GLOBALS["jaypha_timezone"] instanceof \DateTimeZone);
+  return $GLOBALS["jaypha_timezone"] ?? new \DateTimeZone(\date_default_timezone_get());
 }
+
+//---------------------------------------------------------------------------
 
 function date($dateStr)
 {

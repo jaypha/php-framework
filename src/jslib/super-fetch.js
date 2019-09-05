@@ -120,7 +120,7 @@ App.superFetch = function(url, params)
   );
 }
 
-App.justFetch(url)
+App.justFetch = function(url)
 {
   let params = {
     credentials: "include",
@@ -129,7 +129,7 @@ App.justFetch(url)
   return App.superFetch(url, params);
 }
 
-App.postFetch(url, bodyData)
+App.postFetch = function(url, bodyData)
 {
   let params = {
     credentials: "include",

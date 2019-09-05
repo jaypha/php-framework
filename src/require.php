@@ -41,6 +41,7 @@ require "middleware/JsonOutput.php";
 require "middleware/ImageOutput.php";
 require "middleware/UseMysql.php";
 require "middleware/UseLatteEngine.php";
+require "middleware/SetTimezone.php";
 
 require "jayponents-html/Button.php";
 require "jayponents-html/ButtonRow.php";
