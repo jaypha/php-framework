@@ -1,0 +1,36 @@
+//----------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------
+
+.control-group-row
+{
+  border: 1px transparent solid;
+  padding: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  
+  span.required {
+    flex: 0 0 auto;
+    width: 15px;
+    text-align: left;
+  }
+  span.label {
+    flex: 1 1 auto;
+    width: 150px;
+    text-align: left;
+    padding-right: 5px;
+  }
+  .control-holder {
+    flex: 1000 1 auto;
+    .form-control { box-sizing: border-box; width: 100%; }
+  }
+}
+
+//----------------------------------------------------------------------------
+// Copyright (C) 2018 Jaypha.
+// License: BSL-1.0
+// Author: Jason den Dulk
+//
