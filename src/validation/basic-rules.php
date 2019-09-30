@@ -60,6 +60,34 @@ class DefaultRule extends ValidateRuleBase
 }
 
 //----------------------------------------------------------------------------
+// IDs are considered to be all digits, therefore can be checked using ctype
+
+class IdRule extends ValidateRuleBase
+{
+  private $name, $pattern;
+
+  //-------------------------------------------------------
+
+  function __construct(string $name) { $this->name = $name; }
+
+  //-------------------------------------------------------
+
+  function extract(iterable $source, iterable $resultsSoFar = []) : iterable
+  {
+    assert(array_key_exists($this->name, $resultsSoFar));
+
+    if (!($resultsSoFar[$this->name] instanceof Fail))
+      if (!ctype_digit($resultsSoFar[$this->name]))
+      {
+        $message = $this->errorFormats[FAIL_INVALID] ?? null;
+        $resultsSoFar[$this->name] = new Fail(FAIL_INVALID, $message);
+      }
+
+    return $resultsSoFar;
+  }
+}
+
+//----------------------------------------------------------------------------
 
 class PatternRule extends ValidateRuleBase
 {

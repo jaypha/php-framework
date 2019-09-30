@@ -73,29 +73,6 @@ function dialogCycle(passwordDialog)
 // A fetch replacement that will prompt for a password if requested by the 
 // server's response.
 
-App.formSubmit = function(form)
-{
-  let params = {
-    credentials: "include",
-    method: "post",
-    body: new FormData(form)
-  };
-
-  return App.superFetch
-  (
-    form.getAttribute("action"),
-    params
-  )
-  .then((data) =>
-  {
-    if ("redirect" in data)
-      window.location.href = data.redirect;
-    else if ("reload" in data)
-      window.location.reload();
-    return data;
-  });
-}
-
 App.superFetch = function(url, params)
 {
   return fetch(url,params)
@@ -119,6 +96,33 @@ App.superFetch = function(url, params)
     }
   );
 }
+
+//---------------------------------------------------------------------------
+//
+
+App.formSubmit = function(form)
+{
+  let params = {
+    credentials: "include",
+    method: "post",
+    body: new FormData(form)
+  };
+
+  return App.superFetch
+  (
+    form.getAttribute("action"),
+    params
+  )
+  .then((data) =>
+  {
+    if ("redirect" in data)
+      window.location.href = data.redirect;
+    else if ("reload" in data)
+      window.location.reload();
+    return data;
+  });
+}
+
 
 App.justFetch = function(url)
 {

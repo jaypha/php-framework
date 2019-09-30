@@ -31,11 +31,13 @@ require "storage/Entity.php";
 require "storage/Tags.php";
 require "storage/DbDag.php";
 
+require "latte/IncludePathFileLoader.php";
 require "middleware/Middleware.php";
 require "middleware/Service.php";
 
 require "middleware/DetectUserAgent.php";
 require "middleware/SetContentSecurityPolicy.php";
+require "middleware/PdfOutput.php";
 require "middleware/CsvOutput.php";
 require "middleware/JsonOutput.php";
 require "middleware/ImageOutput.php";

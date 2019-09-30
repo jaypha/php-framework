@@ -14,13 +14,19 @@ use Jaypha\Jayponents\Latte\LatteEngineAdaptor;
 
 class UseLatteEngine implements Middleware
 {
+  protected $latte;
+
   function __construct($srcDir = \Config\SRC_ROOT, $cacheDir = \Config\VAR_ROOT."/latte-cache")
   {
-    $latte = new Engine();
-    $latte->setTempDirectory($cacheDir);
-    $latte->setLoader(new FileLoader($srcDir));
-    Component::setDefaultEngine(new LatteEngineAdaptor($latte));
+    $this->latte = new Engine();
+    $this->latte->setTempDirectory($cacheDir);
+    $this->latte->setLoader(new \Jaypha\IncludePathFileLoader());
+    Component::setDefaultEngine(new LatteEngineAdaptor($this->latte));
   }
+
+  function setLoader($loader) { $this->latte->setLoader($loader); return $this; }
+
+  function setTempDirectory($tempDir) { $this->latte->setTempDirectory($tempDir); return $this; }
 
   public function handle($input, Service $service)
   {

@@ -12,16 +12,16 @@ class Login
   private $_user = null;
   private $factory;
 
-  static function isLoggedIn()
-  {
-    return (isset($_SESSION["login"]));
-  }
-
   function __construct(UserFactory $f)
   {
     $this->factory = $f;
     if (isset($_SESSION["login"]))
       $this->_user = $f->get($_SESSION["login"]["id"]);
+  }
+
+  function isLoggedIn()
+  {
+    return ($this->_user != null);
   }
 
   function loginWithPassword(string $username, string $password, ?string $totpToken = null)
