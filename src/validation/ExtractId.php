@@ -12,8 +12,8 @@ class ExtractId extends ExtractValue
   function __construct(string $name, bool $isRequired = false)
   {
     parent::__construct($name, $isRequired);
-    $this->patternRule = new IdRule($name);
-    $this->addRule($this->patternRule);
+    $patternRule = new IdRule($name);
+    $this->addRule($patternRule);
   }
 }
 
@@ -24,7 +24,7 @@ function extractId($source, $name, $isRequired = true)
   {
     if (ctype_digit($source[$name]))
       return $source[$name];
-  } else if (!$isRequred)
+  } else if (!$isRequired)
     return null;
   
   return false;

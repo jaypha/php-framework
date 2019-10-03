@@ -15,8 +15,6 @@ class SelectControl extends Control
 
   private $options = [];
 
-  public $value; 
-
   function __construct($name, $form = null)
   {
     $this->validator = new \Jaypha\ExtractEnum($name);

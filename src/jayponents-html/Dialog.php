@@ -14,15 +14,13 @@ class Dialog extends Element
     assert($id != "");
     parent::__construct("dialog");
     $this->id = $id;
+    $s = $this->addScript();
+    $s->add("docReady.then(function(){App.setUpDialog('$id')});");
   }
 
-  function display()
+  function getShowModalJs()
   {
-    assert($this->id != null);
-    parent::display();
-
-    // Register dialog with the polyfill.
-    echo "<script>docReady.then(function(){App.setUpDialog('$this->id')});</script>";
+    return "document.getElementById('$this->id').showModal()";
   }
 }
 

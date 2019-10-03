@@ -13,6 +13,7 @@ require __DIR__."/EqualToRule.php";
 require __DIR__."/Conditions.php";
 require __DIR__."/ExtractValue.php";
 require __DIR__."/ExtractText.php";
+require __DIR__."/ExtractId.php";
 require __DIR__."/ExtractEnum.php";
 require __DIR__."/ValidationResult.php";
 

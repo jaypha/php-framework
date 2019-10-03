@@ -44,6 +44,7 @@ require "middleware/ImageOutput.php";
 require "middleware/UseMysql.php";
 require "middleware/UseLatteEngine.php";
 require "middleware/SetTimezone.php";
+require "middleware/ValidateId.php";
 
 require "jayponents-html/Button.php";
 require "jayponents-html/ButtonRow.php";
@@ -57,6 +58,7 @@ require "jayponents-html/InputControl.php";
 require "jayponents-html/TextControl.php";
 require "jayponents-html/TextAreaControl.php";
 require "jayponents-html/SelectControl.php";
+require "jayponents-html/RadioGroupControl.php";
 
 require "jayponents-html/JayphaList.php";
 require "jayponents-html/JayphaEditable.php";

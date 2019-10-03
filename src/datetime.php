@@ -7,14 +7,14 @@
 
 namespace Jaypha;
 
-const DATE_SHORT = "j&\\n\b\s\p;M&\\n\b\s\p;y";
-const DATE_LONG  = "jS&\\n\b\s\p;F&\\n\b\s\p;Y";
-const DATE_COMMON = "jS&\\n\b\s\p;M&\\n\b\s\p;Y";
+const DATE_SHORT = "j&\u{00a0}M\u{00a0}y";
+const DATE_LONG  = "jS\u{00a0}F\u{00a0}Y";
+const DATE_COMMON = "jS\u{00a0}M\u{00a0}Y";
 const DATE_MYSQL = "Y-m-d";
 const DATE_BRIT  = "d/m/Y";
 const TIME_MYSQL = "H:i:s";
-const DATETIME_MYSQL = "Y-m-d H:i:s";
-const DATETIME_COMMON = "jS&\\n\b\s\p;M&\\n\b\s\p;Y&\\n\b\s\p;&\\n\b\s\p;g:i&\\n\b\s\p;a";
+const DATETIME_MYSQL = "Y-m-d\u{00a0}H:i:s";
+const DATETIME_COMMON = "jS\u{00a0}M\u{00a0}Y\u{00a0}\u{00a0}g:i\u{00a0}a";
 
 //---------------------------------------------------------------------------
 

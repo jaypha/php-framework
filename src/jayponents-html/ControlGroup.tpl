@@ -1,6 +1,6 @@
 
 {foreach $controls as $control}
- <div class='p control-group-row'>
+ <div class='control-group-row'>
   <span class='required'>{$control->required?"*":""}</span>
   <span class='label'>{$control->label}</span>
   <span class='control-holder'>
