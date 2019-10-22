@@ -13,7 +13,7 @@ const DATE_COMMON = "jS\u{00a0}M\u{00a0}Y";
 const DATE_MYSQL = "Y-m-d";
 const DATE_BRIT  = "d/m/Y";
 const TIME_MYSQL = "H:i:s";
-const DATETIME_MYSQL = "Y-m-d\u{00a0}H:i:s";
+const DATETIME_MYSQL = "Y-m-d H:i:s";
 const DATETIME_COMMON = "jS\u{00a0}M\u{00a0}Y\u{00a0}\u{00a0}g:i\u{00a0}a";
 
 //---------------------------------------------------------------------------

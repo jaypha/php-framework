@@ -71,6 +71,15 @@ class ControlGroup extends \Jaypha\Jayponents\Component
   }
 
   //-----------------------------------
+
+  function addCheckboxControl($name,$label = null)
+  {
+    $control = $this->addControl(new CheckboxControl($name),$label);
+    $control->label = $label;
+    return $control;
+  }
+
+  //-----------------------------------
 }
 
 //----------------------------------------------------------------------------

@@ -17,7 +17,8 @@ class SelectControl extends Control
 
   function __construct($name, $form = null)
   {
-    $this->validator = new \Jaypha\ExtractEnum($name);
+    $this->validator = new \Jaypha\ExtractEnum($name, ["default" => ""]);
+
     parent::__construct($name, $form);
     $this->tagName = "select";
   }

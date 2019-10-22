@@ -1,6 +1,7 @@
 <?php
 //----------------------------------------------------------------------------
 // Classes to group rules together, allowing for complex structures.
+// Each rule must pass for the entire list to pass.
 //----------------------------------------------------------------------------
 
 namespace Jaypha;

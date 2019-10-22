@@ -45,8 +45,8 @@ class JayphaList extends Element
 
   function setData($data)
   {
-    $this->data = new Element("script");
-    $this->data->attributes["type"] = "application/json";
+    $this->data = new Script();
+    $this->data->type = "application/json";
     $this->data->add(json_encode($data));
   }
 
@@ -60,12 +60,30 @@ class JayphaList extends Element
       $this->data->display();
   }
 
+  function __get($p)
+  {
+    switch ($p)
+    {
+      case "columnorder":
+        return explode(" ", $this->attributes["columnorder"]);
+        break;
+      case "datacolumnasrowclass":
+        return $this->attributes[$p];
+        break;
+      default:
+        parent::__set($p,$v);
+    }
+  }
+
   function __set($p, $v)
   {
     switch ($p)
     {
       case "columnorder":
         $this->attributes["columnorder"] = implode(" ", $v);
+        break;
+      case "datacolumnasrowclass":
+        $this->attributes[$p] = $v;
         break;
       default:
         parent::__set($p,$v);
@@ -120,8 +138,26 @@ class JayphaColumn extends Element
       case "sortable":
         return array_key_exists("sortable", $this->attributes);
         break;
+      case "link":
+        return $this->attributes[$p];
+        break;
       default:
         parent::__get($p);
+    }
+  }
+
+  function __set($p, $v)
+  {
+    switch ($p)
+    {
+      case "sortable":
+        $this->attributes["sortable"] = (bool) $v;
+        break;
+      case "link":
+        $this->attributes[$p] = $v;
+        break;
+      default:
+        parent::__set($p,$v);
     }
   }
 }
