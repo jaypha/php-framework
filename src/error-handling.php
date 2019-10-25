@@ -122,7 +122,10 @@
 		  E_USER_DEPRECATED => "E_USER_DEPRECATED"
 	  ];
 
-    warn("Error {$labels[$errno]} - $errstr ($errfile, $errline)");
+    if (\Config\DEBUG)
+      errorWithDetails(new Exception("Error {$labels[$errno]} - $errstr ($errfile, $errline)"));
+    else
+      warn("Error {$labels[$errno]} - $errstr ($errfile, $errline)");
 	  return true;
   }
 

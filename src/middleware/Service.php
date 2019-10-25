@@ -15,6 +15,8 @@ class Service
   private $stackIdx = 0;
   protected $originalInput;
 
+  protected $rejectFn;
+
   function __construct()
   {
     $this->setInput($_REQUEST);
@@ -69,6 +71,8 @@ class Service
     throw new \LogicException("Middleware stack is exhausted");
   }
 
+  //-------------------------------------------------------
+
   function setMimeType($mimeType)
   {
     $this->mimeType = $mimeType;
@@ -79,6 +83,38 @@ class Service
   function getMimeType()
   {
     return $this->mimeType;
+  }
+
+  //-------------------------------------------------------
+
+  function redirect($url)
+  {
+    header("Location: $url");
+    exit();
+  }
+
+  //-------------------------------------------------------
+
+  function acceptsHtml()
+  {
+    if (!isset($_SERVER['HTTP_ACCEPT']))
+      return true; // HTML is default
+    else
+      return strstr($_SERVER['HTTP_ACCEPT'], "html") !== false;
+  }
+
+  function setRejectFn($fn)
+  {
+    $this->rejectFn = $fn;
+    return $this;
+  }
+
+  function reject($message, $code = null, $extra = [])
+  {
+    if ($this->rejectFn)
+      return ($this->rejectFn)($message, $code, $extra);
+    else
+      return "Rejected: $message";
   }
 }
 
