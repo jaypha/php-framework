@@ -27,7 +27,7 @@ class CsvOutput implements ResponseFactory, Middleware
       header("Pragma: no-cache");
       header("Expires: 0");
 
-      return new StringInputStream(\Jaypha\csv_encode($output->data));
+      return $output;
     }
     else
     {
