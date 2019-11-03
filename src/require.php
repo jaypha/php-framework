@@ -86,6 +86,7 @@ require "datetime.php";
 require "arrays.php";
 require "timing-safe.php";
 require "csv.php";
+require "Result.php";
 
 require "middleware/Service.php";
 
