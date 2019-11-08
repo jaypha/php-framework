@@ -22,6 +22,7 @@
     "jaypha/jayponents-latte": "^0.1.1",
     "jaypha/jayponents-html": "^0.2.0",
     "psr/http-message": "^1.0",
+    "jaypha/maildir":"*",
     "phpunit/phpunit": "^6"
   }
 }

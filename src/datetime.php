@@ -16,6 +16,7 @@ const TIME_MYSQL = "H:i:s";
 const DATETIME_MYSQL = "Y-m-d H:i:s";
 const DATETIME_COMMON = "jS&\\n\b\s\p;M&\\n\b\s\p;Y&\\n\b\s\p;&\\n\b\s\p;g:i&\\n\b\s\p;a";
 
+//----------------------------------------------------------------------------
 // It would be preferable to be able to set the default timezone.
 // Unfortunately you cannot set the default to an offset (eg '+0200')
 
@@ -37,6 +38,8 @@ function getTimezone()
   assert(!isset($GLOBALS["timezone"]) || $GLOBALS["timezone"] instanceof \DateTimeZone);
   return $GLOBALS["timezone"] ?? new \DateTimeZone(\date_default_timezone_get());
 }
+
+//----------------------------------------------------------------------------
 
 function date($dateStr)
 {
@@ -137,8 +140,8 @@ function toMysqlDate($date = null)
 
 function toMysqlTimestamp($time = null)
 {
-  $val = toDateTime($time);
-  $val->setTimezone(new \DateTimeZone(\Config\MYSQL_TIMEZONE));
+  $val = toDateTimeImmutable($time);
+  $val = $val->setTimezone(new \DateTimeZone(\Config\MYSQL_TIMEZONE));
   return $val->format(DATETIME_MYSQL);
 }
 

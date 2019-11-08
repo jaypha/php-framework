@@ -41,7 +41,9 @@ abstract class WrappedStream  implements StreamInterface
 
   public function read($length)  { return $this->_stream->read($length); }
 
-  public function getContents() { retrun $this->stream->getContents(); }
+  public function getContents() { return $this->stream->getContents(); }
+
+  public function getMetadata($key = null) { return $this->stream->getMEatadata($key); }
 }
 
 //----------------------------------------------------------------------------
