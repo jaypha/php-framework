@@ -46,6 +46,7 @@ require "middleware/UseLatteEngine.php";
 require "middleware/SetTimezone.php";
 require "middleware/ValidateId.php";
 
+require "jayponents-html/buttons.php";
 require "jayponents-html/Button.php";
 require "jayponents-html/ButtonRow.php";
 require "jayponents-html/InlineButton.php";

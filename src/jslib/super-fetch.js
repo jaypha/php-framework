@@ -100,6 +100,7 @@ App.superFetch = function(url, params)
 //---------------------------------------------------------------------------
 //
 
+
 App.formSubmit = function(form)
 {
   let params = {
@@ -142,6 +143,70 @@ App.postFetch = function(url, bodyData)
   };
   return App.superFetch(url, params);
 }
+
+App.postForm = function(form)
+{
+  let params = {
+    credentials: "include",
+    method: "post",
+    body: new FormData(form)
+  };
+
+  return App.superFetch
+  (
+    form.getAttribute("action"),
+    params
+  );
+}
+
+//----------------------------------------------------------------------------
+// Register a standard submission handler
+
+App.setPostSubmissionFn = function(formId, fn)
+{
+  let form = document.getElementById(formId);
+  let buttons = form.querySelectorAll("button[type=submit]");
+  [...buttons].forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault(); // Prevents the submit event from happening.
+      let formData = new FormData(form);
+      if (button.name && button.value)
+        formData.append(button.name, button.value);
+      App.postFetch(form.getAttribute("action"),formData)
+      .then(fn);
+      return false;
+    });
+  });
+}
+
+//----------------------------------------------------------------------------
+// Common 'lazy' submit that takes its cues from the server.
+
+docReady.then(function()
+{
+  let forms = document.querySelectorAll("form.lazy-submit");
+  [...forms].forEach((form) => {
+    let buttons = form.querySelectorAll("button[type=submit]");
+    [...buttons].forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault(); // Prevents the submit event from happening.
+        let formData = new FormData(form);
+        if (button.name && button.value)
+          formData.append(button.name, button.value);
+        App.postFetch(form.getAttribute("action"),formData)
+        .then((data) =>
+        {
+          if ("redirect" in data)
+            window.location.href = data.redirect;
+          else if ("reload" in data)
+            window.location.reload();
+          return data;
+        });
+        return false;
+      });
+    });
+  });
+});
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha

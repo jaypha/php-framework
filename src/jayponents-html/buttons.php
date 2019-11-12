@@ -12,7 +12,7 @@ function linkAsButton($label, $link)
 
 function linkButton($label, $link)
 {
-  return "<button onclick='document.location=\"$link\"'>$label</button>";
+  return "<button type='button' onclick='document.location=\"$link\"'>$label</button>";
 }
 
 function scriptButton($label, $script)
@@ -20,9 +20,9 @@ function scriptButton($label, $script)
   return "<button type='button' onclick='$script'>$label</button>";
 }
 
-function submitButton($label = "Submit")
+function submitButton($name, $value, $label = "Submit")
 {
-  return "<button type='submit'>$label</button>";
+  return "<button type='submit' name='$name'>$label</button>";
 }
 
 function resetButton($label = "Reset")
