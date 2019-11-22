@@ -12,16 +12,20 @@ class CsvOutput implements Middleware
   {
     $output = $service->next($input);
 
-    if ($output instanceof CsvDocument)
+    if ($output instanceof \Jaypha\CsvDocument)
     {
       if ($output->filename)
         header("Content-Disposition: attachment; filename=\"$output->filename\"");
-      header("Pragma: no-cache");
-      header("Expires: 0");
 
       $output = $output->__toString();
     }
+    else if (is_array($output))
+      $output = \Jaypha\csv_encode($this->data);
     assert(is_string($output));
+
+    header("Pragma: no-cache");
+    header("Expires: 0");
+
     $service->setMimeType("application/csv");
     return $output;
   }

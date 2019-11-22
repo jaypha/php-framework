@@ -184,7 +184,7 @@ App.setPostSubmissionFn = function(formId, fn)
 
 docReady.then(function()
 {
-  let forms = document.querySelectorAll("form.lazy-submit");
+  let forms = document.querySelectorAll("form.default-submit");
   [...forms].forEach((form) => {
     let buttons = form.querySelectorAll("button[type=submit]");
     [...buttons].forEach((button) => {

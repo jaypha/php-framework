@@ -18,12 +18,15 @@ class DateTimeTest extends TestCase
   {
     $this->date = date("2018-01-01");
     $this->dateImmutable = dateImmutable("2018-01-01");
+    setTimezone("+0200");
   }
 
   function testFromNull()
   {
     $this->assertNull(date(null));
     $this->assertNull(dateImmutable(null));
+    $this->assertNull(toDateTime(null));
+    $this->assertNull(toDateTimeImmutable(null));
   }
 
   function testType()
@@ -43,38 +46,23 @@ class DateTimeTest extends TestCase
 
   function testToDateTime()
   {
-    $date = toDateTime(strtotime("2018-02-02"));
+    $date = toDateTime(1517522400); // 2018-02-02T00:00:00+0200
     $this->assertInstanceOf(\DateTime::class, $date);
-    $this->assertTrue($date->format(DATE_MYSQL) == "2018-02-02");
+    $this->assertEquals("2018-02-02T00:00:00+0200", $date->format(\DateTime::ISO8601));
     
     $date = toDateTime("2018-02-02");
     $this->assertInstanceOf(\DateTime::class, $date);
-    $this->assertTrue($date->format(DATE_MYSQL) == "2018-02-02");
-
-    $date = toDateTime();
-    $this->assertInstanceOf(\DateTime::class, $date);
+    $this->assertEquals("2018-02-02T00:00:00+0200", $date->format(\DateTime::ISO8601));
 
     $date = today();
     $this->assertInstanceOf(\DateTime::class, $date);
-    $this->assertTrue($date == toDateTime($date));
-  }
-
-  function testToMysqlDate()
-  {
-    $mDate = toMysqlDate(strtotime("2018-02-02"));
-    $this->assertEquals("2018-02-02", $mDate);
-  }
-
-  function testToMysqlTimestamp()
-  {
-    $mTime = toMysqlTimestamp(strtotime("2018-02-02 +6hours +21minutes"));
-    $this->assertEquals("2018-02-02 06:21:00", $mTime);
+    $this->assertTrue($date === toDateTime($date));
   }
 
   function testToDateTimeString()
   {
-    $mTime = toDateTimeString(strtotime("2018-02-02 +6hours +21minutes"));
-    $this->assertEquals("2018-02-02T06:21:00+0000", $mTime);
+    $mTime = toDateTimeString("2018-02-02 +6hours +21minutes");
+    $this->assertEquals("2018-02-02T06:21:00+0200", $mTime);
   }
 }
 

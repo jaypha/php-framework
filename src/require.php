@@ -13,6 +13,7 @@ require "gsm.php";
 require "rnd.php";
 require "http.php";
 require "datetime.php";
+require "datetime-mysql.php";
 require "arrays.php";
 require "timing-safe.php";
 require "csv.php";
@@ -46,6 +47,7 @@ require "middleware/UseLatteEngine.php";
 require "middleware/SetTimezone.php";
 require "middleware/ValidateId.php";
 
+require "jayponents-html/BoxLink.php";
 require "jayponents-html/buttons.php";
 require "jayponents-html/Button.php";
 require "jayponents-html/ButtonRow.php";

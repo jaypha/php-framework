@@ -7,14 +7,19 @@
 
 namespace Jaypha;
 
-const DATE_SHORT = "j&\u{00a0}M\u{00a0}y";
-const DATE_LONG  = "jS\u{00a0}F\u{00a0}Y";
-const DATE_COMMON = "jS\u{00a0}M\u{00a0}Y";
-const DATE_MYSQL = "Y-m-d";
+// \u{00a0} = Non breaking space.
+
+const DATE_SHORT = "j&\u{00a0}M\u{00a0}y"; // 15 Mar 19
+const DATE_LONG  = "jS\u{00a0}F\u{00a0}Y"; // 15th March 2019
+const DATE_COMMON = "jS\u{00a0}M\u{00a0}Y"; // 15th Mar 2019
+
+const DATE_ISO = "Y-m-d";
 const DATE_BRIT  = "d/m/Y";
-const TIME_MYSQL = "H:i:s";
-const DATETIME_MYSQL = "Y-m-d H:i:s";
-const DATETIME_COMMON = "jS\u{00a0}M\u{00a0}Y\u{00a0}\u{00a0}g:i\u{00a0}a";
+const DATE_US = "m/d/Y";
+
+const TIME_COMMON = "g:i\u{00a0}a"; // 12:15 pm
+
+const DATETIME_COMMON = DATE_COMMON."\u{00a0}\u{00a0}".TIME_COMMON;
 
 //---------------------------------------------------------------------------
 
@@ -85,6 +90,7 @@ function formatDateTime($dateTime = null, $format = \DateTime::ISO8601, $nullInd
   else return toDateTime($dateTime)->format($format);
 }
 
+//---------------------------------------------------------------------------
 // A test that restricts acceptable date strings to ISO format
 
 function dateStrValid(string $str)
@@ -97,10 +103,10 @@ function dateStrValid(string $str)
 //---------------------------------------------------------------------------
 // Takes in a date/time in any format and converts it to a DateTime value.
 
-function toDateTime($timeValue = null)
+function toDateTime($timeValue)
 {
-  if ($timeValue === null)
-    return now();
+  if ($timeValue == null)
+    return null;
   if ($timeValue instanceof \DateTime)
     return $timeValue;
   if ($timeValue instanceof \DateTimeImmutable)
@@ -115,10 +121,10 @@ function toDateTime($timeValue = null)
 //---------------------------------------------------------------------------
 // Same as above, except DateTimeImmutable
 
-function toDateTimeImmutable($timeValue = null)
+function toDateTimeImmutable($timeValue)
 {
-  if ($timeValue === null)
-    return nowImmutable();
+  if ($timeValue == null)
+    return null;
   if ($timeValue instanceof \DateTimeImmutable)
     return $timeValue;
   if ($timeValue instanceof \DateTime)
@@ -131,28 +137,18 @@ function toDateTimeImmutable($timeValue = null)
 }
 
 //---------------------------------------------------------------------------
-// Convenience function to convert a date to MySQL format.
-
-function toMysqlDate($date = null)
-{
-  $val = toDateTime($date);
-  return $val->format(DATE_MYSQL);
-}
-
-function toMysqlTimestamp($time = null)
-{
-  $val = toDateTime($time);
-  $val->setTimezone(new \DateTimeZone(\Config\MYSQL_TIMEZONE));
-  return $val->format(DATETIME_MYSQL);
-}
+// Straight to a string
 
 function toDateTimeString($date, $format = \DateTime::ISO8601)
 {
   $val = toDateTime($date);
+  if ($val == null) return null;
   return $val->format($format);
 }
 
+//---------------------------------------------------------------------------
 // Basically the number of years that have passed since $refDate.
+
 function age($refDate, $ageDate = null)
 {
   $diff = toDateTime($refDate)->diff(toDateTime($ageDate));

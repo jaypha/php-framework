@@ -1,0 +1,22 @@
+//-----------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------
+
+.box-link
+{
+  display: flex;
+  align-items: center;
+  .left { margin-right: 5px; }
+  .right { margin-left: 5px; }
+  .content {
+    flex-grow: 1;
+    display: inline-block;
+    text-align: center;
+  }
+}
+
+//-----------------------------------------------------------------------------
+// Copyright (C) 2019 Jaypha.
+// License: BSL-1.0
+// Author: Jason den Dulk
+//
