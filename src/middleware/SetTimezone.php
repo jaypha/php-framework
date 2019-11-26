@@ -9,6 +9,9 @@ namespace PHS;
 
 namespace Jaypha\Middleware;
 
+// Include this javascript into your HTML document.
+const TIMEZONE_JS = "document.cookie='tzoffset='+((new Date()).getTimezoneOffset()*-60)+'; path=/';";
+
 class SetTimezone implements Middleware
 {
   public function handle($input, Service $service)
@@ -29,7 +32,8 @@ class SetTimezone implements Middleware
     }
     else
       \Jaypha\setTimezone(null);
-    return $output = $service->next($input);
+
+    return $service->next($input);
   }
 }
 

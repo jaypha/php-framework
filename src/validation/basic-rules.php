@@ -104,7 +104,7 @@ class PatternRule extends ValidateRuleBase
     assert(array_key_exists($this->name, $resultsSoFar));
 
     if (!($resultsSoFar[$this->name] instanceof Fail))
-    if (!preg_match("/$this->pattern/", $resultsSoFar[$this->name]))
+    if (!preg_match("$this->pattern", $resultsSoFar[$this->name]))
     {
       $message = $this->errorFormats[FAIL_INVALID] ?? null;
       $resultsSoFar[$this->name] = new Fail(FAIL_INVALID, $message);

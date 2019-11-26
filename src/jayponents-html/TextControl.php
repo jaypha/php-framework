@@ -26,7 +26,7 @@ class TextControl extends InputControl
     if (!$failMessageFormat)
       $failMessageFormat = self::FAIL_INVALID_FORMAT;
     $failMessageFormat = str_replace("%l", $this->label, $failMessageFormat);
-    $this->validator->setPattern("^$pattern$",  $failMessageFormat);
+    $this->validator->setPattern($pattern,  $failMessageFormat);
   }
 
   function setMinLength($minLength, $failMessageFormat = null)

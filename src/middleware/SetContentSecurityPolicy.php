@@ -7,6 +7,8 @@ namespace Jaypha\Middleware;
 
 class SetContentSecurityPolicy implements Middleware
 {
+  static $nonce = null;
+
   function __construct($policies, $reportOnly = false)
   {
     $this->policies = $policies;

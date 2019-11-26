@@ -19,6 +19,8 @@ require "timing-safe.php";
 require "csv.php";
 require "json-functions.php";
 
+require "jslib/app-js.php";
+
 require "logging/functions.php";
 require "logging/DevLogger.php";
 require "logging/EchoLogger.php";
@@ -48,12 +50,14 @@ require "middleware/SetTimezone.php";
 require "middleware/ValidateId.php";
 
 require "jayponents-html/DocReadyScript.php";
+
+require "jayponents-html/JayphaDocument.php";
+
 require "jayponents-html/BoxLink.php";
 require "jayponents-html/buttons.php";
 require "jayponents-html/Button.php";
 require "jayponents-html/ButtonRow.php";
 require "jayponents-html/InlineButton.php";
-
 require "jayponents-html/Ribbon.php";
 
 require "jayponents-html/Control.php";

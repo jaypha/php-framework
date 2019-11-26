@@ -30,6 +30,7 @@ class Button  extends Element
         return $this->attributes[$p] ?? false;
       case "onclick":
       case "type":
+      case "name":
       case "value":
         return $this->attributes[$p] ?? null;
       default:
@@ -45,6 +46,7 @@ class Button  extends Element
         break;
       case "onclick":
       case "type":
+      case "name":
       case "value":
         $this->attributes[$p] = $v;
         break;
@@ -58,6 +60,7 @@ class Button  extends Element
     $button = new Button($label);
     $button->type="submit";
     $button->value = $value;
+    $button->name = "submit";
     return $button;
   }
 

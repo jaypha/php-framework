@@ -4,6 +4,7 @@
 //----------------------------------------------------------------------------
 
 require __DIR__."/Fail.php";
+require __DIR__."/patterns.php";
 require __DIR__."/interfaces.php";
 require __DIR__."/ValidateRuleList.php";
 require __DIR__."/ValidateRuleBase.php";
