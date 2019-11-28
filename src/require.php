@@ -63,6 +63,7 @@ require "jayponents-html/Ribbon.php";
 require "jayponents-html/Control.php";
 require "jayponents-html/ControlGroup.php";
 require "jayponents-html/InputControl.php";
+require "jayponents-html/DateControl.php";
 require "jayponents-html/TextControl.php";
 require "jayponents-html/TextAreaControl.php";
 require "jayponents-html/SelectControl.php";

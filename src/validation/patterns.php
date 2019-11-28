@@ -5,11 +5,10 @@
 
 namespace Jaypha;
 
-use Jaypha\Jayponents\Html;
 
- const REGEX_NUMBER = "/^(\+|-)?\d+(\.\d+)?$/";
- const REGEX_INTEGER = "/^(\+|-)?\d+$/";
- const REGEX_ISO_DATE = "/^\d{4}-?\d{2}-?\d{2}$/";
+const REGEX_NUMBER = "/^(\+|-)?\d+(\.\d+)?$/";
+const REGEX_INTEGER = "/^(\+|-)?\d+$/";
+const REGEX_ISO_DATE = "/^\d{4}-?\d{2}-?\d{2}$/";
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha.

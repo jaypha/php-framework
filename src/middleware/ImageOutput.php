@@ -18,6 +18,8 @@ class ImageOutput implements Middleware
 
     $service->setMimeType("image/$this->imgType");
 
+    header("Content-Length: ".strlen($output));
+
     return $output;
   }
 }
