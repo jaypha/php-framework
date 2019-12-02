@@ -53,7 +53,6 @@ require "jayponents-html/DocReadyScript.php";
 
 require "jayponents-html/JayphaDocument.php";
 
-require "jayponents-html/BoxLink.php";
 require "jayponents-html/buttons.php";
 require "jayponents-html/Button.php";
 require "jayponents-html/ButtonRow.php";

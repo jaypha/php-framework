@@ -9,6 +9,12 @@ namespace Jaypha;
 
 class ExtractId extends ExtractValue
 {
+  static function ExtractId(iterable $source, iterable $resultsSoFar, string $name, bool $isRequired)
+  {
+    $rule = new ExtractId($name, $isRquired);
+    return $rule->extract($source, $resultsSoFar);
+  }
+
   function __construct(string $name, bool $isRequired = false)
   {
     parent::__construct($name, $isRequired);

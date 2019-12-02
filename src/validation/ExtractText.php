@@ -84,6 +84,14 @@ class ExtractText extends ExtractValue
 
     return $this;
   }
+
+  //-------------------------------------------------------
+
+  static function ExtractText($source, $resultsSoFar, $name, $constraints)
+  {
+    $rule = new ExtractText($name, $constraints);
+    return $rule->extract($source, $resultsSoFar);
+  }
 }
 
 //----------------------------------------------------------------------------

@@ -87,6 +87,15 @@ class ExtractEnum extends ExtractValue
 
     return $this;
   }
+
+  //-------------------------------------------------------
+
+  static function ExtractEnum($source, $resultsSoFar, $name, $constraints)
+  {
+    $rule = new ExtractEnum($name, $constraints);
+    return $rule->extract($source, $resultsSoFar);
+  }
+
 }
 
 //----------------------------------------------------------------------------

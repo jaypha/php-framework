@@ -91,7 +91,9 @@ class IdRule extends ValidateRuleBase
 
 class PatternRule extends ValidateRuleBase
 {
-  private $name, $pattern;
+  private $name;
+
+  public $pattern;
 
   //-------------------------------------------------------
 
@@ -104,7 +106,9 @@ class PatternRule extends ValidateRuleBase
     assert(array_key_exists($this->name, $resultsSoFar));
 
     if (!($resultsSoFar[$this->name] instanceof Fail))
-    if (!preg_match("$this->pattern", $resultsSoFar[$this->name]))
+    $matching = preg_match($this->pattern, $resultsSoFar[$this->name]);
+    if ($matching === false) throw new \RuntimeException("Pattern rule failed");
+    if ($matching == 0)
     {
       $message = $this->errorFormats[FAIL_INVALID] ?? null;
       $resultsSoFar[$this->name] = new Fail(FAIL_INVALID, $message);
@@ -224,6 +228,70 @@ class MinCountRule extends ValidateRuleBase
       {
         $message = $this->errorFormats[FAIL_TOO_LOW] ?? null;
         $resultsSoFar[$this->name] = new Fail(FAIL_TOO_LOW, str_replace("%m", $this->minCount,  $message));
+      }
+    }
+    return $resultsSoFar;
+  }
+}
+
+//----------------------------------------------------------------------------
+
+class MinimumRule extends ValidateRuleBase
+{
+  private $name, $min;
+
+  //-------------------------------------------------------
+
+  function __construct(string $name, int $min) { $this->name = $name; $this->min = $min; }
+
+  //-------------------------------------------------------
+
+  function extract(iterable $source, iterable $resultsSoFar = []) : iterable
+  {
+    assert(array_key_exists($this->name, $resultsSoFar));
+
+    if (!($resultsSoFar[$this->name] instanceof Fail))
+    {
+      $val = $resultsSoFar[$this->name];
+
+      assert(preg_match(REGEX_NUMBER, $resultsSoFar[$this->name]) !== false);
+
+      if ($val < $this->min)
+      {
+        $message = $this->errorFormats[FAIL_TOO_LOW] ?? null;
+        $resultsSoFar[$this->name] = new Fail(FAIL_TOO_LOW, str_replace("%m", $this->min,  $message));
+      }
+    }
+    return $resultsSoFar;
+  }
+}
+
+//----------------------------------------------------------------------------
+
+class MaximumRule extends ValidateRuleBase
+{
+  private $name, $max;
+
+  //-------------------------------------------------------
+
+  function __construct(string $name, int $max) { $this->name = $name; $this->max = $max; }
+
+  //-------------------------------------------------------
+
+  function extract(iterable $source, iterable $resultsSoFar = []) : iterable
+  {
+    assert(array_key_exists($this->name, $resultsSoFar));
+
+    if (!($resultsSoFar[$this->name] instanceof Fail))
+    {
+      $val = $resultsSoFar[$this->name];
+
+      assert(preg_match(REGEX_NUMBER, $resultsSoFar[$this->name]) !== false);
+
+      if ($val > $this->max)
+      {
+        $message = $this->errorFormats[FAIL_TOO_HIGH] ?? null;
+        $resultsSoFar[$this->name] = new Fail(FAIL_TOO_HIGH, str_replace("%m", $this->max,  $message));
       }
     }
     return $resultsSoFar;

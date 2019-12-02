@@ -102,8 +102,6 @@ class JayphaColumn extends Element
     parent::__construct($tagName);
     $this->attributes["name"] = $name;
     $this->label = $label;
-    if ($label)
-      $this->add($label);
     foreach ($attributes as $i => $v)
     {
       if ($i == "options")

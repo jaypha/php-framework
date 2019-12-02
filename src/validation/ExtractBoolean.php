@@ -16,6 +16,15 @@ class ExtractBoolean extends ExtractValue
     $resultsSoFar[$this->name] = (bool) $resultsSoFar[$this->name];
     return $resultsSoFar;
   }
+
+  //-------------------------------------------------------
+
+  static function ExtractBoolean($source, $resultsSoFar, $name, $isRequired, $default = null)
+  {
+    $rule = new ExtractBoolean($name, $constraints);
+    return $rule->extract($source, $resultsSoFar);
+  }
+
 }
 
 //----------------------------------------------------------------------------
