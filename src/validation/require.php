@@ -19,6 +19,7 @@ require __DIR__."/ExtractText.php";
 require __DIR__."/ExtractId.php";
 require __DIR__."/ExtractEnum.php";
 require __DIR__."/ValidationResult.php";
+require __DIR__."/extract-values.php";
 
 
 //----------------------------------------------------------------------------

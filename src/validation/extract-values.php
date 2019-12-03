@@ -11,7 +11,7 @@ function extractValues($source, $rules)
 {
   $resultsSoFar = [];
 
-  foreach ($this->rules as $name => $rule)
+  foreach ($rules as $name => $rule)
   {
     $varType = $rule["type"] ?? "string";
     $default = $constraints["default"] ?? "";
@@ -19,22 +19,22 @@ function extractValues($source, $rules)
     switch ($varType)
     {
       case "id":
-        $r = ExtractId::ExtractId($source, $resultsSoFar, $name, $isRequired);
+        $resultsSoFar = ExtractId::ExtractId($source, $resultsSoFar, $name, $isRequired);
         break;
       case "string":
-        $r = ExtractText::ExtractText($source, $resultsSoFar, $name, $rule);
+        $resultsSoFar = ExtractText::ExtractText($source, $resultsSoFar, $name, $rule);
       case "enum":
       case "enumerated":
-        $r = ExtractEnum::ExtractEnum($source, $resultsSoFar, $name, $rule);
+        $resultsSoFar = ExtractEnum::ExtractEnum($source, $resultsSoFar, $name, $rule);
         break;
       case "integer":
         $rule["precision"] = 0;
       case "number":
-        $r = ExtractNumber::ExtractNumber($source, $resultsSoFar, $name, $rule);
+        $resultsSoFar = ExtractNumber::ExtractNumber($source, $resultsSoFar, $name, $rule);
         break;
       case "boolean":
       case "bool":
-        $r = ExtractBoolean::ExtractBoolean($source, $resultsSoFar, $name, $isRequired, $default);
+        $resultsSoFar = ExtractBoolean::ExtractBoolean($source, $resultsSoFar, $name, $isRequired, $default);
         break;
       default:
         throw new \LogicException("Type '$varType' not supported");
@@ -42,6 +42,36 @@ function extractValues($source, $rules)
   }
   return new ValidationResult($resultsSoFar);
 }
+
+/*----------------------------------------------------------------------------
+
+ Validation constraint parameters.
+ 
+ For all types
+  type
+  required
+  default
+
+ For string
+  maxLength
+  minLength
+  pattern
+
+ For enum
+  options
+  maxCount
+  minCount
+
+ For integer
+  min
+  max
+
+ For number
+  min
+  max
+  precision
+
+*/
 
 //----------------------------------------------------------------------------
 // Copyright (C) 2018 Jaypha.
