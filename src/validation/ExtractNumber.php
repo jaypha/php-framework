@@ -5,7 +5,7 @@
 //
 //----------------------------------------------------------------------------
 
-namespace PHS;
+namespace Jaypha;
 
 use Jaypha\Jayponents\Html;
 
@@ -15,7 +15,7 @@ class ExtractNumber extends ExtractValue
   private $patternRule;
   private $minRule, $maxRule, $precisionRule;
 
-  function __construct(string $name, array $constratints = [])
+  function __construct(string $name, array $constraints = [])
   {
     $default = $constraints["default"] ?? "";
     $required = $constraints["required"] ?? false;
@@ -96,6 +96,7 @@ class ExtractNumber extends ExtractValue
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2006-19 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2019 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //

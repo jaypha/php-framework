@@ -16,6 +16,8 @@ class IssetCondition implements Evaluation
   }
 }
 
+//----------------------------------------------------------------------------
+
 class EqualsCondition implements Evaluation
 {
   private $name, $value;
@@ -27,6 +29,8 @@ class EqualsCondition implements Evaluation
   }
 }
 
+//----------------------------------------------------------------------------
+
 class ValueEvaluation implements Evaluation
 {
   private $name;
@@ -36,6 +40,8 @@ class ValueEvaluation implements Evaluation
     return $resultsSoFar[$this->name];
   }
 }
+
+//----------------------------------------------------------------------------
 
 class RulePassFailCondition implements Evaluation
 {
@@ -58,6 +64,8 @@ class RulePassFailCondition implements Evaluation
   }
 }
 
+//----------------------------------------------------------------------------
+
 class AndCondition implements Evaluation
 {
   const PASS=true;
@@ -77,6 +85,8 @@ class AndCondition implements Evaluation
   }
 }
 
+//----------------------------------------------------------------------------
+
 class OrCondition implements Evaluation
 {
   const PASS=true;
@@ -95,6 +105,8 @@ class OrCondition implements Evaluation
            $rule2->evaluate($resultsSoFar);
   }
 }
+
+//----------------------------------------------------------------------------
 
 class NotCondition implements Evaluation
 {

@@ -24,9 +24,25 @@ class ControlGroup extends \Jaypha\Jayponents\Component
     $this->set("controls", $this->controls);
   }
 
-  //-----------------------------------
+  //-------------------------------------------------------
 
-  function addControl($control)
+  function addNonControl(\Jaypha\Jayponents\Component $c)
+  {
+    $this->controls[] = $c;
+  }
+
+  //-------------------------------------------------------
+
+  function addStatic($text)
+  {
+    $c = new \Jaypha\Jayponents\Component();
+    $c->add($text);
+    $this->controls[] = $c;
+  }
+
+  //-------------------------------------------------------
+
+  function addControl(Control $control)
   {
     $control->form = $this->form;
     $this->controls[$control->name] = $control;
@@ -34,7 +50,7 @@ class ControlGroup extends \Jaypha\Jayponents\Component
     return $control;
   }
 
-  //-----------------------------------
+  //-------------------------------------------------------
 
   function addTextControl($name,$label = null)
   {
@@ -43,7 +59,7 @@ class ControlGroup extends \Jaypha\Jayponents\Component
     return $control;
   }
 
-  //-----------------------------------
+  //-------------------------------------------------------
 
   function addPasswordControl($name,$label = null)
   {
@@ -52,7 +68,7 @@ class ControlGroup extends \Jaypha\Jayponents\Component
     return $control;
   }
 
-  //-----------------------------------
+  //-------------------------------------------------------
 
   function addTextAreaControl($name,$label = null)
   {
@@ -61,7 +77,7 @@ class ControlGroup extends \Jaypha\Jayponents\Component
     return $control;
   }
 
-  //-----------------------------------
+  //-------------------------------------------------------
 
   function addSelectControl($name,$label = null)
   {
@@ -70,7 +86,16 @@ class ControlGroup extends \Jaypha\Jayponents\Component
     return $control;
   }
 
-  //-----------------------------------
+  //-------------------------------------------------------
+
+  function addRadioGroupControl($name,$label = null)
+  {
+    $control = $this->addControl(new RadioGroupControl($name),$label);
+    $control->label = $label;
+    return $control;
+  }
+
+  //-------------------------------------------------------
 
   function addCheckboxControl($name,$label = null)
   {
@@ -79,7 +104,7 @@ class ControlGroup extends \Jaypha\Jayponents\Component
     return $control;
   }
 
-  //-----------------------------------
+  //-------------------------------------------------------
 }
 
 //----------------------------------------------------------------------------

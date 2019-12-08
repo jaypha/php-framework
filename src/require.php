@@ -4,6 +4,7 @@
 //----------------------------------------------------------------------------
 
 require "exceptions/DataIntegrityException.php";
+require "exceptions/DeprecatedException.php";
 
 require "validation/require.php";
 
@@ -18,6 +19,9 @@ require "arrays.php";
 require "timing-safe.php";
 require "csv.php";
 require "json-functions.php";
+
+require "PdfDocument.php";
+require "CsvDocument.php";
 
 require "jslib/app-js.php";
 

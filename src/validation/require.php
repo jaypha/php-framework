@@ -15,6 +15,7 @@ require __DIR__."/OneOfRequiredRule.php";
 require __DIR__."/Conditions.php";
 require __DIR__."/ExtractValue.php";
 require __DIR__."/ExtractBoolean.php";
+require __DIR__."/ExtractNumber.php";
 require __DIR__."/ExtractText.php";
 require __DIR__."/ExtractId.php";
 require __DIR__."/ExtractEnum.php";

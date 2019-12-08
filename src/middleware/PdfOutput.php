@@ -7,8 +7,6 @@ namespace Jaypha\Middleware;
 
 class PdfOutput implements Middleware
 {
-  public $filename;
-
   function __construct()
   {
   }
@@ -17,16 +15,32 @@ class PdfOutput implements Middleware
   {
     $output = $service->next($input);
 
-    if (!is_string($output))
+    if ($output instanceof \Jaypha\PdfDocument)
+    {
+      if ($output->filename)
+        header("Content-Disposition: inline; filename=\"$output->filename\"");
+
       $output = $output->__toString();
+    }
+    else if (is_object($output))
+      $output = $output->__toString();
+
+    assert(is_string($output));
+
     $service->setMimeType("application/pdf");
 
     header("Content-Length: ".strlen($output));
 
-    if ($this->filename)
-      header("Content-disposition: inline; filename=\"$this->filename\"");
-
     return $output;
+  }
+
+  function __set($p, $v)
+  {
+    switch ($p)
+    {
+      case "filename":
+        throw new DeprecatedException("PdfOutput::filename is deprecated");
+    }
   }
 }
 

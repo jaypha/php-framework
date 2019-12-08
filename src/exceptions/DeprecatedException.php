@@ -1,12 +1,12 @@
 <?php
 //----------------------------------------------------------------------------
-// An exception that is thrown when data in the database is found to be
-// invalid.
+// An exception that can be thrown when code is attempting to do something
+// that has been deprecated.
 //----------------------------------------------------------------------------
 
 namespace Jaypha;
 
-class DataIntegrityException extends \RuntimeException
+class DeprecatedException extends \LogicException
 {
 }
 

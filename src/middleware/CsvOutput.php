@@ -15,7 +15,7 @@ class CsvOutput implements Middleware
     if ($output instanceof \Jaypha\CsvDocument)
     {
       if ($output->filename)
-        header("Content-Disposition: attachment; filename=\"$output->filename\"");
+        header("Content-Disposition: inline; filename=\"$output->filename\"");
 
       $output = $output->__toString();
     }
@@ -25,6 +25,7 @@ class CsvOutput implements Middleware
 
     header("Pragma: no-cache");
     header("Expires: 0");
+    header("Content-Length: ".strlen($output));
 
     $service->setMimeType("application/csv");
     return $output;

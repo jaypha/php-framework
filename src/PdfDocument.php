@@ -1,13 +1,25 @@
 <?php
 //----------------------------------------------------------------------------
-// An exception that is thrown when data in the database is found to be
-// invalid.
+//
 //----------------------------------------------------------------------------
 
 namespace Jaypha;
 
-class DataIntegrityException extends \RuntimeException
+class PdfDocument
 {
+  public $filename;
+  public $content;
+
+  function __toString()
+  {
+    if (is_object($this->content))
+      return $this->content->__toString();
+    else
+    {
+      assert(is_string($this->content));
+      return $this->content;
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
