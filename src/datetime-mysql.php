@@ -23,7 +23,7 @@ function toMysqlDate($date)
 
 function toMysqlTimestamp($time)
 {
-  if ($date == null) return null;
+  if ($time == null) return null;
   $val = toDateTime($time);
   $val->setTimezone(new \DateTimeZone(\Config\MYSQL_TIMEZONE));
   return $val->format(DATETIME_MYSQL);

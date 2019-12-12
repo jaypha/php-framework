@@ -20,6 +20,8 @@ require "timing-safe.php";
 require "csv.php";
 require "json-functions.php";
 
+require "Steps.php";
+
 require "PdfDocument.php";
 require "CsvDocument.php";
 
