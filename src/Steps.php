@@ -24,6 +24,8 @@ interface ISteps
   function reverseStep() : ?int;
   function gotoStep(int $n) : bool;
   function getContentForStep(?int $n = null); // Defaults to current step
+
+  function dataStore() : ArrayAccess
 }
 
 //----------------------------------------------------------------------------
@@ -34,6 +36,11 @@ interface IStepMomento
 {
   function getSteps();
   function updateSteps($currentStep, $furthestStep);
+
+  function saveStuff($stuff);
+  function retrieveStuff();
+
+  function dataStore() : ArrayAccess
 }
 
 //----------------------------------------------------------------------------
@@ -180,6 +187,13 @@ class Steps implements ISteps
 
   //-------------------------------------------------------
 
+  function dataStore() : ArrayAccess
+  {
+    return $this->momento->dataStore();
+  }
+
+  //-------------------------------------------------------
+
   private function updateMomento()
   {
     if ($this->momento)
@@ -199,7 +213,14 @@ class SessionStepMomento
   {
     $this->name = $name;
     if (!isset($_SESSION["steps"][$name]))
-      $_SESSION["steps"][$name] = [ "currentStep" => null, "furthestStep" => null ];
+    {
+      $_SESSION["steps"][$name] =
+      [
+        "currentStep" => null,
+        "furthestStep" => null,
+        "dataStore" => new \ArrayObject()
+      ];
+    }
   }
 
   function getSteps()
@@ -210,6 +231,11 @@ class SessionStepMomento
   function updateSteps($currentStep, $furthestStep)
   {
     $_SESSION["steps"][$this->name] = [ "currentStep" => $currentStep, "furthestStep" => $furthestStep ];
+  }
+
+  function dataStore() : ArrayAccess
+  {
+    $_SESSION["steps"][$this->name]["dataStore"];
   }
 }
 
@@ -224,7 +250,7 @@ class DbStepMomento
   {
     $this->tableName = $tableName;
     $this->rdb = $rdb;
-    $this0->id = $id;
+    $this->id = $id;
   }
 
   function getSteps()
@@ -235,6 +261,10 @@ class DbStepMomento
   function updateSteps($currentStep, $furthestStep)
   {
     $this->rdb->insertUpdate($this->tableName, [ "currentStep" => $currentStep, "furthestStep" => $furthestStep ], [ "id" => $this->id ]);
+  }
+
+  function dataStore() : ArrayAccess
+  {
   }
 }
   

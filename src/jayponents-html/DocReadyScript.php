@@ -5,11 +5,9 @@
 //
 //----------------------------------------------------------------------------
 
-namespace PHS;
+namespace Jaypha\Jayponents\Html;
 
-use Jaypha\Jayponents\Html;
-
-class DocReadyScript extends Html\Script
+class DocReadyScript extends Script
 {
   function displayInner()
   {
@@ -20,6 +18,7 @@ class DocReadyScript extends Html\Script
 }
 
 //----------------------------------------------------------------------------
-// Copyright (C) 2006-19 Prima Health Solutions Pty Ltd. All rights reserved.
+// Copyright (C) 2019 Jaypha.
+// License: BSL-1.0
 // Author: Jason den Dulk
 //
