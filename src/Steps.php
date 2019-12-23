@@ -25,7 +25,7 @@ interface ISteps
   function gotoStep(int $n) : bool;
   function getContentForStep(?int $n = null); // Defaults to current step
 
-  function dataStore() : ArrayAccess
+  function dataStore() : ArrayAccess;
 }
 
 //----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ interface IStepMomento
   function saveStuff($stuff);
   function retrieveStuff();
 
-  function dataStore() : ArrayAccess
+  function dataStore() : ArrayAccess;
 }
 
 //----------------------------------------------------------------------------
