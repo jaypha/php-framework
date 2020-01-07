@@ -9,17 +9,17 @@ namespace Jaypha;
 
 // \u{00a0} = Non breaking space.
 
-const DATE_SHORT = "j&\u{00a0}M\u{00a0}y"; // 15 Mar 19
-const DATE_LONG  = "jS\u{00a0}F\u{00a0}Y"; // 15th March 2019
-const DATE_COMMON = "jS\u{00a0}M\u{00a0}Y"; // 15th Mar 2019
+const DATE_SHORT = "j M y"; // 15 Mar 19
+const DATE_LONG  = "jS F Y"; // 15th March 2019
+const DATE_COMMON = "jS M Y"; // 15th Mar 2019
 
 const DATE_ISO = "Y-m-d";
 const DATE_BRIT  = "d/m/Y";
 const DATE_US = "m/d/Y";
 
-const TIME_COMMON = "g:i\u{00a0}a"; // 12:15 pm
+const TIME_COMMON = "g:i a"; // 12:15 pm
 
-const DATETIME_COMMON = DATE_COMMON."\u{00a0}\u{00a0}".TIME_COMMON;
+const DATETIME_COMMON = DATE_COMMON." ".TIME_COMMON;
 
 //---------------------------------------------------------------------------
 

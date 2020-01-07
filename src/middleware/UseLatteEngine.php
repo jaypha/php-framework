@@ -22,6 +22,10 @@ class UseLatteEngine implements Middleware
     $this->latte->setTempDirectory($cacheDir);
     $this->latte->setLoader(new \Jaypha\IncludePathFileLoader());
     Component::setDefaultEngine(new LatteEngineAdaptor($this->latte));
+
+    $this->latte->addFilter('makenb', function ($s) {
+      return str_replace(" ", "\u{00a0}", $s);
+    });
   }
 
   function setLoader($loader) { $this->latte->setLoader($loader); return $this; }
