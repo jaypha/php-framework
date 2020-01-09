@@ -23,6 +23,7 @@ const DATETIME_COMMON = DATE_COMMON." ".TIME_COMMON;
 
 //---------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------
 // It would be preferable to be able to set the default timezone.
 // Unfortunately you cannot set the default to an offset (eg '+0200')
 

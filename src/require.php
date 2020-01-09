@@ -90,21 +90,6 @@ require "auth/User.php";
 
 require "error-handling.php";
 
-
-/*
-require "jayponents-html/buttons.php";
-require "jayponents-html/Fieldset.php";
-require "jayponents-html/FormDialog.php";
-require "jayponents-html/Table.php";
-
-
-require "jayponents-html/BooleanWidget.php";
-require "jayponents-html/RadioGroupWidget.php";
-
-
-
-*/
-
 //----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha.
 // License: BSL-1.0

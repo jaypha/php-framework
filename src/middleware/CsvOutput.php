@@ -21,6 +21,7 @@ class CsvOutput implements Middleware
     }
     else if (is_array($output))
       $output = \Jaypha\csv_encode($this->data);
+
     assert(is_string($output));
 
     header("Pragma: no-cache");
