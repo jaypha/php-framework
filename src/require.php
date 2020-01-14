@@ -19,6 +19,7 @@ require "arrays.php";
 require "timing-safe.php";
 require "csv.php";
 require "json-functions.php";
+require "Result.php";
 
 require "Steps.php";
 
