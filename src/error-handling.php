@@ -85,7 +85,10 @@
 
   function critical(string $message)
   {
-    getLogger()->critical($message);
+    if ($message == "")
+      errorWithDetails(new Exception("No message given"));
+    else
+      getLogger()->critical($message);
     gracefulExit();
   }
 
