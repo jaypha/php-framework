@@ -39,7 +39,7 @@ class PdfOutput implements Middleware
     switch ($p)
     {
       case "filename":
-        throw new DeprecatedException("PdfOutput::filename is deprecated");
+        throw new \Jaypha\DeprecatedException("PdfOutput::filename is deprecated");
     }
   }
 }

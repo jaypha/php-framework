@@ -5,23 +5,14 @@
 
 namespace Jaypha\Jayponents\Html;
 
-class CheckboxControl extends InputControl
+class CheckboxControl extends CheckableControl
 {
   const FAIL_MISSING_FORMAT = "You must check the box '%l'";
 
   function __construct($name)
   {
-    $this->validator = new \Jaypha\ExtractText($name);
     parent::__construct($name);
     $this->attributes["type"]="checkbox";
-  }
-
-  function asBoolean($isBool = true)
-  {
-    if ($isBool)
-      $this->validator = new \Jaypha\ExtractBoolean($this->name);
-    else
-      $this->validator = new \Jaypha\ExtractText($this->name);
   }
 
   //-------------------------------------------------------

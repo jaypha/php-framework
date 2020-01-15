@@ -74,6 +74,7 @@ require "jayponents-html/TextControl.php";
 require "jayponents-html/TextAreaControl.php";
 require "jayponents-html/SelectControl.php";
 require "jayponents-html/RadioGroupControl.php";
+require "jayponents-html/CheckableControl.php";
 require "jayponents-html/CheckboxControl.php";
 
 require "jayponents-html/JayphaList.php";
