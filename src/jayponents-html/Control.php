@@ -53,6 +53,8 @@ abstract class Control extends Element implements ValidateRuleCollection
       case "autofocus":
       case "disabled":
         return isset($this->attributes[$p]);
+      case "validator":
+        return $this->validator;
       default:
         return parent::__get($p);
     }
