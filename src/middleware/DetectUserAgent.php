@@ -15,7 +15,9 @@ class DetectUserAgent implements Middleware
     {
       // IE 10 or earlier not supported
       if (strpos($_SERVER["HTTP_USER_AGENT"], "MSIE"))
-        return \getErrorResponseFormatter()->getRejectResponse(200, "Internet Explorer 10 and less is not supported, please upgrade yout browser");
+      {
+        return get_file_contents(__DIR__."/old-browser.html");
+      }
 
       // IE 11 requires special handling in some places
       $_SESSION["isIE11"] = (bool) strpos($_SERVER["HTTP_USER_AGENT"], "Trident");

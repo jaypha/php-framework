@@ -54,7 +54,6 @@ require "middleware/ImageOutput.php";
 require "middleware/UseMysql.php";
 require "middleware/UseLatteEngine.php";
 require "middleware/SetTimezone.php";
-require "middleware/ValidateId.php";
 
 require "jayponents-html/DocReadyScript.php";
 
