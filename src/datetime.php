@@ -106,17 +106,24 @@ function dateStrValid(string $str)
 
 function toDateTime($timeValue)
 {
-  if ($timeValue == null)
-    return null;
   if ($timeValue instanceof \DateTime)
     return $timeValue;
   if ($timeValue instanceof \DateTimeImmutable)
     return new \DateTime($timeValue->format(\DateTimeInterface::ISO8601));
+  if ($timeValue == null)
+    return null;
   if (is_string($timeValue) && !ctype_digit($timeValue))
     return new \DateTime($timeValue, getTimezone());
   assert(is_int($timeValue) || ctype_digit($timeValue));
   $time = new \DateTime("@$timeValue");
   return $time->setTimezone(getTimezone());
+}
+
+function toDateTimeDefaultNow($timeValue)
+{
+  if ($timeValue == null)
+    return now();
+  return toDateTime($timeValue);
 }
 
 //---------------------------------------------------------------------------
