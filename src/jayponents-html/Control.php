@@ -79,6 +79,10 @@ abstract class Control extends Element implements ValidateRuleCollection
         else
           unset($this->attributes[$p]);
         break;
+      case "validator":
+        assert($v instanceof \Jaypha\ExtractValue);
+        $this->validator = $v;
+        break;
       default:
         parent::__set($p, $v);
     }

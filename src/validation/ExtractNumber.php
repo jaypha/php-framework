@@ -58,7 +58,7 @@ class ExtractNumber extends ExtractValue
     else
       $this->patternRule->pattern = "/^(\+|-)?\d+(\.\d{1,$numDecimalPlaces})?$/";
     if ($failMessageFormat)
-      $this->patternRule->setFailMessageFormat(FAIL_TOO_HIGH,$failMessageFormat);
+      $this->patternRule->setFailMessageFormat(FAIL_INVALID,$failMessageFormat);
   }
 
   //-------------------------------------------------------
@@ -91,6 +91,29 @@ class ExtractNumber extends ExtractValue
   static function ExtractNumber($source, $resultsSoFar, $name, $constraints)
   {
     $rule = new ExtractNumber($name, $constraints);
+    return $rule->extract($source, $resultsSoFar);
+  }
+}
+
+//----------------------------------------------------------------------------
+
+class ExtractInteger extends ExtractNumber
+{
+  function __construct(string $name, array $constraints = [])
+  {
+    $constraints["precision"] = 0;
+    parent::__construct($name, $constraints);
+  }
+
+  function setPrecision(int $numDecimalPlaces, $failMessageFormat = null)
+  {
+  }
+
+  //-------------------------------------------------------
+
+  static function ExtractInteger($source, $resultsSoFar, $name, $constraints)
+  {
+    $rule = new ExtractInteger($name, $constraints);
     return $rule->extract($source, $resultsSoFar);
   }
 }

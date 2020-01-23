@@ -78,7 +78,9 @@ class Button  extends Element
 
   static function cancelButton($label = "Cancel")
   {
-    return self::submitButton($label, "cancel");
+    $button = new Button($label);
+    $button->value = "cancel";
+    return $button;
   }
 }
 
