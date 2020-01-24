@@ -1,7 +1,7 @@
 (function (factory) {
 	typeof define === 'function' && define.amd ? define(factory) :
 	factory();
-}(function () { 'use strict';
+}((function () { 'use strict';
 
 	function createCommonjsModule(fn, module) {
 		return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -733,7 +733,7 @@
 	  dialogPolyfill['forceRegisterDialog'] = dialogPolyfill.forceRegisterDialog;
 	  dialogPolyfill['registerDialog'] = dialogPolyfill.registerDialog;
 
-	  if (typeof module['exports'] === 'object') {
+	  if ( typeof module['exports'] === 'object') {
 	    // CommonJS support
 	    module['exports'] = dialogPolyfill;
 	  } else {
@@ -743,12 +743,4 @@
 	})();
 	});
 
-	//----------------------------------------------------------------------------
-
-	//----------------------------------------------------------------------------
-	// Copyright (C) 2019 Jaypha
-	// License: BSL-1.0
-	// Authors: Jason den Dulk
-	//
-
-}));
+})));
