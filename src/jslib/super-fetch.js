@@ -170,6 +170,7 @@ App.setPostSubmissionFn = function(formId, fn)
     button.addEventListener("click", (event) => {
       event.preventDefault(); // Prevents the submit event from happening.
       let formData = new FormData(form);
+      // We must manually add the submit buttons to the form data
       if (button.name && button.value)
         formData.append(button.name, button.value);
       App.postFetch(form.getAttribute("action"),formData)
@@ -191,6 +192,7 @@ docReady.then(function()
       button.addEventListener("click", (event) => {
         event.preventDefault(); // Prevents the submit event from happening.
         let formData = new FormData(form);
+        // We must manually add the submit buttons to the form data
         if (button.name && button.value)
           formData.append(button.name, button.value);
         App.postFetch(form.getAttribute("action"),formData)
