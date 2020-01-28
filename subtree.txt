@@ -1,0 +1,8 @@
+git remote add framework /path/to/php-framework
+git fetch --depth=1 framework
+git merge -s ours --no-commit --allow-unrelated-histories framework/live
+git read-tree --prefix=subprojects/framework -u framework/live
+git commit -m "added framework"
+
+git pull -s subtree framework live
+
