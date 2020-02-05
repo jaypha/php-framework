@@ -36,7 +36,9 @@ abstract class Control extends Element implements ValidateRuleCollection
       $this->form !== null &&
       array_key_exists($this->name, $this->form->values)
     )
+    {
       $this->value = $this->form->values[$this->name];
+    }
 
     parent::display();
   }

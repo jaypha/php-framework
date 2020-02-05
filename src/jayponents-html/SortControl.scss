@@ -2,10 +2,13 @@
 //
 //-----------------------------------------------------------------------------
 
-@import 'jayponents-html/ControlGroup';
-@import 'jayponents-html/SortControl';
-@import 'jayponents-html/Dialog';
-@import 'jayponents-html/Ribbon';
+
+.sort-control {
+  list-style: none;
+  li {
+    cursor: grab;
+  }
+}
 
 //-----------------------------------------------------------------------------
 // Copyright (C) 2019 Jaypha.

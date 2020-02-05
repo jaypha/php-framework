@@ -11,9 +11,9 @@ class DocReadyScript extends Script
 {
   function displayInner()
   {
-    echo "docReady.then(function() {\n";
+    echo "docReady.then(function(){";
     parent::displayInner();
-    echo "});\n";
+    echo "});";
   }
 }
 
